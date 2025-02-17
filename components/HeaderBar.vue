@@ -52,13 +52,13 @@
                 class="submenu-pop-item"
                 @click="changeMenu()"
               >
-                <a
-                  :href="item.link"
-                  :target="item.target || '_self'"
+                <NuxtLink
+                  :to="item.link"
+                  :target="item.target"
                   class="txt-4001418 txt-sub"
                 >
                   {{ item.text }}
-                </a>
+                </NuxtLink>
               </li>
             </ol>
           </li>
@@ -171,12 +171,12 @@
               :key="index"
               class="drawer-item"
             >
-              <a
+              <NuxtLink
                 class="txt-4001620 txt"
-                :href="item.link"
-                :target="item.target || '_self'"
+                :to="item.link"
+                :target="item.target"
                 @click="closeDrawer"
-                >{{ item.text }}</a
+                >{{ item.text }}</NuxtLink
               >
             </div>
           </ol>

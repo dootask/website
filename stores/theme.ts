@@ -13,7 +13,7 @@ export const useThemeStore = defineStore('themeStore', {
   actions: {
     initializeTheme() {
       if (import.meta.client) {
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        const savedTheme = sessionStorage.getItem('theme') || 'light';
         if (savedTheme) {
           this.theme = savedTheme;
           document.documentElement.setAttribute('data-theme', savedTheme);
@@ -36,12 +36,12 @@ export const useThemeStore = defineStore('themeStore', {
       );
 
       // Store the theme in localStorage
-      localStorage.setItem('theme', theme);
+      sessionStorage.setItem('theme', theme);
       document.documentElement.setAttribute('data-theme', theme);
     },
 
     loadTheme(lang?: string): void {
-      const theme = localStorage.getItem('theme');
+      const theme = sessionStorage.getItem('theme');
       if (theme == 'dark') {
         this.setTheme('dark', lang);
       } else {
