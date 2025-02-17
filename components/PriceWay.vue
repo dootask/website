@@ -268,7 +268,7 @@ const animateBoxes = () => {
           }, 1200);
         }
       });
-    }, 1000);
+    }, 100);
   }
 };
 const throttleAnimateBoxes = throttle(animateBoxes, 50);

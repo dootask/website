@@ -41,21 +41,21 @@
     color: #fff;
   }
 
-  .price-card-item:hover .price-card-h4 {
-    color: var(--txt-theme-color) !important;
-    transition: color 0.3s ease-in-out;
-  }
+  // .price-card-item:hover .price-card-h4 {
+  //   color: var(--txt-theme-color) !important;
+  //   transition: color 0.3s ease-in-out;
+  // }
 
   /* 未选中卡片的悬停效果 */
-  .price-card-item:not(.active):hover {
-    border: 1px solid var(--txt-theme-color);
-    transform: translateY(-16px);
-  }
+  // .price-card-item:not(.active):hover {
+  //   border: 1px solid var(--txt-theme-color);
+  //   transform: translateY(-16px);
+  // }
 
-  .price-card-item:not(.active):hover .btn-green {
-    background-color: var(--txt-theme-color);
-    color: #fff;
-  }
+  // .price-card-item:not(.active):hover .btn-green {
+  //   background-color: var(--txt-theme-color);
+  //   color: #fff;
+  // }
 
   /* 未选中卡片悬停时h4变绿 */
   /* .price-card-item:not(.active):hover .price-card-h4 {
