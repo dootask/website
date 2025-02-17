@@ -23,7 +23,11 @@ export default defineNuxtConfig({
         },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'theme-color', content: '#ffffff' },
-        { name: 'keywords', content: '中国 DooTask 开源在线项目 任务管理工具 任务管理 轻量级 海豚有海 团队协作' },
+        {
+          name: 'keywords',
+          content:
+            '中国 DooTask 开源在线项目 任务管理工具 任务管理 轻量级 海豚有海 团队协作',
+        },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }],
       // htmlAttrs: {
@@ -65,33 +69,32 @@ export default defineNuxtConfig({
     'nuxt-gtag',
   ],
   // SEO配置
-  seo: {
-    
-  },  
+  seo: {},
   site: {
     url: 'http://localhost:3000',
     name: 'DooTask',
     defaultLocale: 'zh',
     cacheMaxAgeSeconds: 24 * 3600, // 缓存时间设置为24小时
-    autoLastmod: true
+    autoLastmod: true,
   },
   robots: {
-    disallow: ['/cookie', '/privacy', '/ad']
+    disallow: ['/cookie', '/privacy', '/ad'],
   },
   sitemap: {
     cacheMaxAgeSeconds: 3600, // 缓存时间设置为1小时
   },
   ogImage: {
     defaults: {
-      renderer: 'chromium'
-    }
+      renderer: 'chromium',
+    },
   },
   i18n: {
     locales: [
       { code: 'en', iso: 'en-US', name: 'English' },
       { code: 'zh', iso: 'zh-CN', name: '简体中文' },
     ],
-    strategy: 'prefix_except_default', // 语言前缀策略
+    defaultLocale: 'zh',
+    strategy: 'prefix_and_default', // 语言前缀策略
     vueI18n: './i18n.config.ts',
   },
   gtag: {
@@ -117,8 +120,7 @@ export default defineNuxtConfig({
     },
   },
   generate: {
-    routes: ['/zh', '/en'], // 生成的语言版本页面
+    // routes: ['/zh', '/en'], // 生成的语言版本页面
   },
   eslint: {},
-  
 });
