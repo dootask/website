@@ -71,7 +71,7 @@ export default defineNuxtConfig({
   // SEO配置
   seo: {},
   site: {
-    url: 'http://localhost:3000',
+    url: 'https://www.dootask.com',
     name: 'DooTask',
     defaultLocale: 'zh',
     cacheMaxAgeSeconds: 24 * 3600, // 缓存时间设置为24小时

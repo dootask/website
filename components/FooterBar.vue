@@ -49,7 +49,7 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item mb-16">
-                  <a href="https://www.dootask.com" target="_blank" class="txt-4001624 txt">{{$t('footer.help')}}</a>
+                  <a href="https://help.dootask.com" target="_blank" class="txt-4001624 txt">{{$t('footer.help')}}</a>
                 </li>
                 <li class="footer-ol-item mb-16">
                   <NuxtLink
