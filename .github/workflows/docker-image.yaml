@@ -18,7 +18,8 @@ env:
   REGISTRY: hub.hitosea.com
   # github.repository as <account>/<repo>
   IMAGE_NAME: official-website/dootask-site
-
+  PROJECT_URL: 333read/doo-Helper
+  PROJECT_PATH: help
 
 jobs:
   build:
@@ -28,6 +29,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.branch }} # 可选：指定要检出的分支或 tag，默认为 default branch
+
+      - name: Checkout the dootask code
+        uses: actions/checkout@v4
+        with:
+          path: ${{ env.PROJECT_PATH }}
+          repository: ${{ env.PROJECT_URL }} # 目标仓库的 owner 和名称
+          ref: pages
+      - name: Copy dockerfile
+        id: get_commit_id
+        run: |
+          cp -r ${{ env.PROJECT_PATH }}/* .
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
