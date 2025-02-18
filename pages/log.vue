@@ -114,6 +114,8 @@ definePageMeta({
   layoutClass: 'log-page',
 });
 
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
 const { t, locale } = useI18n();
 
 const themeStore = useThemeStore();
@@ -242,6 +244,7 @@ const renderLogs = (html: string) => {
   });
 };
 
+
 // 获取更新日志数据
 const fetchLogsData = async () => {
   try {
@@ -250,8 +253,9 @@ const fetchLogsData = async () => {
       logsData.value = cachedLogs;
       renderLogs(cachedLogs);
     } else {
+      const url = `${siteUrl}/api/system/get/updatelog`
       const response = await axios.get(
-        'https://www.dootask.com/api/system/get/updatelog',
+        url,
       );
       const markdown = response.data.data.updateLog;
       const html = markdownIt().render(markdown);

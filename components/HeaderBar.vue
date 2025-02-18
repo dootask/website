@@ -120,7 +120,7 @@
           </a>
           <i class="line-1"></i>
           <span class="get-started">
-            <a href="https://www.dootask.com/manage/dashboard">
+            <a :href="`${siteUrl}/manage/dashboard`">
               <button class="btn btn-primary">
                 {{ $t('common.try_now') }}
               </button>
@@ -246,7 +246,7 @@
         <li class="drawer-item">
           <a
             class="txt-4001620 txt"
-            href="https://www.dootak.com/manage/dashboard"
+            :href="`${siteUrl}/manage/dashboard`"
             @click="closeDrawer"
             >{{ $t('common.try_now') }}</a
           >
@@ -282,7 +282,6 @@ const isLanguageMenuOpen = ref(false);
 
 // 语言切换方法
 const switchLanguage = async (lang: 'zh' | 'en') => {
-  console.log('Switching language to:', lang);
   setLocale(lang);
   // 更新 themeStore
   themeStore.lang = lang;
@@ -292,6 +291,9 @@ const switchLanguage = async (lang: 'zh' | 'en') => {
 
 // 背景显示状态
 const showBackground = ref(true);
+
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
 
 const getTabStyles = () => {
   return {
@@ -402,7 +404,7 @@ const supportItems = computed(() => [
   { text: t('navigation.download'), link: localizedRoutes.value.download },
   {
     text: t('navigation.help_center'),
-    link: 'https://help.dootask.com',
+    link: `${siteUrl}/help/basic/quick-start`,
     target: '_blank',
   },
   {
@@ -412,7 +414,7 @@ const supportItems = computed(() => [
   },
   {
     text: t('navigation.api_docs'),
-    link: 'https://www.dootask.com/docs/index.html',
+    link: `${siteUrl}/docs/index.html`,
     target: '_blank',
   },
 ]);

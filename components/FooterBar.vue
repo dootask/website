@@ -49,7 +49,7 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item mb-16">
-                  <a href="https://help.dootask.com" target="_blank" class="txt-4001624 txt">{{$t('footer.help')}}</a>
+                  <a :href="`${siteUrl}/help/basic/quick-start`" target="_blank" class="txt-4001624 txt">{{$t('footer.help')}}</a>
                 </li>
                 <li class="footer-ol-item mb-16">
                   <NuxtLink
@@ -62,7 +62,7 @@
                 <li class="footer-ol-item">
                   <a
                     class="txt-4001624 txt"
-                    href="https://www.dootask.com/docs/index.html"
+                    :href="`${siteUrl}/docs/index.html`"
                     target="_blank"
                     >{{ $t('footer.api_docs') }}</a
                   >
@@ -134,6 +134,9 @@ import { openInNewTab } from '../utils/common';
 import { useI18n } from 'vue-i18n';
 
 const themeStore = useThemeStore();
+
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
 
 const { locale } = useI18n();
 

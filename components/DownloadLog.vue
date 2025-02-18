@@ -54,6 +54,9 @@ import { navigateTo } from '#app';
 
 const themeStore = useThemeStore();
 
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
+
 const { theme, lang } = toRefs(themeStore);
 
 interface ReleaseVersion {
@@ -85,7 +88,7 @@ const handleReleaseClick = (index: number) => {
 const fetchReleases = async () => {
   // loading.value = true;
   try {
-    const url = 'https://www.dootask.com/api/system/get/updatelog';
+    const url = `${siteUrl}/api/system/get/updatelog`;
     const response = await axios.get(url);
     const changelog = response.data.data.updateLog;
     const regex = /## \[(.*?)\]\n([\s\S]*?)(?=\n\n## \[|$)/g;
