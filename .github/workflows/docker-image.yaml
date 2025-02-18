@@ -36,10 +36,10 @@ jobs:
           path: ${{ env.PROJECT_PATH }}
           repository: ${{ env.PROJECT_URL }} # 目标仓库的 owner 和名称
           ref: pages
-      - name: Copy dockerfile
-        id: get_commit_id
-        run: |
-          cp -r ${{ env.PROJECT_PATH }}/* .
+      # - name: Copy dockerfile
+      #   id: get_commit_id
+      #   run: |
+      #     cp -r ${{ env.PROJECT_PATH }}/* .
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
