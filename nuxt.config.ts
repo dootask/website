@@ -74,8 +74,13 @@ export default defineNuxtConfig({
     url: 'https://www.dootask.com',
     name: 'DooTask',
     defaultLocale: 'zh',
-    cacheMaxAgeSeconds: 24 * 3600, // 缓存时间设置为24小时
+    cacheMaxAgeSeconds: 1 * 3600, // 缓存时间设置为1小时
     autoLastmod: true,
+  },
+  runtimeConfig: {
+    public: {
+      siteUrl: 'https://www.dootask.com'
+    }
   },
   robots: {
     disallow: ['/cookie', '/privacy', '/ad'],

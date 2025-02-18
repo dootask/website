@@ -123,7 +123,7 @@
         <a
           class="download-other-btn dow-animate-box"
           style="--delay: 0.5s"
-          href="https://www.dootask.com/desktop/publish/latest"
+          :href="`${siteUrl}/desktop/publish/latest`"
           target="_blank"
         >
           <span>{{ $t('download.other') }}</span>
@@ -135,6 +135,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+
+const config = useRuntimeConfig()
+const siteUrl = config.public.siteUrl
 
 const platforms = ref([
   {
@@ -149,7 +152,7 @@ const platforms = ref([
     name: 'Android',
     icon: '/img/dow_android.svg',
     normalLink:
-      'https://www.dootask.com/desktop/publish/latest?platform=android',
+      `${siteUrl}/desktop/publish/latest?platform=android`,
   },
   {
     id: 'mac',
@@ -158,11 +161,11 @@ const platforms = ref([
     chips: [
       {
         name: 'Apple Chips',
-        link: 'https://www.dootask.com/desktop/publish/latest?platform=mac&arch=arm64',
+        link: `${siteUrl}/desktop/publish/latest?platform=mac&arch=arm64`,
       },
       {
         name: 'Intel Chips',
-        link: 'https://www.dootask.com/desktop/publish/latest?platform=mac&arch=x64',
+        link: `${siteUrl}/desktop/publish/latest?platform=mac&arch=x64`,
       },
     ],
   },
@@ -171,7 +174,7 @@ const platforms = ref([
     name: 'Windows',
     icon: '/img/dow_window.svg',
     normalLink:
-      'https://www.dootask.com/desktop/publish/latest?platform=win&arch=x64',
+      `${siteUrl}/desktop/publish/latest?platform=win&arch=x64`,
   },
 ]);
 
