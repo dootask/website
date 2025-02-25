@@ -1,8 +1,8 @@
 :root {
   --bg-pic7-url: url(/img/light/home_pic7.svg);
-  --bg-pic7-768-url: url(/img/light/home_pic7-768.svg);
+  // --bg-pic7-768-url: url(/img/light/home_pic7-768.svg);
   --bg-pic1-url: url(/img/light/zh_dow_pic1.png);
-  --bg-pic2-url: url(/img/light/help_pic1.svg);
+  // --bg-pic2-url: url(/img/light/help_pic1.svg);
   --bg-1-url: url(/img/light/bg1.png);
   --bg-2-url: url(/img/light/bg2.png);
   --bg-3-url: url(/img/light/bg3.png);
@@ -42,9 +42,9 @@
 
 :root[data-theme='dark'] {
   --bg-pic7-url: url(/img/dark/home_pic7.svg);
-  --bg-pic7-768-url: url(/img/dark/home_pic7-768.svg);
+  // --bg-pic7-768-url: url(/img/dark/home_pic7-768.svg);
   --bg-pic1-url: url(/img/dark/zh_dow_pic1.png);
-  --bg-pic2-url: url(/img/dark/help_pic1.svg);
+  // --bg-pic2-url: url(/img/dark/help_pic1.svg);
   --bg-1-url: url(/img/dark/bg1.png);
   --bg-2-url: url(/img/dark/bg2.png);
   --bg-3-url: url(/img/dark/bg3.png);
