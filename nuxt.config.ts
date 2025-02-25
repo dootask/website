@@ -30,34 +30,6 @@ export default defineNuxtConfig({
         },
       ],
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/img/favicon.ico' }],
-      // htmlAttrs: {
-      //   'data-theme': 'light', // 默认设置为 light，后续会通过 JS 替换为 dark
-      // },
-      // script: [
-      //   {
-      //     innerHTML: `
-      //       (function() {
-      //         var theme = localStorage.getItem('theme') || 'light';
-      //         document.documentElement.setAttribute('data-theme', theme);
-      //       })();
-      //     `,
-      //     type: 'text/javascript',
-      //   },
-      // ],
-      // // 确保 CSS 样式文件优先加载
-      // style: [
-      //   {
-      //     children: `
-      //       [data-theme="dark"] {
-      //         --bg-color: #1E1E1E;
-      //       }
-      //       [data-theme="light"] {
-      //         --bg-color: #fff;
-      //       }
-      //     `,
-      //     // type: 'text/css',
-      //   },
-      // ],
     },
   },
   modules: [
