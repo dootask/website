@@ -88,7 +88,7 @@
                     <i
                       class="txt-4001624 txt external-link-icon"
                       @click="openInNewTab('https://gitee.com/aipaw/dootask')"
-                      >Gitee </i
+                      >Gitee</i
                     >
                   </div>
                   <div id="qq_group" class="footer-ol-item">

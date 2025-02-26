@@ -26,7 +26,7 @@
               </template>
             </li>
             <li v-show="!loading">
-              <a class="more-item" @click="navigateTo('/log')">
+              <a class="more-item" @click="goToMoreLogs">
                 <h5 class="txt-4001624 more">{{ $t('download.log.more') }}</h5>
                 <img class="icon" src="/img/dow_arrow.svg" :alt="$t('download.log.more')" />
               </a>
@@ -80,9 +80,16 @@ const getLocalStorageItem = (key: string) => {
 };
 
 const handleReleaseClick = (index: number) => {
-  // 直接使用下标跳转到日志页面
+   // 直接使用下标跳转到日志页面
   localStorage.setItem('update_log_num', (index + 1).toString());
-  navigateTo('/log');
+  
+   // 使用当前语言前缀导航
+   navigateTo(`/log?from=version_specific`);
+};
+
+const goToMoreLogs = () => {
+  localStorage.setItem('update_log_num', '-1');
+  navigateTo(`/log?from=moreLogs`);
 };
 
 const fetchReleases = async () => {

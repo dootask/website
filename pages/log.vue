@@ -82,7 +82,7 @@
                       </li>
                       <div
                         v-for="(
-                          htmlText, itemIndex
+htmlText, itemIndex
                         ) in updateLog.updatesHtmlText"
                         :key="itemIndex"
                         style="display: flex"
@@ -194,6 +194,7 @@ const scrollToActiveVersion = () => {
 
 const renderLogs = (html: string) => {
   nextTick(() => {
+    const route = useRoute();
     // 解析渲染后的 HTML 结构
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -239,11 +240,20 @@ const renderLogs = (html: string) => {
         updatesHtmlText,
       };
     });
-
-    scrollToActiveVersion(); // 滚动到目标版本
+    // setTimeout保障解决时序问题
+    setTimeout(() => {
+      if (route.query.from === 'version_specific') {
+        scrollToActiveVersion();
+      } else if (route.query.from === 'moreLogs') {
+        // 明确地将滚动位置设置为顶部
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    }, 200);
   });
 };
-
 
 // 获取更新日志数据
 const fetchLogsData = async () => {
@@ -267,8 +277,8 @@ const fetchLogsData = async () => {
 
     // 提供默认日志
     const defaultLogs = `## [1.0.0]
-           - 初始版本发布
-           - 基础功能上线`;
+          - 初始版本发布
+          - 基础功能上线`;
     const html = markdownIt().render(defaultLogs);
     renderLogs(html);
   }
@@ -372,11 +382,18 @@ useHead({
 
 // 生命周期钩子
 onMounted(() => {
+  const route = useRoute();
   const storedLogIndex = localStorage.getItem('update_log_num');
+  
   if (storedLogIndex) {
-    // 转换为数字并减1（因为数组索引从0开始）
-    activeTabIndex.value = parseInt(storedLogIndex, 10) - 1;
-
+    if (storedLogIndex === '-1') {
+      // 从"更多日志"进入，确保滚动到顶部
+      route.query.from = 'moreLogs';
+    } else {
+      // 转换为数字并减1（因为数组索引从0开始）
+      activeTabIndex.value = parseInt(storedLogIndex, 10) - 1;
+      route.query.from = 'version_specific';
+    }
     // 清除 localStorage 中的记录，防止重复使用
     localStorage.removeItem('update_log_num');
   }
