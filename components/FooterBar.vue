@@ -49,11 +49,11 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item mb-16">
-                  <a :href="`${siteUrl}/help/basic/quick-start`" target="_blank" class="txt-4001624 txt">{{$t('footer.help')}}</a>
+                  <a :href="`${siteUrl}/help/basic/quick-start`" target="_blank" class="txt-4001624 txt external-link-icon">{{$t('footer.help')}}</a>
                 </li>
                 <li class="footer-ol-item mb-16">
                   <NuxtLink
-                    class="txt-4001624 txt"
+                    class="txt-4001624 txt external-link-icon"
                     :to="`/${locale}/privacy`"
                     target="_blank"
                     >{{ $t('footer.privacy') }}</NuxtLink
@@ -61,7 +61,7 @@
                 </li>
                 <li class="footer-ol-item">
                   <a
-                    class="txt-4001624 txt"
+                    class="txt-4001624 txt external-link-icon"
                     :href="`${siteUrl}/docs/index.html`"
                     target="_blank"
                     >{{ $t('footer.api_docs') }}</a
@@ -77,7 +77,7 @@
                 <li class="footer-ol-item">
                   <div class="footer-ol-item mb-16">
                     <i
-                      class="txt-4001624 txt"
+                      class="txt-4001624 txt external-link-icon"
                       @click="
                         openInNewTab('https://github.com/kuaifan/dootask')
                       "
@@ -86,7 +86,7 @@
                   </div>
                   <div class="footer-ol-item mb-16">
                     <i
-                      class="txt-4001624 txt"
+                      class="txt-4001624 txt external-link-icon"
                       @click="openInNewTab('https://gitee.com/aipaw/dootask')"
                       >Gitee</i
                     >
