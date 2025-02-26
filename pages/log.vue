@@ -13,20 +13,15 @@
         {{ $t('download.log.title') }}
       </h5>
       <ul class="logs-l-ul logs-l-768">
-        <li
-          v-for="(versionNumber, index) in versionsNumbers"
-          :key="index"
-          :data-id="`section-${index + 1}`"
-          class="l-ul-item"
-          @click="
+        <li 
+          v-for="(versionNumber, index) in versionsNumbers" 
+          :key="index" :data-id="`section-${index + 1}`"
+          class="l-ul-item" @click="
             () => {
               closeLogsDrawer(), handleNavClick(index);
             }
-          "
-        >
-          <a class="txt-4001620 txt"
-            >v{{ versionNumber }} {{ t('download.log.new') }}</a
-          >
+          ">
+          <a class="txt-4001620 txt">v{{ versionNumber }} {{ t('download.log.new') }}</a>
         </li>
       </ul>
     </div>
@@ -45,17 +40,12 @@
                   {{ $t('download.log.title') }}
                 </h5>
                 <ul ref="LogsLULRef" class="logs-l-ul logs-l-1920">
-                  <li
-                    v-for="(versionNumber, index) in versionsNumbers"
-                    :key="index"
+                  <li 
+                    v-for="(versionNumber, index) in versionsNumbers" 
+                    :key="index" 
                     :data-id="`section-${index + 1}`"
-                    class="l-ul-item"
-                    :class="{ active: index === activeTabIndex }"
-                    @click="handleNavClick(index)"
-                  >
-                    <a class="txt-4001620 txt log-a"
-                      >v{{ versionNumber }} {{ t('download.log.new') }}</a
-                    >
+                    class="l-ul-item" :class="{ active: index === activeTabIndex }" @click="handleNavClick(index)">
+                    <a class="txt-4001620 txt log-a">v{{ versionNumber }} {{ t('download.log.new') }}</a>
                   </li>
                 </ul>
                 <ul class="logs-l-ul logs-l-768"></ul>
@@ -65,28 +55,18 @@
                   {{ $t('download.log.headline') }}
                 </h1>
                 <ul class="logs-r-ul">
-                  <li
-                    v-for="(updateLog, index) in updateLogs"
-                    :key="index"
-                    class="r-ul-item mb-36"
-                  >
+                  <li v-for="(updateLog, index) in updateLogs" :key="index" class="r-ul-item mb-36">
                     <ol class="logs-r-ol">
-                      <li
-                        :id="`section-${index + 1}`"
-                        class="txt-4001624 r-ol-item mb-24"
-                      >
+                      <li :id="`section-${index + 1}`" class="txt-4001624 r-ol-item mb-24">
                         <h4 class="logs-h4">
                           v{{ updateLog.versionNumber }}
                           {{ t('download.log.new') }}
                         </h4>
                       </li>
-                      <div
-                        v-for="(
-                          htmlText, itemIndex
-                        ) in updateLog.updatesHtmlText"
-                        :key="itemIndex"
-                        style="display: flex"
-                      >
+                      <div 
+                        v-for="(htmlText, itemIndex) in updateLog.updatesHtmlText" 
+                        :key="itemIndex" 
+                        style="display: flex">
                         <i class="dots"></i>
                         <li class="r-ol-item">{{ htmlText }}</li>
                       </div>
@@ -194,6 +174,7 @@ const scrollToActiveVersion = () => {
 
 const renderLogs = (html: string) => {
   nextTick(() => {
+    const route = useRoute();
     // 解析渲染后的 HTML 结构
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -239,11 +220,20 @@ const renderLogs = (html: string) => {
         updatesHtmlText,
       };
     });
-
-    scrollToActiveVersion(); // 滚动到目标版本
+    // setTimeout保障解决时序问题
+    setTimeout(() => {
+      if (route.query.from === 'version_specific') {
+        scrollToActiveVersion();
+      } else if (route.query.from === 'moreLogs') {
+        // 明确地将滚动位置设置为顶部
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    }, 200);
   });
 };
-
 
 // 获取更新日志数据
 const fetchLogsData = async () => {
@@ -267,19 +257,28 @@ const fetchLogsData = async () => {
 
     // 提供默认日志
     const defaultLogs = `## [1.0.0]
-           - 初始版本发布
-           - 基础功能上线`;
+          - 初始版本发布
+          - 基础功能上线`;
     const html = markdownIt().render(defaultLogs);
     renderLogs(html);
   }
 };
 
-// 点击左侧导航项时触发
-const handleNavClick = (index: number) => {
-  activeTabIndex.value = index;
+const adjustNavBarScroll = (ulElement: HTMLElement, liElement: HTMLElement) => {
+  const liTop = liElement.offsetTop;
+  const liHeight = liElement.offsetHeight;
+  const ulScrollTop = ulElement.scrollTop;
+  const ulHeight = ulElement.offsetHeight;
 
-  // 获取对应的内容元素
-  const id = 'section-' + (activeTabIndex.value + 1).toString();
+  if (liTop > ulScrollTop + ulHeight) {
+    ulElement.scrollTop += liHeight;
+  } else if (liTop - ulScrollTop <= 40) {
+    ulElement.scrollTop -= liHeight;
+  }
+};
+
+const scrollToSection = (index: number, smooth = true) => {
+  const id = `section-${index + 1}`;
   const content = document.getElementById(id);
 
   if (content) {
@@ -289,68 +288,80 @@ const handleNavClick = (index: number) => {
     // 滚动到目标位置，并考虑上偏移量
     window.scrollTo({
       top: targetPosition - offset,
-      behavior: 'smooth',
+      behavior: smooth ? 'smooth' : 'auto',
     });
-    // 处理左侧导航栏滚动
-    const ulElement = LogsLULRef.value;
-    const liElement = content;
-
-    if (ulElement && liElement) {
-      const liHeight = liElement.offsetHeight;
-      const liTop = liElement.offsetTop;
-      const ulScrollTop = ulElement.scrollTop;
-      const ulHeight = ulElement.offsetHeight;
-
-      // 如果当前激活项在可视区域之外，调整滚动位置
-      if (liTop > ulScrollTop + ulHeight) {
-        ulElement.scrollTop += liHeight;
-      }
-
-      if (liTop - ulScrollTop <= 40) {
-        ulElement.scrollTop -= liHeight;
-      }
-    }
   }
+};
+
+
+const safelyExecute = <T,>(
+  element: T | null,
+  callback: (el: T) => void
+) => {
+  if (element) {
+    callback(element);
+  }
+};
+
+// 点击左侧导航项时触发
+const handleNavClick = (index: number) => {
+  activeTabIndex.value = index;
+  // 滚动到对应的内容区域
+  scrollToSection(index);
+  // 处理左侧导航栏滚动
+  safelyExecute(LogsLULRef.value, (ulElement) => {
+    const liElement = ulElement.children[index] as HTMLElement;
+    safelyExecute(liElement, (li) => {
+      adjustNavBarScroll(ulElement, li);
+    });
+  });
+
 };
 
 // 监听滚动，更新导航高亮
 const scrollHandler = () => {
   const sections: HTMLHeadingElement[] = Array.from(
-    document.querySelectorAll('h4'),
+    document.querySelectorAll('.logs-r-ul li h4')  // 获取所有版本号的标题
   );
-
-  // 获取当前滚动位置
   const currentScrollPosition = window.scrollY;
 
   // 遍历所有标题元素
   sections.forEach((section, index) => {
-    const sectionTop = section.getBoundingClientRect().top;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;  // 获取当前标题的屏幕位置
 
-    if (sectionTop <= currentScrollPosition + 100) {
-      const id = 'section-' + (index + 1).toString();
+    // 当标题进入视口范围时
+    if (sectionTop <= currentScrollPosition + 100 && sectionTop > currentScrollPosition - 100) {
+      activeTabIndex.value = index;
 
-      // 处理左侧导航栏滚动
-      const ulElement = LogsLULRef.value;
-      const liElement = document.getElementById(id);
+      safelyExecute(LogsLULRef.value, (ulElement) => {
+        const liElement = ulElement.children[index] as HTMLElement;
+        safelyExecute(liElement, (li) => {
+          adjustNavBarScroll(ulElement, li);
+        });
+      });
 
-      if (ulElement && liElement) {
-        const liHeight = liElement.offsetHeight;
-        const liTop = liElement.offsetTop;
-        const ulScrollTop = ulElement.scrollTop;
-        const ulHeight = ulElement.offsetHeight;
-
-        // 如果当前激活项在可视区域之外，调整滚动位置
-        if (liTop > ulScrollTop + ulHeight) {
-          ulElement.scrollTop += liHeight;
-        }
-
-        if (liTop - ulScrollTop <= 40) {
-          ulElement.scrollTop -= liHeight;
-        }
-      }
     }
   });
+
 };
+
+// 在页面加载时同步左侧导航栏的位置
+const syncLeftNav = () => {
+  // 使用 safelyExecute 处理 activeTabIndex 可能为 null 的情况
+  safelyExecute(activeTabIndex.value, (index) => {
+    safelyExecute(LogsLULRef.value, (ulElement) => {
+      // 检查索引是否在子元素范围内
+      if (ulElement.children && ulElement.children.length > index) {
+        const liElement = ulElement.children[index] as HTMLElement;
+        
+        safelyExecute(liElement, (li) => {
+          adjustNavBarScroll(ulElement, li);
+        });
+      }
+    });
+  });
+};
+
 
 // 在组件挂载时设置头部标题
 useHead({
@@ -372,16 +383,31 @@ useHead({
 
 // 生命周期钩子
 onMounted(() => {
-  const storedLogIndex = localStorage.getItem('update_log_num');
-  if (storedLogIndex) {
-    // 转换为数字并减1（因为数组索引从0开始）
-    activeTabIndex.value = parseInt(storedLogIndex, 10) - 1;
 
+  window.addEventListener('scroll', scrollHandler);
+
+  const route = useRoute();
+  const storedLogIndex = localStorage.getItem('update_log_num');
+
+  if (storedLogIndex) {
+    if (storedLogIndex === '-1') {
+      // 从"更多日志"进入，确保滚动到顶部
+      route.query.from = 'moreLogs';
+    } else {
+      // 转换为数字并减1（因为数组索引从0开始）
+      activeTabIndex.value = parseInt(storedLogIndex, 10) - 1;
+      route.query.from = 'version_specific';
+    }
     // 清除 localStorage 中的记录，防止重复使用
     localStorage.removeItem('update_log_num');
   }
 
-  fetchLogsData();
+  setTimeout(() => {
+    fetchLogsData().then(() => {
+      syncLeftNav();  // 页面加载完成后同步左侧导航栏的滚动
+    });
+  }, 100);
+
   window.addEventListener('scroll', scrollHandler);
 });
 

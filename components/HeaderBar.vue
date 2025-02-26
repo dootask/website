@@ -5,7 +5,12 @@
     <div ref="nav" class="nav">
       <div class="nav-layout">
         <NuxtLink :to="`/${locale}`" class="logo">
-          <ClientDynamicImage id="logo" :src="`/img/${theme}/logo.svg`" :default-src="`/img/light/logo.svg`" alt="DooTask,Logo" />
+          <ClientDynamicImage
+            id="logo"
+            :src="`/img/${theme}/logo.svg`"
+            :default-src="`/img/light/logo.svg`"
+            alt="DooTask,Logo"
+          />
           <i class="dootask txt-7002027">DooTask</i>
         </NuxtLink>
         <ul class="nav-ul">
@@ -13,7 +18,11 @@
             <NuxtLink
               class="txt-4001620 txt nav-product"
               :to="`/${locale}/product`"
-              :style="route.path.startsWith(`/${locale}/product`) ? getTabStyles() : {}"
+              :style="
+                route.path.startsWith(`/${locale}/product`)
+                  ? getTabStyles()
+                  : {}
+              "
               >{{ $t('navigation.product') }}</NuxtLink
             >
           </li>
@@ -21,7 +30,11 @@
             <NuxtLink
               class="txt-4001620 txt nav-solutions"
               :to="`/${locale}/solutions`"
-              :style="route.path.startsWith(`/${locale}/solutions`)? getTabStyles() : {}"
+              :style="
+                route.path.startsWith(`/${locale}/solutions`)
+                  ? getTabStyles()
+                  : {}
+              "
               >{{ $t('navigation.solution') }}</NuxtLink
             >
           </li>
@@ -56,6 +69,7 @@
                   :to="item.link"
                   :target="item.target"
                   class="txt-4001418 txt-sub"
+                  :class="{ 'external-link-icon': item.target }"
                 >
                   {{ item.text }}
                 </NuxtLink>
@@ -66,7 +80,9 @@
             <NuxtLink
               class="txt-4001620 txt nav-price"
               :to="`/${locale}/price`"
-              :style="route.path.startsWith(`/${locale}/price`) ? getTabStyles() : {}"
+              :style="
+                route.path.startsWith(`/${locale}/price`) ? getTabStyles() : {}
+              "
               >{{ $t('navigation.pricing') }}</NuxtLink
             >
           </li>
@@ -74,7 +90,9 @@
             <NuxtLink
               class="txt-4001620 txt nav-about"
               :to="`/${locale}/about`"
-              :style="route.path.startsWith(`/${locale}/about`) ? getTabStyles() : {}"
+              :style="
+                route.path.startsWith(`/${locale}/about`) ? getTabStyles() : {}
+              "
               >{{ $t('navigation.about_us') }}</NuxtLink
             >
           </li>
@@ -128,7 +146,11 @@
           </span>
         </div>
         <div class="menuBtn" @click="openDrawer">
-          <img id="menuBtn" :src="`/img/menu.svg`" :alt="$t('navigation.menu')" />
+          <img
+            id="menuBtn"
+            :src="`/img/menu.svg`"
+            :alt="$t('navigation.menu')"
+          />
         </div>
       </div>
     </div>
@@ -137,7 +159,12 @@
     <div class="drawer" :class="{ 'open-drawer': isDrawerVisible }">
       <div class="drawer-t mb-36">
         <a href="/" class="logo">
-          <ClientDynamicImage id="logo" :src="`/img/${theme}/logo.svg`" :default-src="`/img/light/logo.svg`" alt="DooTaskLogo" />
+          <ClientDynamicImage
+            id="logo"
+            :src="`/img/${theme}/logo.svg`"
+            :default-src="`/img/light/logo.svg`"
+            alt="DooTaskLogo"
+          />
           <i class="dootask txt-7002027">DooTask</i>
         </a>
         <i class="close-drawer" @click="closeDrawer">✕</i>
@@ -175,6 +202,7 @@
                 class="txt-4001620 txt"
                 :to="item.link"
                 :target="item.target"
+                :class="{ 'external-link-icon': item.target }"
                 @click="closeDrawer"
                 >{{ item.text }}</NuxtLink
               >
@@ -261,7 +289,6 @@ import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
-
 const themeStore = useThemeStore();
 
 const { theme } = toRefs(themeStore);
@@ -292,8 +319,8 @@ const switchLanguage = async (lang: 'zh' | 'en') => {
 // 背景显示状态
 const showBackground = ref(true);
 
-const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl
+const config = useRuntimeConfig();
+const siteUrl = config.public.siteUrl;
 
 const getTabStyles = () => {
   return {
@@ -418,8 +445,6 @@ const supportItems = computed(() => [
     target: '_blank',
   },
 ]);
-
-
 
 const themeItems = computed(() => [
   { text: t('theme.light'), value: 'light' },
