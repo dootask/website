@@ -326,40 +326,72 @@ const handleNavClick = (index: number) => {
 // 监听滚动，更新导航高亮
 const scrollHandler = () => {
   const sections: HTMLHeadingElement[] = Array.from(
-    document.querySelectorAll('h4'),
+    document.querySelectorAll('.logs-r-ul li h4')  // 获取所有版本号的标题
   );
 
-  // 获取当前滚动位置
   const currentScrollPosition = window.scrollY;
 
   // 遍历所有标题元素
   sections.forEach((section, index) => {
-    const sectionTop = section.getBoundingClientRect().top;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;  // 获取当前标题的屏幕位置
 
-    if (sectionTop <= currentScrollPosition + 100) {
-      const id = 'section-' + (index + 1).toString();
+    // 当标题进入视口范围时
+    if (sectionTop <= currentScrollPosition + 100 && sectionTop > currentScrollPosition - 100) {
+      // 激活对应的左侧导航栏项
+      activeTabIndex.value = index;
 
-      // 处理左侧导航栏滚动
+      // 确保左侧导航栏滚动到对应版本
       const ulElement = LogsLULRef.value;
-      const liElement = document.getElementById(id);
+      
+       // 安全的非空检查
+      if (ulElement && ulElement.children && ulElement.children.length > index) {
+        const liElement = ulElement.children[index] as HTMLElement;
 
-      if (ulElement && liElement) {
-        const liHeight = liElement.offsetHeight;
-        const liTop = liElement.offsetTop;
-        const ulScrollTop = ulElement.scrollTop;
-        const ulHeight = ulElement.offsetHeight;
+        if (liElement) {
+          const liTop = liElement.offsetTop;
+          const liHeight = liElement.offsetHeight;
+          const ulScrollTop = ulElement.scrollTop;
+          const ulHeight = ulElement.offsetHeight;
 
-        // 如果当前激活项在可视区域之外，调整滚动位置
-        if (liTop > ulScrollTop + ulHeight) {
-          ulElement.scrollTop += liHeight;
-        }
-
-        if (liTop - ulScrollTop <= 40) {
-          ulElement.scrollTop -= liHeight;
+          // 如果当前激活项在可视区域之外，调整滚动位置
+          if (liTop > ulScrollTop + ulHeight) {
+            ulElement.scrollTop += liHeight;
+          } else if (liTop - ulScrollTop <= 40) {
+            ulElement.scrollTop -= liHeight;
+          }
         }
       }
     }
   });
+  
+};
+
+// 在页面加载时同步左侧导航栏的位置
+const syncLeftNav = () => {
+  // 确保已经有activeTabIndex
+  if (activeTabIndex.value !== undefined && activeTabIndex.value !== null) {
+    const ulElement = LogsLULRef.value;
+    
+    // 安全地处理ulElement可能为null的情况
+    if (ulElement && ulElement.children && ulElement.children.length > activeTabIndex.value) {
+      const liElement = ulElement.children[activeTabIndex.value] as HTMLElement;
+      
+      if (liElement) {
+        const liTop = liElement.offsetTop;
+        const liHeight = liElement.offsetHeight;
+        const ulHeight = ulElement.offsetHeight;
+
+        // 计算滚动位置，确保选中的项目在可视范围内
+        if (liTop + liHeight > ulHeight) {
+          // 如果元素在可视区域下方，向下滚动
+          ulElement.scrollTop = liTop + liHeight - ulHeight;
+        } else if (liTop < 0) {
+          // 如果元素在可视区域上方，向上滚动
+          ulElement.scrollTop = liTop;
+        }
+      }
+    }
+  }
 };
 
 // 在组件挂载时设置头部标题
@@ -382,6 +414,9 @@ useHead({
 
 // 生命周期钩子
 onMounted(() => {
+
+  window.addEventListener('scroll', scrollHandler);  
+
   const route = useRoute();
   const storedLogIndex = localStorage.getItem('update_log_num');
   
@@ -398,7 +433,12 @@ onMounted(() => {
     localStorage.removeItem('update_log_num');
   }
 
-  fetchLogsData();
+  setTimeout(() => {
+    fetchLogsData().then(() => {
+        syncLeftNav();  // 页面加载完成后同步左侧导航栏的滚动
+    });
+  }, 100);
+  
   window.addEventListener('scroll', scrollHandler);
 });
 
