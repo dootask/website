@@ -303,10 +303,6 @@ function handleAdBannerDescription(description: BannerDescription): void {
   if (descriptionEl && descriptionText.text) {
     descriptionEl.textContent = descriptionText.text;
     if (descriptionText.style) {
-      console.log(
-        'getStyle(descriptionText.style)',
-        getStyle(descriptionText.style),
-      );
       Object.assign(descriptionEl.style, getStyle(descriptionText.style));
     }
   }
