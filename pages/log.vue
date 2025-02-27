@@ -1,78 +1,107 @@
 <template>
-  <div>
-    <!-- 更新日志抽屉 -->
-    <div class="logs-drawer" :class="{ 'open-logs-drawer': drawerOpen }">
-      <div class="drawer-t mb-36">
-        <a :href="`/${locale}`" class="logo">
-          <img id="logo" :src="`/img/${theme}/logo.svg`" alt="DooTask,Logo" />
-          <i class="dootask txt-7002027">DooTask</i>
-        </a>
-        <i class="close-drawer" @click="closeLogsDrawer">✕</i>
+  <ClientOnly>
+    <div>
+      <!-- 更新日志抽屉 -->
+      <div class="logs-drawer" :class="{ 'open-logs-drawer': drawerOpen }">
+        <div class="drawer-t mb-36">
+          <a :href="`/${locale}`" class="logo">
+            <img id="logo" :src="`/img/${theme}/logo.svg`" alt="DooTask,Logo" />
+            <i class="dootask txt-7002027">DooTask</i>
+          </a>
+          <i class="close-drawer" @click="closeLogsDrawer">✕</i>
+        </div>
+        <h5 class="logs-h5 mb-16" style="font-weight: 500">
+          {{ $t('download.log.title') }}
+        </h5>
+        <ul class="logs-l-ul logs-l-768">
+          <li
+            v-for="(versionNumber, index) in versionsNumbers"
+            :key="index"
+            :data-id="`section-${index + 1}`"
+            class="l-ul-item"
+            @click="
+              () => {
+                closeLogsDrawer(), handleNavClick(index);
+              }
+            "
+          >
+            <a class="txt-4001620 txt"
+              >v{{ versionNumber }} {{ t('download.log.new') }}</a
+            >
+          </li>
+        </ul>
       </div>
-      <h5 class="logs-h5 mb-16" style="font-weight: 500">
-        {{ $t('download.log.title') }}
-      </h5>
-      <ul class="logs-l-ul logs-l-768">
-        <li v-for="(versionNumber, index) in versionsNumbers" :key="index" :data-id="`section-${index + 1}`"
-          class="l-ul-item" @click="
-            () => {
-              closeLogsDrawer(), handleNavClick(index);
-            }
-          ">
-          <a class="txt-4001620 txt">v{{ versionNumber }} {{ t('download.log.new') }}</a>
-        </li>
-      </ul>
+      <main>
+        <section>
+          <!-- 主内容区 -->
+          <article class="logs">
+            <div class="logs-con">
+              <div class="logs-t-768" @click="openLogsDrawer">
+                <img class="logs-t-prev" src="/img/prev.svg" alt="logs" />
+                <i class="logs-t-tit">{{ $t('download.log.title') }}</i>
+              </div>
+              <div class="logs-layout">
+                <div class="logs-l logs-sticky">
+                  <h5 class="logs-h5 mb-16" style="font-weight: 500">
+                    {{ $t('download.log.title') }}
+                  </h5>
+                  <ul ref="LogsLULRef" class="logs-l-ul logs-l-1920">
+                    <li
+                      v-for="(versionNumber, index) in versionsNumbers"
+                      :key="index"
+                      :data-id="`section-${index + 1}`"
+                      class="l-ul-item"
+                      :class="{ active: index === activeTabIndex }"
+                      @click="handleNavClick(index)"
+                    >
+                      <a class="txt-4001620 txt log-a"
+                        >v{{ versionNumber }} {{ t('download.log.new') }}</a
+                      >
+                    </li>
+                  </ul>
+                  <ul class="logs-l-ul logs-l-768"></ul>
+                </div>
+                <div id="google_translate_element" class="logs-r">
+                  <h1 class="txt-6003645 logs-h1 mb-36">
+                    {{ $t('download.log.headline') }}
+                  </h1>
+                  <ul class="logs-r-ul">
+                    <li
+                      v-for="(updateLog, index) in updateLogs"
+                      :key="index"
+                      class="r-ul-item mb-36"
+                    >
+                      <ol class="logs-r-ol">
+                        <li
+                          :id="`section-${index + 1}`"
+                          class="txt-4001624 r-ol-item mb-24"
+                        >
+                          <h4 class="logs-h4">
+                            v{{ updateLog.versionNumber }}
+                            {{ t('download.log.new') }}
+                          </h4>
+                        </li>
+                        <div
+                          v-for="(
+                            htmlText, itemIndex
+                          ) in updateLog.updatesHtmlText"
+                          :key="itemIndex"
+                          style="display: flex"
+                        >
+                          <i class="dots"></i>
+                          <li class="r-ol-item">{{ htmlText }}</li>
+                        </div>
+                      </ol>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
     </div>
-    <main>
-      <section>
-        <!-- 主内容区 -->
-        <article class="logs">
-          <div class="logs-con">
-            <div class="logs-t-768" @click="openLogsDrawer">
-              <img class="logs-t-prev" src="/img/prev.svg" alt="logs" />
-              <i class="logs-t-tit">{{ $t('download.log.title') }}</i>
-            </div>
-            <div class="logs-layout">
-              <div class="logs-l logs-sticky">
-                <h5 class="logs-h5 mb-16" style="font-weight: 500">
-                  {{ $t('download.log.title') }}
-                </h5>
-                <ul ref="LogsLULRef" class="logs-l-ul logs-l-1920">
-                  <li v-for="(versionNumber, index) in versionsNumbers" :key="index" :data-id="`section-${index + 1}`"
-                    class="l-ul-item" :class="{ active: index === activeTabIndex }" @click="handleNavClick(index)">
-                    <a class="txt-4001620 txt log-a">v{{ versionNumber }} {{ t('download.log.new') }}</a>
-                  </li>
-                </ul>
-                <ul class="logs-l-ul logs-l-768"></ul>
-              </div>
-              <div id="google_translate_element" class="logs-r">
-                <h1 class="txt-6003645 logs-h1 mb-36">
-                  {{ $t('download.log.headline') }}
-                </h1>
-                <ul class="logs-r-ul">
-                  <li v-for="(updateLog, index) in updateLogs" :key="index" class="r-ul-item mb-36">
-                    <ol class="logs-r-ol">
-                      <li :id="`section-${index + 1}`" class="txt-4001624 r-ol-item mb-24">
-                        <h4 class="logs-h4">
-                          v{{ updateLog.versionNumber }}
-                          {{ t('download.log.new') }}
-                        </h4>
-                      </li>
-                      <div v-for="(htmlText, itemIndex) in updateLog.updatesHtmlText" :key="itemIndex"
-                        style="display: flex">
-                        <i class="dots"></i>
-                        <li class="r-ol-item">{{ htmlText }}</li>
-                      </div>
-                    </ol>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </article>
-      </section>
-    </main>
-  </div>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
@@ -87,8 +116,8 @@ definePageMeta({
   layoutClass: 'log-page',
 });
 
-const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl
+const config = useRuntimeConfig();
+const siteUrl = config.public.siteUrl;
 const { t, locale } = useI18n();
 
 const themeStore = useThemeStore();
@@ -145,75 +174,72 @@ const setItem = (key: string, value: string) => {
 };
 
 const renderLogs = (html: string) => {
-  nextTick(() => {
-    // const route = useRoute();
-    // 解析渲染后的 HTML 结构
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
+  // const route = useRoute();
+  // 解析渲染后的 HTML 结构
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
 
-    // 提取所有 <h2>, <h3>, <ul> 标签
-    const h2Tags = Array.from(doc.querySelectorAll('h2')).slice(0, 15); // 只取前 15 个 <h2>
-    const ulTags = Array.from(doc.querySelectorAll('ul')).slice(0, 15); // 只取前 15 个 <ul>
+  // 提取所有 <h2>, <h3>, <ul> 标签
+  const h2Tags = Array.from(doc.querySelectorAll('h2')).slice(0, 15); // 只取前 15 个 <h2>
+  const ulTags = Array.from(doc.querySelectorAll('ul')).slice(0, 15); // 只取前 15 个 <ul>
 
-    // 合并并按出现的顺序排列这些标签
-    const sections: HTMLElement[] = [];
-    const maxLength = Math.max(h2Tags.length, ulTags.length);
+  // 合并并按出现的顺序排列这些标签
+  const sections: HTMLElement[] = [];
+  const maxLength = Math.max(h2Tags.length, ulTags.length);
 
-    for (let i = 0; i < maxLength; i++) {
-      if (i < h2Tags.length) sections.push(h2Tags[i]);
-      if (i < ulTags.length) sections.push(ulTags[i]);
-    }
+  for (let i = 0; i < maxLength; i++) {
+    if (i < h2Tags.length) sections.push(h2Tags[i]);
+    if (i < ulTags.length) sections.push(ulTags[i]);
+  }
 
-    // 提取所有 <h2> 标签中的版本号，并限制最多提取前 15 个版本号
-    const versions: string[] =
-      html.match(/<h2>(.*?)<\/h2>/g)?.slice(0, 15) || [];
-    versionsNumbers.value = versions.map(
-      (str) =>
-        str
-          .replace(/<\/?h2>/g, '')
-          .split('[')[1]
-          ?.split(']')[0],
-    ); // 提取版本号并清理HTML标签
+  // 提取所有 <h2> 标签中的版本号，并限制最多提取前 15 个版本号
+  const versions: string[] = html.match(/<h2>(.*?)<\/h2>/g)?.slice(0, 15) || [];
+  versionsNumbers.value = versions.map(
+    (str) =>
+      str
+        .replace(/<\/?h2>/g, '')
+        .split('[')[1]
+        ?.split(']')[0],
+  ); // 提取版本号并清理HTML标签
 
-    // 渲染右侧日志条目 通过版本号获取更新内容并渲染
-    updateLogs.value = versionsNumbers.value.map((versionNumber) => {
-      const updateText = t('download.log.new'); // 这里直接使用翻译字符串
-      const updatesHtmlText =
-        html
-          .split(versionNumber)[1]
-          .split('<h2>')[0]
-          .match(/<li>(.*?)<\/li>/g)
-          ?.map((str) => str.split('<li>')[1].split('</li>')[0]) || [];
+  // 渲染右侧日志条目 通过版本号获取更新内容并渲染
+  updateLogs.value = versionsNumbers.value.map((versionNumber) => {
+    const updateText = t('download.log.new'); // 这里直接使用翻译字符串
+    const updatesHtmlText =
+      html
+        .split(versionNumber)[1]
+        .split('<h2>')[0]
+        .match(/<li>(.*?)<\/li>/g)
+        ?.map((str) => str.split('<li>')[1].split('</li>')[0]) || [];
 
-      return {
-        versionNumber,
-        updateText,
-        updatesHtmlText,
-      };
-    });
-
-    // 处理从 DownloadLog 跳转的逻辑
-    setTimeout(() => {
-      const storedLogIndex = localStorage.getItem('update_log_num');
-      if (storedLogIndex) {
-        if (storedLogIndex === '-1') {
-          // 滚动到顶部
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          const index = parseInt(storedLogIndex, 10) - 1;
-          if (index >= 0 && index < versionsNumbers.value.length) {
-            // 直接设置活跃版本
-            activeTabIndex.value = index;
-
-            // 滚动到对应版本
-            scrollToSection(index);
-          }
-        }
-        // 清除存储的索引
-        localStorage.removeItem('update_log_num');
-      }
-    }, 100);
+    return {
+      versionNumber,
+      updateText,
+      updatesHtmlText,
+    };
   });
+
+  // 处理从 DownloadLog 跳转的逻辑
+  setTimeout(() => {
+    const storedLogIndex = localStorage.getItem('update_log_num');
+    if (storedLogIndex) {
+      if (storedLogIndex === '-1') {
+        // 滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const index = parseInt(storedLogIndex, 10) - 1;
+        if (index >= 0 && index < versionsNumbers.value.length) {
+          // 直接设置活跃版本
+          activeTabIndex.value = index;
+
+          // 滚动到对应版本
+          scrollToSection(index);
+        }
+      }
+      // 清除存储的索引
+      localStorage.removeItem('update_log_num');
+    }
+  }, 100);
 };
 
 // 获取更新日志数据
@@ -224,10 +250,8 @@ const fetchLogsData = async () => {
       logsData.value = cachedLogs;
       renderLogs(cachedLogs);
     } else {
-      const url = `${siteUrl}/api/system/get/updatelog`
-      const response = await axios.get(
-        url,
-      );
+      const url = `${siteUrl}/api/system/get/updatelog`;
+      const response = await axios.get(url);
       const markdown = response.data.data.updateLog;
       const html = markdownIt().render(markdown);
       setItem('changelog', html);
@@ -253,10 +277,14 @@ const adjustLogPageHeight = () => {
 
     if (adBar && adBar.style.display !== 'none' && logPage) {
       // 如果广告条存在且可见，向下调整 30px
-      logPage.style.marginTop = '150px';
+      if (isMobile.value) {
+        logPage.setAttribute('style', 'margin-top: 120px !important;');
+      } else {
+        logPage.style.marginTop = '150px';
+      }
     } else if (logPage) {
       // 如果广告条不存在或不可见，重置高度
-      logPage.style.marginTop = '90px';
+      logPage.setAttribute('style', 'margin-top: 90px;');
     }
   });
 };
@@ -271,7 +299,9 @@ const adjustStickyNavPosition = () => {
   nextTick(() => {
     if (adBar) {
       const computedStyle = window.getComputedStyle(adBar);
-      const isAdBarVisible = computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
+      const isAdBarVisible =
+        computedStyle.display !== 'none' &&
+        computedStyle.visibility !== 'hidden';
 
       if (isAdBarVisible) {
         const adBarHeight = window.innerWidth <= 768 ? 48 : 64;
@@ -285,7 +315,6 @@ const adjustStickyNavPosition = () => {
     }
   });
 };
-
 
 //公共滚动方法
 const adjustNavBarScroll = (ulElement: HTMLElement, liElement: HTMLElement) => {
@@ -323,10 +352,7 @@ const scrollToSection = (index: number, smooth = true) => {
   }
 };
 
-const safelyExecute = <T,>(
-  element: T | null,
-  callback: (el: T) => void
-) => {
+const safelyExecute = <T,>(element: T | null, callback: (el: T) => void) => {
   if (element) {
     callback(element);
   }
@@ -355,13 +381,13 @@ const scrollHandler = () => {
   const additionalOffset = isAdBarVisible ? 150 : 90;
 
   const sections: HTMLHeadingElement[] = Array.from(
-    document.querySelectorAll('.logs-r-ul li h4')  // 获取所有版本号的标题
+    document.querySelectorAll('.logs-r-ul li h4'), // 获取所有版本号的标题
   );
   const currentScrollPosition = window.scrollY;
 
   // 遍历所有标题元素
   sections.forEach((section, index) => {
-    const sectionTop = section.getBoundingClientRect().top + window.scrollY;  // 获取当前标题的屏幕位置
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY; // 获取当前标题的屏幕位置
 
     // 当标题进入视口范围时
     if (
@@ -400,7 +426,7 @@ const syncLeftNav = () => {
 const saveScrollState = () => {
   const state = {
     scrollPosition: window.scrollY, // 保存右侧滚动位置
-    activeVersion: activeTabIndex.value // 保存左侧导航的版本
+    activeVersion: activeTabIndex.value, // 保存左侧导航的版本
   };
   localStorage.setItem('log_page_state', JSON.stringify(state));
 };
@@ -420,7 +446,7 @@ const restoreScrollState = () => {
       if (scrollPosition !== undefined) {
         window.scrollTo({
           top: scrollPosition,
-          behavior: 'auto'
+          behavior: 'auto',
         });
       }
     });
@@ -429,7 +455,6 @@ const restoreScrollState = () => {
     localStorage.removeItem('log_page_state');
   }
 };
-
 
 // 在组件挂载时设置头部标题
 useHead({
@@ -448,12 +473,18 @@ useHead({
     },
   ],
 });
+const isMobile = ref(false);
+// 检查屏幕尺寸
+const checkMobileView = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
 
 // 生命周期钩子
 onMounted(() => {
+  checkMobileView();
   window.addEventListener('scroll', scrollHandler);
   window.addEventListener('beforeunload', saveScrollState);
-
+  window.addEventListener('resize', checkMobileView);
   //调整左侧导航粘性高度
   adjustStickyNavPosition();
   // 添加高度调整
@@ -468,25 +499,22 @@ onMounted(() => {
   if (adBar) {
     adBarObserver.observe(adBar, {
       attributes: true,
-      attributeFilter: ['style']
+      attributeFilter: ['style'],
     });
   }
-  setTimeout(() => {
-    fetchLogsData().then(() => {
-      adjustStickyNavPosition();
-      syncLeftNav();  // 页面加载完成后同步左侧导航栏的滚动
-      restoreScrollState();
 
-    });
-  }, 100);
-
+  fetchLogsData().then(() => {
+    adjustStickyNavPosition();
+    syncLeftNav(); // 页面加载完成后同步左侧导航栏的滚动
+    restoreScrollState();
+  });
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', scrollHandler);
   window.removeEventListener('beforeunload', saveScrollState);
+  window.removeEventListener('resize', checkMobileView);
 });
-
 </script>
 
 <style>
