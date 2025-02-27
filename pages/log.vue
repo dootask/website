@@ -13,9 +13,7 @@
         {{ $t('download.log.title') }}
       </h5>
       <ul class="logs-l-ul logs-l-768">
-        <li 
-          v-for="(versionNumber, index) in versionsNumbers" 
-          :key="index" :data-id="`section-${index + 1}`"
+        <li v-for="(versionNumber, index) in versionsNumbers" :key="index" :data-id="`section-${index + 1}`"
           class="l-ul-item" @click="
             () => {
               closeLogsDrawer(), handleNavClick(index);
@@ -40,10 +38,7 @@
                   {{ $t('download.log.title') }}
                 </h5>
                 <ul ref="LogsLULRef" class="logs-l-ul logs-l-1920">
-                  <li 
-                    v-for="(versionNumber, index) in versionsNumbers" 
-                    :key="index" 
-                    :data-id="`section-${index + 1}`"
+                  <li v-for="(versionNumber, index) in versionsNumbers" :key="index" :data-id="`section-${index + 1}`"
                     class="l-ul-item" :class="{ active: index === activeTabIndex }" @click="handleNavClick(index)">
                     <a class="txt-4001620 txt log-a">v{{ versionNumber }} {{ t('download.log.new') }}</a>
                   </li>
@@ -63,9 +58,7 @@
                           {{ t('download.log.new') }}
                         </h4>
                       </li>
-                      <div 
-                        v-for="(htmlText, itemIndex) in updateLog.updatesHtmlText" 
-                        :key="itemIndex" 
+                      <div v-for="(htmlText, itemIndex) in updateLog.updatesHtmlText" :key="itemIndex"
                         style="display: flex">
                         <i class="dots"></i>
                         <li class="r-ol-item">{{ htmlText }}</li>
@@ -151,30 +144,9 @@ const setItem = (key: string, value: string) => {
   localStorage.setItem(key, JSON.stringify(record));
 };
 
-// 移除 scrollToActiveVersion 中的版本号相关逻辑
-const scrollToActiveVersion = () => {
-  if (activeTabIndex.value >= 0) {
-    setTimeout(() => {
-      const targetElement = document.querySelector(
-        `.logs-r-ul li:nth-child(${activeTabIndex.value + 1}) h4`,
-      );
-      if (targetElement) {
-        const offset = 90; // 上偏移量，避免标题被遮挡
-        const targetPosition =
-          targetElement.getBoundingClientRect().top + window.scrollY;
-
-        window.scrollTo({
-          top: targetPosition - offset,
-          behavior: 'smooth',
-        });
-      }
-    }, 300);
-  }
-};
-
 const renderLogs = (html: string) => {
   nextTick(() => {
-    const route = useRoute();
+    // const route = useRoute();
     // 解析渲染后的 HTML 结构
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
@@ -203,8 +175,7 @@ const renderLogs = (html: string) => {
           ?.split(']')[0],
     ); // 提取版本号并清理HTML标签
 
-    // 渲染右侧日志条目
-    // 通过版本号获取更新内容并渲染
+    // 渲染右侧日志条目 通过版本号获取更新内容并渲染
     updateLogs.value = versionsNumbers.value.map((versionNumber) => {
       const updateText = t('download.log.new'); // 这里直接使用翻译字符串
       const updatesHtmlText =
@@ -220,18 +191,28 @@ const renderLogs = (html: string) => {
         updatesHtmlText,
       };
     });
-    // setTimeout保障解决时序问题
+
+    // 处理从 DownloadLog 跳转的逻辑
     setTimeout(() => {
-      if (route.query.from === 'version_specific') {
-        scrollToActiveVersion();
-      } else if (route.query.from === 'moreLogs') {
-        // 明确地将滚动位置设置为顶部
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+      const storedLogIndex = localStorage.getItem('update_log_num');
+      if (storedLogIndex) {
+        if (storedLogIndex === '-1') {
+          // 滚动到顶部
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const index = parseInt(storedLogIndex, 10) - 1;
+          if (index >= 0 && index < versionsNumbers.value.length) {
+            // 直接设置活跃版本
+            activeTabIndex.value = index;
+
+            // 滚动到对应版本
+            scrollToSection(index);
+          }
+        }
+        // 清除存储的索引
+        localStorage.removeItem('update_log_num');
       }
-    }, 200);
+    }, 100);
   });
 };
 
@@ -264,6 +245,49 @@ const fetchLogsData = async () => {
   }
 };
 
+// 获取是否存在广告条
+const adjustLogPageHeight = () => {
+  nextTick(() => {
+    const adBar = document.getElementById('ad');
+    const logPage = document.querySelector('.logs') as HTMLElement;
+
+    if (adBar && adBar.style.display !== 'none' && logPage) {
+      // 如果广告条存在且可见，向下调整 30px
+      logPage.style.marginTop = '150px';
+    } else if (logPage) {
+      // 如果广告条不存在或不可见，重置高度
+      logPage.style.marginTop = '90px';
+    }
+  });
+};
+
+const adjustStickyNavPosition = () => {
+  const adBar = document.getElementById('ad');
+  const logsStickyEl = document.querySelector('.logs-sticky') as HTMLElement;
+
+  if (!logsStickyEl) return;
+
+  // 延迟检测，确保DOM完全渲染
+  nextTick(() => {
+    if (adBar) {
+      const computedStyle = window.getComputedStyle(adBar);
+      const isAdBarVisible = computedStyle.display !== 'none' && computedStyle.visibility !== 'hidden';
+
+      if (isAdBarVisible) {
+        const adBarHeight = window.innerWidth <= 768 ? 48 : 64;
+        logsStickyEl.style.top = `${80 + adBarHeight}px`;
+      } else {
+        logsStickyEl.style.top = '80px';
+      }
+    } else {
+      // 如果没有找到广告条，保持默认位置
+      logsStickyEl.style.top = '80px';
+    }
+  });
+};
+
+
+//公共滚动方法
 const adjustNavBarScroll = (ulElement: HTMLElement, liElement: HTMLElement) => {
   const liTop = liElement.offsetTop;
   const liHeight = liElement.offsetHeight;
@@ -277,22 +301,27 @@ const adjustNavBarScroll = (ulElement: HTMLElement, liElement: HTMLElement) => {
   }
 };
 
+//统一滚动和高亮逻辑
 const scrollToSection = (index: number, smooth = true) => {
   const id = `section-${index + 1}`;
   const content = document.getElementById(id);
 
   if (content) {
-    const offset = 90; // 上偏移量
+    // const offset = 90; // 上偏移量
+    const adBar = document.getElementById('ad');
+    const isAdBarVisible = adBar && adBar.style.display !== 'none';
+
+    // 根据广告条是否存在调整额外偏移量
+    const additionalOffset = isAdBarVisible ? 150 : 90; // 增加额外的偏移量
     const targetPosition = content.getBoundingClientRect().top + window.scrollY;
 
     // 滚动到目标位置，并考虑上偏移量
     window.scrollTo({
-      top: targetPosition - offset,
+      top: targetPosition - additionalOffset,
       behavior: smooth ? 'smooth' : 'auto',
     });
   }
 };
-
 
 const safelyExecute = <T,>(
   element: T | null,
@@ -315,11 +344,16 @@ const handleNavClick = (index: number) => {
       adjustNavBarScroll(ulElement, li);
     });
   });
-
 };
 
 // 监听滚动，更新导航高亮
 const scrollHandler = () => {
+  const adBar = document.getElementById('ad');
+  const isAdBarVisible = adBar && adBar.style.display !== 'none';
+
+  // 根据广告条是否存在调整额外偏移量
+  const additionalOffset = isAdBarVisible ? 150 : 90;
+
   const sections: HTMLHeadingElement[] = Array.from(
     document.querySelectorAll('.logs-r-ul li h4')  // 获取所有版本号的标题
   );
@@ -330,7 +364,10 @@ const scrollHandler = () => {
     const sectionTop = section.getBoundingClientRect().top + window.scrollY;  // 获取当前标题的屏幕位置
 
     // 当标题进入视口范围时
-    if (sectionTop <= currentScrollPosition + 100 && sectionTop > currentScrollPosition - 100) {
+    if (
+      sectionTop <= currentScrollPosition + additionalOffset &&
+      sectionTop > currentScrollPosition - additionalOffset
+    ) {
       activeTabIndex.value = index;
 
       safelyExecute(LogsLULRef.value, (ulElement) => {
@@ -339,10 +376,8 @@ const scrollHandler = () => {
           adjustNavBarScroll(ulElement, li);
         });
       });
-
     }
   });
-
 };
 
 // 在页面加载时同步左侧导航栏的位置
@@ -350,16 +385,49 @@ const syncLeftNav = () => {
   // 使用 safelyExecute 处理 activeTabIndex 可能为 null 的情况
   safelyExecute(activeTabIndex.value, (index) => {
     safelyExecute(LogsLULRef.value, (ulElement) => {
-      // 检查索引是否在子元素范围内
       if (ulElement.children && ulElement.children.length > index) {
         const liElement = ulElement.children[index] as HTMLElement;
-        
+
         safelyExecute(liElement, (li) => {
           adjustNavBarScroll(ulElement, li);
         });
       }
     });
   });
+};
+
+//实现左导航滚动位置和版本的保存与恢复
+const saveScrollState = () => {
+  const state = {
+    scrollPosition: window.scrollY, // 保存右侧滚动位置
+    activeVersion: activeTabIndex.value // 保存左侧导航的版本
+  };
+  localStorage.setItem('log_page_state', JSON.stringify(state));
+};
+
+const restoreScrollState = () => {
+  const savedState = localStorage.getItem('log_page_state');
+  if (savedState) {
+    const { scrollPosition, activeVersion } = JSON.parse(savedState);
+
+    // 恢复活跃版本
+    if (activeVersion !== undefined && activeVersion !== null) {
+      activeTabIndex.value = activeVersion;
+    }
+
+    // 延迟滚动，确保 DOM 渲染完成
+    nextTick(() => {
+      if (scrollPosition !== undefined) {
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'auto'
+        });
+      }
+    });
+
+    // 清除保存的状态，防止重复使用
+    localStorage.removeItem('log_page_state');
+  }
 };
 
 
@@ -383,36 +451,40 @@ useHead({
 
 // 生命周期钩子
 onMounted(() => {
-
   window.addEventListener('scroll', scrollHandler);
+  window.addEventListener('beforeunload', saveScrollState);
 
-  const route = useRoute();
-  const storedLogIndex = localStorage.getItem('update_log_num');
+  //调整左侧导航粘性高度
+  adjustStickyNavPosition();
+  // 添加高度调整
+  adjustLogPageHeight();
 
-  if (storedLogIndex) {
-    if (storedLogIndex === '-1') {
-      // 从"更多日志"进入，确保滚动到顶部
-      route.query.from = 'moreLogs';
-    } else {
-      // 转换为数字并减1（因为数组索引从0开始）
-      activeTabIndex.value = parseInt(storedLogIndex, 10) - 1;
-      route.query.from = 'version_specific';
-    }
-    // 清除 localStorage 中的记录，防止重复使用
-    localStorage.removeItem('update_log_num');
+  const adBarObserver = new MutationObserver(() => {
+    adjustStickyNavPosition();
+    adjustLogPageHeight();
+  });
+  const adBar = document.getElementById('ad');
+
+  if (adBar) {
+    adBarObserver.observe(adBar, {
+      attributes: true,
+      attributeFilter: ['style']
+    });
   }
-
   setTimeout(() => {
     fetchLogsData().then(() => {
+      adjustStickyNavPosition();
       syncLeftNav();  // 页面加载完成后同步左侧导航栏的滚动
+      restoreScrollState();
+
     });
   }, 100);
 
-  window.addEventListener('scroll', scrollHandler);
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', scrollHandler);
+  window.removeEventListener('beforeunload', saveScrollState);
 });
 
 </script>
