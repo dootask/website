@@ -274,6 +274,15 @@
         <li class="drawer-item">
           <a
             class="txt-4001620 txt"
+            href="https://github.com/kuaifan/dootask"
+            target="_blank"
+            @click="closeDrawer"
+            >GitHub</a
+          >
+        </li>
+        <li class="drawer-item">
+          <a
+            class="txt-4001620 txt"
             :href="`${siteUrl}/manage/dashboard`"
             @click="closeDrawer"
             >{{ $t('common.try_now') }}</a
