@@ -81,7 +81,7 @@
                       @click="
                         openInNewTab('https://github.com/kuaifan/dootask')
                       "
-                      >Github</i
+                      >GitHub</i
                     >
                   </div>
                   <div class="footer-ol-item mb-16">
