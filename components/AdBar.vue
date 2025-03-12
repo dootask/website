@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
 import '@/assets/scss/ad.scss';
-import { fetchData, handleError } from '../utils/fetch';
+import { fetchData } from '../utils/fetch';
 import type { BannerBarResponse, BannerBarAttributes } from '../types/ad'
 const { locale } = useI18n();
 
