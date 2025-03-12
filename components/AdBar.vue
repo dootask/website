@@ -86,7 +86,7 @@ const fetchAdBar = (language: string) => {
     .then(({ data: { attributes } }) => {
       updateAdBar(attributes);
     })
-    .catch(handleError);
+    .catch((_error) => {});
 };
 
 // 更新广告栏内容
