@@ -97,6 +97,34 @@
             </template>
 
             <template v-else-if="platform.id === 'windows'">
+              <div class="normal">
+                <img
+                  class="icon mb-8"
+                  :src="platform.icon"
+                  :alt="platform.name"
+                />
+                <i class="txt-4001624 txt">{{ platform.name }}</i>
+              </div>
+              <div class="hover radius">
+                <button
+                  v-for="(normal, normalIndex) in platform.normalLinks"
+                  :key="normalIndex"
+                  class="btn btn-green mb-12 btn-padding"
+                  style="width: 70%"
+                >
+                  <a
+                    class="chips-txt txt-4001418"
+                    :href="normal.link"
+                    target="_blank"
+                  >
+                    {{ normal.name }}
+                  </a>
+                </button>
+              </div>
+            </template>
+
+
+            <!-- <template v-else-if="platform.id === 'windows'">
               <p class="normal">
                 <img
                   class="icon mb-8"
@@ -117,7 +145,7 @@
                 />
                 <i class="txt-4001624 txt">{{ $t('download.load') }}</i>
               </a>
-            </template>
+            </template> -->
           </li>
         </ul>
         <a
@@ -173,8 +201,16 @@ const platforms = ref([
     id: 'windows',
     name: 'Windows',
     icon: '/img/dow_window.svg',
-    normalLink:
-      `${siteUrl}/desktop/publish/latest?platform=win&arch=x64`,
+    normalLinks: [
+      {
+        name: 'ARM64',
+        link: `${siteUrl}/desktop/publish/latest?platform=win&arch=arm64`,
+      },
+      {
+        name: 'X64',
+        link: `${siteUrl}/desktop/publish/latest?platform=win&arch=x64`,
+      },
+    ],
   },
 ]);
 

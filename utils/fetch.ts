@@ -20,7 +20,7 @@ export const getStyle = (style: Record<string, string>) => {
   return styleObject;
 };
 
-export const getMediaUrl = (media: {data: MediaData | null}) => {
+export const getMediaUrl = (media: { data: MediaData | null }) => {
   if (!media?.data?.attributes?.url) {
     return '';
   }
