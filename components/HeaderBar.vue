@@ -138,7 +138,7 @@
           </a>
           <i class="line-1"></i>
           <span class="get-started">
-            <a :href="`${siteUrl}/manage/dashboard`">
+            <a :href="`${siteUrl}/manage/dashboard`" target="_blank">
               <button class="btn btn-primary">
                 {{ $t('common.try_now') }}
               </button>
@@ -284,6 +284,7 @@
           <a
             class="txt-4001620 txt"
             :href="`${siteUrl}/manage/dashboard`"
+            target="_blank"
             @click="closeDrawer"
             >{{ $t('common.try_now') }}</a
           >
