@@ -11,7 +11,7 @@ on:
       branch: 
         description: 'branch (e.g., release)'
         required: true
-        default: 'nuxt-pages'
+        default: 'pages'
 
 env:
   # Use docker.io for Docker Hub if empty
