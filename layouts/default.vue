@@ -12,6 +12,7 @@
         <SuloTopics v-else-if="topicsName === 'solution'" />
         <DownloadPart v-else-if="topicsName === 'download'" />
         <AboutIntro v-else-if="topicsName === 'about'" />
+        <AITopics v-else-if="topicsName === 'ai'" />
       </template>
     </HeaderBar>
     <!-- <ClientOnly> -->

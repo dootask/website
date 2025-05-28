@@ -18,6 +18,7 @@
     "product": "Product",
     "solution": "Solutions",
     "pricing": "Pricing",
+    "appstore": "App Store",
     "about_us": "About Us",
     "support": "Support",
     "download": "Download Center",
@@ -179,6 +180,84 @@
       "digtitle_fir_four": "",
       "digtitle_sec_four": "Personalized service",
       "digdesc_four": "Users can customize performance appraisal indicators and report content and analysis according to their own needs and business processes to better match the actual work needs of team members and the specific business situation of the company."
+    }
+  },
+  "ai": {
+    "headtitle": "AI - DooTask",
+    "title": " DooTask AI：Opening the era of intelligent office ",
+    "desc": "Integrates AI task management, smart docs, and automated workflows. Enhances projects and decisions – making work smarter & simpler.",
+    "task": {
+      "title": "Automated generation of tasks",
+      "desc_one": "A key ",
+      "desc_two": "AI robot, enjoy intelligent and efficient office experience.",
+      "title01": "Summon AI within the chat",
+      "desc01": "Click ‘",
+      "desc011": "Bot’, describe your request and AI will analyze your project content, automatically extract key information, and remind you to supplement missing details.",
+      "title02": "Auto-generate Task List",
+      "desc02": "AI automatically generates a task list based on the content to ensure that each task is clear. After generation, click 'Confirm' and AI will add the task to the project task bar to help you manage your work efficiently.",
+       "title03": "Type 'Bye' to exit",
+      "desc03": "Type 'Goodbye' or 'Stop' to instantly end the chat with the AI, ensuring seamless and effortless interaction."
+    },
+    "file":{
+        "title":"File Parsing",
+        "desc":" AI analyzes and condenses data into key insights, saving you time on manual processing.",
+        "slide":{
+          "wordtitle":"Microsoft Word",
+          "worddesc":"Documentation simplifies text processing to create reports, letters, academic papers, and more.",
+          "ppttitle":"Microsoft PowerPoint",
+          "pptdesc":"Create dynamic slide shows to support business presentations, professional reports and more.",
+          "exceltitle":"Microsoft Excel",
+          "exceldesc":"A spreadsheet application for efficient data analysis and spreadsheet management.",
+          "pdftitle":"Portable Document Format",
+          "pdfdesc":"A file format for presenting documents, independent of the device and operating system",
+          "rtftitle":"Rich Text Format (RTF)",
+          "rtfdesc":"A cross-platform text format used to preserve formatted text.",
+          "txttitle":"TXT",
+          "txtdesc":"A plain text file, typically used to store simple unformatted text.",
+          "htmltitle":"Hypertext Markup Language (HTML)",
+          "htmldesc":"A markup language used to create web pages."
+        }
+    },
+    "weekly":{
+          "title":"Weekly Report Analysis​",
+          "desc":" Let AI be your work review assistant! Immediately '%'select your weekly report file and experience the convenience and efficiency of intelligent analysis. ",
+          "subdesc01":"Usage Scenarios - Group or Bot Dialogue",
+          "subdesc02":"Usage - enter ‘%’ to select the weekly report to be analysed",
+          "subdesc03":"Analysing results - giving a detailed assessment",
+          "subdesc04":"Risk Insights - Automated Detection of Hidden Risk Factors​"
+    },
+    "multi":{
+      "title":"Multi-threaded Communication",
+      "desc":"Open a new era of intelligent dialogue management! Immediately experience the AI Multi-Conversation feature to make your communication more efficient and precise. ",
+      "card":{
+        "title01":"Model Selection",
+        "desc01":"Multiple AI models are available to meet your needs for a variety of application scenarios.",
+        "title02":"Open a new session",
+        "desc02":"Instantly start discussions and easily parallelise multiple threads",
+        "title03":"History Session",
+        "desc03":"Conveniently view the history of dialogue records, important content at any time to review"
+      }
+    },
+    "richselect":{
+      "title":"DooTask offers users a rich selection of AI options",
+      "sub01":"ChatGPT",
+      "desc01":"Expert in natural language processing and dialogue generation for scenarios such as team communication, customer support and copywriting.",
+      "sub02":"DeepSeek",
+      "desc02":"Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
+      "sub03":"Grok",
+      "desc03":"Grok AI: Quote tasks/questions in DooTask chats for instant expert solutions.",
+      "sub04":"Ollama",
+      "desc04":"Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
+      "sub05":"Claude",
+      "desc05":"Deep learning-driven text analysis/generation to streamline content workflows and document handling.",
+      "sub06":"Gemini",
+      "desc06":"Multimodal data processing and cross-domain AI for smarter project automation.",
+      "sub07":"Zhipu Qingyan",
+      "desc07":"AI-driven voice and conversational tools for enterprise customer service optimization.",
+      "sub08":"Tongyi Qianwen",
+      "desc08":"AI-powered knowledge Q&A: Combines knowledge graphs and reasoning for accurate solutions.",
+      "sub09":"ERNIE Bot",
+      "desc09":"AI-powered creative writing tools for reports and content generation."
     }
   },
   "solution": {
@@ -354,6 +433,7 @@
     "product": "Product",
     "solution": "Solutions",
     "pricing": "Pricing",
+    "appstore": "App Store",
     "about": "About Us",
     "support": "Support",
     "download": "Download Center",

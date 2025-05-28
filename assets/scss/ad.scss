@@ -490,6 +490,23 @@
     }
   }
 
+  @media screen and (max-width: 480px){
+    header .ad .ad-content .ad-content-left .ad-text {
+      font-size: 16px;
+      line-height: 1.3;
+      text-align: left;
+    }
+
+    header .ad .ad-content .ad-content-left{
+      justify-content: space-between;
+    }
+
+    header .ad .ad-content .ad-close{
+      width:24px;
+      height: 24px;
+    }
+  }
+
   .ad-dialog {
     position: fixed;
     z-index: 10000;
