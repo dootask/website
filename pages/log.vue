@@ -194,24 +194,24 @@ const renderLogs = (html: string) => {
 
   // 提取所有 <h2> 标签中的版本号，并限制最多提取前 15 个版本号
   const versions: string[] = html.match(/<h2>(.*?)<\/h2>/g)?.slice(0, 15) || [];
+  
   versionsNumbers.value = versions.map(
     (str) =>
       str
-        .replace(/<\/?h2>/g, '')
-        .split('[')[1]
-        ?.split(']')[0],
+        .replace(/<\/?h2>/g, ''),
   ); // 提取版本号并清理HTML标签
-
+  
   // 渲染右侧日志条目 通过版本号获取更新内容并渲染
   updateLogs.value = versionsNumbers.value.map((versionNumber) => {
     const updateText = t('download.log.new'); // 这里直接使用翻译字符串
+    
     const updatesHtmlText =
       html
         .split(versionNumber)[1]
         .split('<h2>')[0]
         .match(/<li>(.*?)<\/li>/g)
         ?.map((str) => str.split('<li>')[1].split('</li>')[0]) || [];
-
+    
     return {
       versionNumber,
       updateText,

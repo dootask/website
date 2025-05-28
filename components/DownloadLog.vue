@@ -102,7 +102,7 @@ const fetchReleases = async () => {
     const url = `${siteUrl}/api/system/get/updatelog`;
     const response = await axios.get(url);
     const changelog = response.data.data.updateLog;
-    const regex = /## \[(.*?)\]\n([\s\S]*?)(?=\n\n## \[|$)/g;
+    const regex = /## (.*?)\n([\s\S]*?)(?=\n\n## |$)/g;
 
     let match;
     const versions = [];
