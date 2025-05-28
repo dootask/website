@@ -7,7 +7,9 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  plugins: [],
+  nitro: {
+    plugins: ['~/server/plugins/playwright.server.ts'],
+  },
   css: ['~/assets/scss/theme.scss'],
   app: {
     head: {

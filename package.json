@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "generate-playwright": "ENABLE_PLAYWRIGHT=true nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier --write .",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^0.7.5",
     "eslint": "^9.18.0",
+    "playwright": "^1.52.0",
     "prettier": "^3.4.2",
     "sass": "^1.83.4"
   }
