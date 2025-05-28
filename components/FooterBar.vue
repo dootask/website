@@ -22,6 +22,9 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item mb-16">
+                  <NuxtLink class="txt-4001624 txt" :to="`/${locale}/ai`">AI</NuxtLink>
+                </li>
+                <li class="footer-ol-item mb-16">
                   <NuxtLink class="txt-4001624 txt" :to="`/${locale}/solutions`">{{
                     $t('footer.solution')
                   }}</NuxtLink>
@@ -32,9 +35,12 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item">
-                  <NuxtLink class="txt-4001624 txt" :to="`/${locale}/about`">{{
-                    $t('footer.about')
-                  }}</NuxtLink>
+                  <a
+                    class="txt-4001624 txt external-link-icon"
+                    href="https://appstore.dootask.com/"
+                    target="_blank"
+                    >{{ $t('footer.appstore') }}</a
+                  >
                 </li>
               </ol>
             </li>
@@ -59,13 +65,20 @@
                     >{{ $t('footer.privacy') }}</NuxtLink
                   >
                 </li>
-                <li class="footer-ol-item">
+                <li class="footer-ol-item mb-16">
                   <a
                     class="txt-4001624 txt external-link-icon"
                     :href="`${siteUrl}/docs/index.html`"
                     target="_blank"
                     >{{ $t('footer.api_docs') }}</a
                   >
+                </li>
+                <li class="footer-ol-item">
+                  <NuxtLink 
+                  class="txt-4001624 txt"
+                  :to="`/${locale}/about`">
+                  {{ $t('footer.about')}}
+                </NuxtLink>
                 </li>
               </ol>
             </li>

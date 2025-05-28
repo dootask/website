@@ -29,6 +29,16 @@
           <li class="nav-ul-item">
             <NuxtLink
               class="txt-4001620 txt nav-solutions"
+              :to="`/${locale}/ai`"
+              :style="
+                route.path.startsWith(`/${locale}/ai`) ? getTabStyles() : {}
+              "
+              >AI</NuxtLink
+            >
+          </li>
+          <li class="nav-ul-item">
+            <NuxtLink
+              class="txt-4001620 txt nav-solutions"
               :to="`/${locale}/solutions`"
               :style="
                 route.path.startsWith(`/${locale}/solutions`)
@@ -87,13 +97,12 @@
             >
           </li>
           <li class="nav-ul-item">
-            <NuxtLink
+            <a
               class="txt-4001620 txt nav-about"
-              :to="`/${locale}/about`"
-              :style="
-                route.path.startsWith(`/${locale}/about`) ? getTabStyles() : {}
-              "
-              >{{ $t('navigation.about_us') }}</NuxtLink
+              href="https://appstore.dootask.com/"
+              target="_blank"
+              
+              >{{ $t('navigation.appstore') }}</a
             >
           </li>
         </ul>
@@ -172,7 +181,7 @@
       <ul class="drawer-ul">
         <li class="drawer-item-t mb-16">
           <div
-            v-for="(item, index) in mainMenuItems.slice(0, 2)"
+            v-for="(item, index) in mainMenuItems.slice(0, 3)"
             :key="index"
             class="drawer-item"
           >
@@ -209,7 +218,7 @@
             </div>
           </ol>
           <div
-            v-for="(item, index) in mainMenuItems.slice(2, 5)"
+            v-for="(item, index) in mainMenuItems.slice(3, 5)"
             :key="index"
             class="drawer-item"
           >
@@ -422,23 +431,29 @@ const isDrawerVisible = ref(false);
 const localizedRoutes = computed(() => ({
   product: `/${locale.value}/product`,
   solutions: `/${locale.value}/solutions`,
+  ai: `/${locale.value}/ai`,
   pricing: `/${locale.value}/price`,
   about: `/${locale.value}/about`,
   download: `/${locale.value}/download`,
   // help: `/${locale.value}/help`,
   privacy: `/${locale.value}/privacy`,
+  appstore: "https://appstore.dootask.com/",
 }));
 
 // 菜单项数据
 const mainMenuItems = computed(() => [
   { text: t('navigation.product'), link: localizedRoutes.value.product },
+  { text: 'AI', link: localizedRoutes.value.ai },
   { text: t('navigation.solution'), link: localizedRoutes.value.solutions },
   { text: t('navigation.pricing'), link: localizedRoutes.value.pricing },
-  { text: t('navigation.about_us'), link: localizedRoutes.value.about },
+  { text: t('navigation.appstore'), link: localizedRoutes.value.appstore },
 ]);
 
 const supportItems = computed(() => [
-  { text: t('navigation.download'), link: localizedRoutes.value.download },
+  { 
+    text: t('navigation.download'), 
+    link: localizedRoutes.value.download,
+  },
   {
     text: t('navigation.help_center'),
     link: `${siteUrl}/help/basic/quick-start`,
@@ -454,6 +469,12 @@ const supportItems = computed(() => [
     link: `${siteUrl}/docs/index.html`,
     target: '_blank',
   },
+  {
+    text: t('navigation.about_us'),
+    link: localizedRoutes.value.about,
+    // target: '_blank',
+  },
+
 ]);
 
 const themeItems = computed(() => [

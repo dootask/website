@@ -9,7 +9,7 @@
       <div
         class="section-description animate__animated animate__fadeInDown animate__fast animate__delay-1s"
       >
-        <span id="ad-intro-description"> &nbsp; </span>
+        <!-- <span id="ad-intro-description"> &nbsp; </span> -->
       </div>
       <div id="ad-intro-content" class="section-content">
         <div class="ad-intro-item">

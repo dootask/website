@@ -14,6 +14,7 @@
   --bg-9-url: url(/img/light/bg9.png);
   --bg-10-url: url(/img/light/bg10.png);
   --bg-11-url: url(/img/light/bg11.png);
+  --bg-12-url: url(/img/light/bg12.png);
   --bg-768-3-url: url(/img/light/bg3_768.png);
   --bg-768-4-url: url(/img/light/bg4_768.png);
   --bg-768-5-url: url(/img/light/bg5_768.png);
@@ -38,6 +39,13 @@
   --bg-292c2f-color: #fff;
   --pop-box-shadow: 0px 0px 8px #f3f2f5;
   --code-bg-color: #000;
+  --bg-word-color:#EFF8FF;
+  --bg-ppt-color:#FFF1ED;
+  --bg-excel-color:#E4FFF3;
+  --bg-pdf-color:#FFF1F1;
+  --bg-rtf-color:#E1F9F3;
+  --bg-txt-color:#E8F7FF;
+  --bg-html-color:#F0EFFF;
 }
 
 :root[data-theme='dark'] {
@@ -56,6 +64,7 @@
   --bg-9-url: url(/img/dark/bg9.png);
   --bg-10-url: url(/img/dark/bg10.png);
   --bg-11-url: url(/img/dark/bg11.png);
+  --bg-12-url: url(/img/dark/bg12.png);
   --bg-768-3-url: url(/img/dark/bg3_768.png);
   --bg-768-4-url: url(/img/dark/bg4_768.png);
   --bg-768-5-url: url(/img/dark/bg5_768.png);
@@ -80,4 +89,11 @@
   --bg-292c2f-color: #292c2f;
   --pop-box-shadow: 0px 4px 16px 8px rgba(0, 0, 0, 0.12);
   --code-bg-color: #2e3533;
+  --bg-word-color:#3282BA33;
+  --bg-ppt-color:#CC735633;
+  --bg-excel-color:#26915F33;
+  --bg-pdf-color:#E04A4D33;
+  --bg-rtf-color:#3F998433;
+  --bg-txt-color:#129FE633;
+  --bg-html-color:#8C86B333;
 }
