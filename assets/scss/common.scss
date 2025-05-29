@@ -796,26 +796,32 @@ img {
 }
 
 .nav-ul-item .txt {
-  padding: 7px 8px;
+  padding: 12px 16px;
   color: var(--txt-gray-color);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .nav-ul-item .txt:hover {
   background-color: var(--bg-hover-color);
   border-radius: 6px;
   color: var(--text-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .nav-ul-item .support-active {
   background-color: var(--bg-hover-color);
   border-radius: 6px;
   color: var(--text-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .submenu-pop {
   position: absolute;
-  top: 40px;
-  left: -38px;
+  top: 52px;
+  left: -13px;
   display: none;
   background-color: var(--pop-bg-color);
   border: 1px solid var(--box-shadow-color);
@@ -829,6 +835,7 @@ img {
 
 .submenu-pop .submenu-pop-item {
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .submenu-pop .submenu-pop-item .txt-sub {
@@ -839,6 +846,7 @@ img {
 
 .submenu-pop .submenu-pop-item:hover {
   background-color: var(--bg-hover-color);
+  transform: translateY(-1px);
 }
 
 .submenu-pop .submenu-pop-item:hover .txt-sub {
@@ -885,7 +893,7 @@ img {
 
 .lang-pop {
   position: absolute;
-  top: 40px;
+  top: 52px;
   left: -38px;
   display: none;
   background-color: var(--pop-bg-color);
@@ -904,11 +912,12 @@ img {
 .lang-pop .lang-pop-item {
   padding: 9px 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .lang-pop .lang-pop-item .lang-txt {
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   color: var(--txt-gray-color);
   display: inline-block;
@@ -916,6 +925,7 @@ img {
 
 .lang-pop .lang-pop-item:hover {
   background-color: var(--bg-hover-color);
+  transform: translateY(-1px);
 }
 
 .lang-pop .lang-pop-item:hover .lang-txt {
@@ -1321,3 +1331,20 @@ footer {
     mask-image: var(--icon);
   // }
 }
+
+.nav-appstore {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 1100px) {
+  .nav-appstore {
+    max-width: 50%;
+  }
+}
+
+

@@ -18,21 +18,15 @@
             <NuxtLink
               class="txt-4001620 txt nav-product"
               :to="`/${locale}/product`"
-              :style="
-                route.path.startsWith(`/${locale}/product`)
-                  ? getTabStyles()
-                  : {}
-              "
+              :class="{ 'support-active': isActiveRoute('/product') }"
               >{{ $t('navigation.product') }}</NuxtLink
             >
           </li>
           <li class="nav-ul-item">
             <NuxtLink
-              class="txt-4001620 txt nav-solutions"
+              class="txt-4001620 txt nav-ai"
               :to="`/${locale}/ai`"
-              :style="
-                route.path.startsWith(`/${locale}/ai`) ? getTabStyles() : {}
-              "
+              :class="{ 'support-active': isActiveRoute('/ai') }"
               >AI</NuxtLink
             >
           </li>
@@ -40,11 +34,7 @@
             <NuxtLink
               class="txt-4001620 txt nav-solutions"
               :to="`/${locale}/solutions`"
-              :style="
-                route.path.startsWith(`/${locale}/solutions`)
-                  ? getTabStyles()
-                  : {}
-              "
+              :class="{ 'support-active': isActiveRoute('/solutions') }"
               >{{ $t('navigation.solution') }}</NuxtLink
             >
           </li>
@@ -90,18 +80,15 @@
             <NuxtLink
               class="txt-4001620 txt nav-price"
               :to="`/${locale}/price`"
-              :style="
-                route.path.startsWith(`/${locale}/price`) ? getTabStyles() : {}
-              "
+              :class="{ 'support-active': isActiveRoute('/price') }"
               >{{ $t('navigation.pricing') }}</NuxtLink
             >
           </li>
           <li class="nav-ul-item">
             <a
-              class="txt-4001620 txt nav-about"
+              class="txt-4001620 txt nav-appstore"
               href="https://appstore.dootask.com/"
               target="_blank"
-              
               >{{ $t('navigation.appstore') }}</a
             >
           </li>
@@ -517,5 +504,10 @@ const expandMenuHandle = (val: string) => {
 const handleSetLocale = (newLocale: 'zh' | 'en') => {
   switchLanguage(newLocale);
   isLangPopVisisble.value = false;
+};
+
+// 判断当前路由是否激活
+const isActiveRoute = (path: string) => {
+  return route.path.includes(path);
 };
 </script>
