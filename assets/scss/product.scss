@@ -80,6 +80,16 @@
   .prooduct-list .next {
     margin-left: 16px;
   }
+  @media (max-width: 768px) {
+    .prooduct-list .prev img {
+      height: 30px;
+    }
+    .prooduct-list .next img{
+      height: 30px;
+    }
+    
+  }
+ 
   /* .active .txt {
   color: var(--text-color) !important;
 } */

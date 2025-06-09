@@ -15,6 +15,7 @@
   --bg-10-url: url(/img/light/bg10.png);
   --bg-11-url: url(/img/light/bg11.png);
   --bg-12-url: url(/img/light/bg12.png);
+  --bg-13-url: url(/img/light/bg13.png);
   --bg-768-3-url: url(/img/light/bg3_768.png);
   --bg-768-4-url: url(/img/light/bg4_768.png);
   --bg-768-5-url: url(/img/light/bg5_768.png);
@@ -46,6 +47,13 @@
   --bg-rtf-color:#E1F9F3;
   --bg-txt-color:#E8F7FF;
   --bg-html-color:#F0EFFF;
+  --bg-popular-color:#ffffffd9;
+  --bg-popular-inner-color:#f6fef7;
+  --bg-devtxt-color:#727570;
+  --bg-devhr-color:#f1f5f9;
+  --bg-user-color:linear-gradient(90deg, #e0f2fe 0%, #f6fef7 100%);
+  --bg-favs-color:linear-gradient(90deg, #fef9c3 0%, #f6fef7 100%);
+  --bg-rating-color:linear-gradient(90deg, #fee2e2 0%, #f6fef7 100%);
 }
 
 :root[data-theme='dark'] {
@@ -65,6 +73,7 @@
   --bg-10-url: url(/img/dark/bg10.png);
   --bg-11-url: url(/img/dark/bg11.png);
   --bg-12-url: url(/img/dark/bg12.png);
+  --bg-13-url: url(/img/dark/bg13.png);
   --bg-768-3-url: url(/img/dark/bg3_768.png);
   --bg-768-4-url: url(/img/dark/bg4_768.png);
   --bg-768-5-url: url(/img/dark/bg5_768.png);
@@ -96,4 +105,11 @@
   --bg-rtf-color:#3F998433;
   --bg-txt-color:#129FE633;
   --bg-html-color:#8C86B333;
+  --bg-popular-color:#2e3533;
+  --bg-popular-inner-color:#252b2a;
+  --bg-devtxt-color:#d4d4d4;
+  --bg-devhr-color:#555555;
+  --bg-user-color:linear-gradient(270deg, #2B3439 5.14%, #143042 100%);
+  --bg-favs-color:linear-gradient(270deg, #2A322B 5.14%, #4B4501 100%);
+  --bg-rating-color: linear-gradient(270deg, #382E2E 5.14%, #553636 100%);
 }

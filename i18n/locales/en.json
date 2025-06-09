@@ -427,6 +427,117 @@
     "headtitle": "Logs - DooTask",
     "description": "Lightweight open source online project task management tool to help teams efficiently advance their projects and make work easier."
   },
+"appstore": {
+    "headtitle": "App Store - Explore More Apps",
+    "description": "Discover and install various high-quality applications to improve your work efficiency",
+    "btn":"Go Now",
+    "features": {
+      "title01":"Diversified applications",
+      "desc01":"Covering various office, collaboration, efficiency, tools and other rich applications to meet the needs of different scenarios.",
+      "title02":"Convenient installation",
+      "desc02":"Support multiple installation methods such as local upload, URL, GitHub, etc., to quickly integrate new applications.",
+      "title03":"Official review",
+      "desc03":"All listed applications have undergone official review to ensure safety and reliability.",
+      "title04":"Continuous updates",
+      "desc04":"Continuous maintenance and upgrading of applications, continuous improvement of functions, and better user experience.",
+      "title05":"Multi language support",
+      "desc05":"Both the application and platform support multiple languages and are compatible with global users.",
+      "title06":"Safe and reliable",
+      "desc06":"Strict permission management and security mechanisms ensure data and system security."
+    },
+    "installation": {
+      "title": "Installation method",
+      "localins": {
+        "title": "Local application installation",
+        "desc": "Package the application directory into zip or tar.gz format and upload it directly to the platform for installation.",
+        "li01": "Log in to DooTask with an administrator account",
+        "li02": "Enter the app store and click 'Upload Local App'",
+        "li03": "Select the compressed application package and submit for installation"
+      },
+      "urlins": {
+        "title": "URL installation",
+        "desc": "Upload the application package to the server, fill in the accessible download link, and the platform will automatically pull and install it.",
+        "li01": "Upload the application package to the server and obtain the download link",
+        "li02": "Log in to DooTask with an administrator account",
+        "li03": "Enter the app store and click 'Install from URL'",
+        "li04": "Enter the application package URL and submit for installation"
+      },
+      "gitins": {
+        "title": "GitHub installation",
+        "desc": "Fill in the GitHub repository address, and the platform will automatically pull the code and install the application.",
+        "li01": "Submit the application code to GitHub to ensure that the repository structure is standardized",
+        "li02": "Log in to DooTask with an administrator account",
+        "li03": "Enter the app store and click 'Install from URL'",
+        "li04": "Enter the GitHub repository address and submit for installation"
+      }
+    },
+    "popular": {
+      "title": "Popular applications",
+      "install": "Go to",
+      "minder": 
+        {
+          "name": "Minder",
+          "desc": "The Minder plugin provides the ability to draw and edit mind maps for DooTask. Users can directly create, view, and modify mind maps within the platform, helping to clarify ideas, plan projects, and improve team collaboration efficiency."
+        },
+      "airobot":
+        {
+          "name": "AI Robot",
+          "desc": "The AI plugin provides intelligent capabilities for DooTask, integrating multiple mainstream language models. These AI models can be uniformly configured and called in DooTask for various scenarios such as task suggestions and content generation, significantly improving team efficiency."
+        },
+      "zinc":
+        {
+          "name": "ZincSearch",
+          "desc": "ZincSearch is a high-performance full-text search engine plugin designed specifically for Dootask system optimization. It is developed in Go language and based on the Bluge index library, making it a lightweight alternative to Elasticsearch."
+        },
+      "okr":
+        {
+          "name": "OKR",
+          "desc": "This is a DooTask plugin for Goal and Key Results (OKR) management. Through this plugin, you can implement goal management, progress tracking, team collaboration, and other functions in DooTask, helping teams better set and achieve goals."
+        },
+      "viewmore":"View more",
+      "load":"download",
+      "usr":"user",
+      "rate":"score"
+    },
+    "development": {
+      "title": "How to develop your own application",
+      "structure": {
+        "title": "Directory Structure and Configuration Files",
+        "li01":"Config. yml: Basic application information and configuration (supports multiple languages, field configuration, menu items, etc.)",
+        "li02":"Docker-compose.yml: Define application container configuration",
+        "li03":"Nginx. conf: optional, defines Nginx proxy configuration",
+        "li04":"Logo.png/README.md: Application icon and documentation, supports multiple languages"
+      },
+      "suggest":{
+        "title":"Development suggestions",
+        "li01":"Unified use of TailwindCSS to improve interface consistency",
+        "li02":"pass through",
+        "li002":"Dootask/tools interacts with the main application",
+        "li03":"Follow the semantic version number specification",
+        "li04":"Configure support for multiple languages and environment variables",
+        "li05":"Avoid hard coding sensitive information to ensure security",
+        "li06":"Container image optimization, reasonable use of caching mechanism"
+      },
+      "build":{
+        "title":"Packaging and publishing process",
+        "li01":"Confirm that the application directory structure is complete",
+        "li02":"Package in zip or tar.gz format",
+        "li03":"Log in to DooTask User Center",
+        "li04":"Click on 'Submit Application' to upload the compressed file",
+        "li05":"Fill in application information and submit for review",
+        "li06":"Automatically list and publish after approval"
+      },
+      "support":{
+        "title":"Support and Community",
+        "li01":"Submit issues through GitHub Issues",
+        "li02":"Visit official documentation for assistance",
+        "li03":"Join the official community and participate in discussions",
+        "li04":"Follow the update log to learn about version changes",
+        "li05":"Contact technical support via email or phone",
+        "li06":"Actively participate in community contribution plugins"
+      }
+    }
+  },
   "footer": {
     "title": "Helps teams move projects forward efficiently and makes work easier.",
     "links": "Links",

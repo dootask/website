@@ -13,6 +13,7 @@
         <DownloadPart v-else-if="topicsName === 'download'" />
         <AboutIntro v-else-if="topicsName === 'about'" />
         <AITopics v-else-if="topicsName === 'ai'" />
+        <AppStoreFeatures v-else-if="topicsName === 'appstore'" />
       </template>
     </HeaderBar>
     <!-- <ClientOnly> -->

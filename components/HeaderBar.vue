@@ -85,12 +85,12 @@
             >
           </li>
           <li class="nav-ul-item">
-            <a
-              class="txt-4001620 txt nav-appstore"
-              href="https://appstore.dootask.com/"
-              target="_blank"
-              >{{ $t('navigation.appstore') }}</a
-            >
+            <NuxtLink
+              class="txt-4001620 txt nav-price"
+              :to="`/${locale}/appstore`"
+              :class="{ 'support-active': isActiveRoute('/appstore') }"
+              >{{ $t('navigation.appstore') }}</NuxtLink
+              >
           </li>
         </ul>
         <div class="nav-r">
@@ -424,7 +424,7 @@ const localizedRoutes = computed(() => ({
   download: `/${locale.value}/download`,
   // help: `/${locale.value}/help`,
   privacy: `/${locale.value}/privacy`,
-  appstore: "https://appstore.dootask.com/",
+  appstore: `/${locale.value}/appstore`,
 }));
 
 // 菜单项数据

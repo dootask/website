@@ -35,12 +35,10 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item">
-                  <a
-                    class="txt-4001624 txt external-link-icon"
-                    href="https://appstore.dootask.com/"
-                    target="_blank"
-                    >{{ $t('footer.appstore') }}</a
-                  >
+                  <NuxtLink class="txt-4001620 txt nav-price":to="`/${locale}/appstore`">{{
+                     $t('footer.appstore') 
+                  }}</NuxtLink
+                    >
                 </li>
               </ol>
             </li>
