@@ -366,7 +366,32 @@
     "modalphone": "Landline Telephone：0771-3164099",
     "modaladdr1": "Email Address：service",
     "modaladdr2": "hitosea.com",
-    "btn": "OK"
+    "btn": "OK",
+    "welfare": {
+      "title": "Empowering Education, Social Good, and Quality Creators",
+      "desc": "We are committed to supporting educational institutions, nonprofit organizations, and influential creators",
+      "free": "Free",
+      "apply": "Apply Now",
+      "education": {
+        "title": "Education Discount",
+        "desc": "Currently enrolled students and faculty with a valid EDU email or institutional ID get 50% off DooTask Pro Edition.",
+        "modal": "Please provide your educational institution email or valid student/faculty ID, and we will offer you a 50% discount on the Pro Edition."
+      },
+      "nonprofit": {
+        "title": "Nonprofit Program",
+        "desc": "Certified nonprofit organizations can apply for a 50% long-term discount on Team Edition to help improve public welfare efficiency.",
+        "modal": "Please provide your nonprofit organization certification documents, and we will offer a sustained 50% discount on Team Edition for qualified organizations."
+      },
+      "influence": {
+        "title": "Earn Rewards with Your Influence",
+        "desc": "Publish high-quality content with #DooTask on social platforms (single post with ≥40 likes and retained for 3 months) to exchange for more than 1 month of Pro Edition usage, with a chance to win permanent free access to the Pro Edition!",
+        "modal": "Please provide links to your high-quality DooTask-related content on social media, and we will grant corresponding free access rewards based on your influence."
+      },
+      "modal": {
+        "contact": "If you have any questions, please contact us through the following methods:",
+        "email": "Email: welfare_hitosea.com"
+      }
+    }
   },
 
   "about": {

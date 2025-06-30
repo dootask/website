@@ -2,7 +2,9 @@
     <main>
       <section>
         <!-- <PriceWay></PriceWay> -->
+        <PriceWelfare></PriceWelfare>
         <PriceCompare></PriceCompare>
+        
       </section>
     </main>
 </template>
