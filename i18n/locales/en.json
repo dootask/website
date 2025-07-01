@@ -378,12 +378,12 @@
         "modal": "Please provide your academic institution email or valid student/educator ID, and we will offer you a 50% discount on the Pro version."
       },
       "nonprofit": {
-        "title": "Nonprofit Program",
+        "title": "Nonprofit Organization",
         "desc": "Verified nonprofit organizations can apply for a 50% long-term discount on the Team version to boost efficiency in public welfare efforts.",
         "modal": "Please provide certification documents of your nonprofit organization. Eligible organizations will receive a continuous 50% discount on the Team version."
       },
       "influence": {
-        "title": "Influence Rewards Exchange",
+        "title": "Influence",
         "desc": "Share quality content with #DooTask on social platforms (≥40 likes per post and kept for 3 months) to redeem over 1 month of Pro access — top creators may earn lifetime access!",
         "modal": "Please provide links to your high-quality DooTask-related posts on social media. We will grant free access based on your content's influence."
       },
