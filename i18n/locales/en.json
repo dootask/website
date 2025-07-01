@@ -195,69 +195,69 @@
       "desc011": "Bot’, describe your request and AI will analyze your project content, automatically extract key information, and remind you to supplement missing details.",
       "title02": "Auto-generate Task List",
       "desc02": "AI automatically generates a task list based on the content to ensure that each task is clear. After generation, click 'Confirm' and AI will add the task to the project task bar to help you manage your work efficiently.",
-       "title03": "Type 'Bye' to exit",
+      "title03": "Type 'Bye' to exit",
       "desc03": "Type 'Goodbye' or 'Stop' to instantly end the chat with the AI, ensuring seamless and effortless interaction."
     },
-    "file":{
-        "title":"File Parsing",
-        "desc":" AI analyzes and condenses data into key insights, saving you time on manual processing.",
-        "slide":{
-          "wordtitle":"Microsoft Word",
-          "worddesc":"Documentation simplifies text processing to create reports, letters, academic papers, and more.",
-          "ppttitle":"Microsoft PowerPoint",
-          "pptdesc":"Create dynamic slide shows to support business presentations, professional reports and more.",
-          "exceltitle":"Microsoft Excel",
-          "exceldesc":"A spreadsheet application for efficient data analysis and spreadsheet management.",
-          "pdftitle":"Portable Document Format",
-          "pdfdesc":"A file format for presenting documents, independent of the device and operating system",
-          "rtftitle":"Rich Text Format (RTF)",
-          "rtfdesc":"A cross-platform text format used to preserve formatted text.",
-          "txttitle":"TXT",
-          "txtdesc":"A plain text file, typically used to store simple unformatted text.",
-          "htmltitle":"Hypertext Markup Language (HTML)",
-          "htmldesc":"A markup language used to create web pages."
-        }
-    },
-    "weekly":{
-          "title":"Weekly Report Analysis​",
-          "desc":" Let AI be your work review assistant! Immediately '%'select your weekly report file and experience the convenience and efficiency of intelligent analysis. ",
-          "subdesc01":"Usage Scenarios - Group or Bot Dialogue",
-          "subdesc02":"Usage - enter ‘%’ to select the weekly report to be analysed",
-          "subdesc03":"Analysing results - giving a detailed assessment",
-          "subdesc04":"Risk Insights - Automated Detection of Hidden Risk Factors​"
-    },
-    "multi":{
-      "title":"Multi-threaded Communication",
-      "desc":"Open a new era of intelligent dialogue management! Immediately experience the AI Multi-Conversation feature to make your communication more efficient and precise. ",
-      "card":{
-        "title01":"Model Selection",
-        "desc01":"Multiple AI models are available to meet your needs for a variety of application scenarios.",
-        "title02":"Open a new session",
-        "desc02":"Instantly start discussions and easily parallelise multiple threads",
-        "title03":"History Session",
-        "desc03":"Conveniently view the history of dialogue records, important content at any time to review"
+    "file": {
+      "title": "File Parsing",
+      "desc": " AI analyzes and condenses data into key insights, saving you time on manual processing.",
+      "slide": {
+        "wordtitle": "Microsoft Word",
+        "worddesc": "Documentation simplifies text processing to create reports, letters, academic papers, and more.",
+        "ppttitle": "Microsoft PowerPoint",
+        "pptdesc": "Create dynamic slide shows to support business presentations, professional reports and more.",
+        "exceltitle": "Microsoft Excel",
+        "exceldesc": "A spreadsheet application for efficient data analysis and spreadsheet management.",
+        "pdftitle": "Portable Document Format",
+        "pdfdesc": "A file format for presenting documents, independent of the device and operating system",
+        "rtftitle": "Rich Text Format (RTF)",
+        "rtfdesc": "A cross-platform text format used to preserve formatted text.",
+        "txttitle": "TXT",
+        "txtdesc": "A plain text file, typically used to store simple unformatted text.",
+        "htmltitle": "Hypertext Markup Language (HTML)",
+        "htmldesc": "A markup language used to create web pages."
       }
     },
-    "richselect":{
-      "title":"DooTask offers users a rich selection of AI options",
-      "sub01":"ChatGPT",
-      "desc01":"Expert in natural language processing and dialogue generation for scenarios such as team communication, customer support and copywriting.",
-      "sub02":"DeepSeek",
-      "desc02":"Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
-      "sub03":"Grok",
-      "desc03":"Grok AI: Quote tasks/questions in DooTask chats for instant expert solutions.",
-      "sub04":"Ollama",
-      "desc04":"Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
-      "sub05":"Claude",
-      "desc05":"Deep learning-driven text analysis/generation to streamline content workflows and document handling.",
-      "sub06":"Gemini",
-      "desc06":"Multimodal data processing and cross-domain AI for smarter project automation.",
-      "sub07":"Zhipu Qingyan",
-      "desc07":"AI-driven voice and conversational tools for enterprise customer service optimization.",
-      "sub08":"Tongyi Qianwen",
-      "desc08":"AI-powered knowledge Q&A: Combines knowledge graphs and reasoning for accurate solutions.",
-      "sub09":"ERNIE Bot",
-      "desc09":"AI-powered creative writing tools for reports and content generation."
+    "weekly": {
+      "title": "Weekly Report Analysis​",
+      "desc": " Let AI be your work review assistant! Immediately '%'select your weekly report file and experience the convenience and efficiency of intelligent analysis. ",
+      "subdesc01": "Usage Scenarios - Group or Bot Dialogue",
+      "subdesc02": "Usage - enter ‘%’ to select the weekly report to be analysed",
+      "subdesc03": "Analysing results - giving a detailed assessment",
+      "subdesc04": "Risk Insights - Automated Detection of Hidden Risk Factors​"
+    },
+    "multi": {
+      "title": "Multi-threaded Communication",
+      "desc": "Open a new era of intelligent dialogue management! Immediately experience the AI Multi-Conversation feature to make your communication more efficient and precise. ",
+      "card": {
+        "title01": "Model Selection",
+        "desc01": "Multiple AI models are available to meet your needs for a variety of application scenarios.",
+        "title02": "Open a new session",
+        "desc02": "Instantly start discussions and easily parallelise multiple threads",
+        "title03": "History Session",
+        "desc03": "Conveniently view the history of dialogue records, important content at any time to review"
+      }
+    },
+    "richselect": {
+      "title": "DooTask offers users a rich selection of AI options",
+      "sub01": "ChatGPT",
+      "desc01": "Expert in natural language processing and dialogue generation for scenarios such as team communication, customer support and copywriting.",
+      "sub02": "DeepSeek",
+      "desc02": "Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
+      "sub03": "Grok",
+      "desc03": "Grok AI: Quote tasks/questions in DooTask chats for instant expert solutions.",
+      "sub04": "Ollama",
+      "desc04": "Enable efficient information retrieval and data mining for quick access to desired insights from large datasets.",
+      "sub05": "Claude",
+      "desc05": "Deep learning-driven text analysis/generation to streamline content workflows and document handling.",
+      "sub06": "Gemini",
+      "desc06": "Multimodal data processing and cross-domain AI for smarter project automation.",
+      "sub07": "Zhipu Qingyan",
+      "desc07": "AI-driven voice and conversational tools for enterprise customer service optimization.",
+      "sub08": "Tongyi Qianwen",
+      "desc08": "AI-powered knowledge Q&A: Combines knowledge graphs and reasoning for accurate solutions.",
+      "sub09": "ERNIE Bot",
+      "desc09": "AI-powered creative writing tools for reports and content generation."
     }
   },
   "solution": {
@@ -369,28 +369,25 @@
     "btn": "OK",
     "welfare": {
       "title": "Empowering Education, Social Good, and Quality Creators",
-      "desc": "We are committed to supporting educational institutions, nonprofit organizations, and influential creators",
+      "desc": "We are committed to supporting educational institutions, nonprofit organizations, and influential content creators.",
       "free": "Free",
       "apply": "Apply Now",
       "education": {
-        "title": "Education Discount",
-        "desc": "Currently enrolled students and faculty with a valid EDU email or institutional ID get 50% off DooTask Pro Edition.",
-        "modal": "Please provide your educational institution email or valid student/faculty ID, and we will offer you a 50% discount on the Pro Edition."
+        "title": "Educational Discount",
+        "desc": "Students and educators with a valid academic email or ID can enjoy a 50% discount on DooTask Pro.",
+        "modal": "Please provide your academic institution email or valid student/educator ID, and we will offer you a 50% discount on the Pro version."
       },
       "nonprofit": {
         "title": "Nonprofit Program",
-        "desc": "Certified nonprofit organizations can apply for a 50% long-term discount on Team Edition to help improve public welfare efficiency.",
-        "modal": "Please provide your nonprofit organization certification documents, and we will offer a sustained 50% discount on Team Edition for qualified organizations."
+        "desc": "Verified nonprofit organizations can apply for a 50% long-term discount on the Team version to boost efficiency in public welfare efforts.",
+        "modal": "Please provide certification documents of your nonprofit organization. Eligible organizations will receive a continuous 50% discount on the Team version."
       },
       "influence": {
-        "title": "Earn Rewards with Your Influence",
-        "desc": "Publish high-quality content with #DooTask on social platforms (single post with ≥40 likes and retained for 3 months) to exchange for more than 1 month of Pro Edition usage, with a chance to win permanent free access to the Pro Edition!",
-        "modal": "Please provide links to your high-quality DooTask-related content on social media, and we will grant corresponding free access rewards based on your influence."
+        "title": "Influence Rewards Exchange",
+        "desc": "Share quality content with #DooTask on social platforms (≥40 likes per post and kept for 3 months) to redeem over 1 month of Pro access — top creators may earn lifetime access!",
+        "modal": "Please provide links to your high-quality DooTask-related posts on social media. We will grant free access based on your content's influence."
       },
-      "modal": {
-        "contact": "If you have any questions, please contact us through the following methods:",
-        "email": "Email: welfare_hitosea.com"
-      }
+      "dialog_qr_code_tip": "Scan the QR code to contact our WeChat support representative for application."
     }
   },
 
@@ -404,7 +401,7 @@
     "profile": {
       "title": "Company profile",
       "desc": "Since its establishment, Guangxi Hitosea Information Technology Co., Ltd.(HITOSEA) has been focusing on the innovation of cutting-edge technologies in the field of network security, providing network security products and services including border security, cloud security, data security, intranet security, and is committed to providing users with comprehensive, smarter, and zero-disturbance network security solutions, and is a dynamic technology company with a young and energetic team.",
-      "alt":"Guangxi Dolphin Have Sea Information Technology Company, HITOSEA, Dolphin Have Sea, Guangxi Dolphin Have Sea"
+      "alt": "Guangxi Dolphin Have Sea Information Technology Company, HITOSEA, Dolphin Have Sea, Guangxi Dolphin Have Sea"
     },
     "scenapply": {
       "title": "Scenario Application",
@@ -428,9 +425,9 @@
       "mes": "Message",
       "mes_placeholder": "Optional",
       "btn": "Submit",
-      "phone_alt":"Contact Mobile:13471168831",
-      "email_alt":"Contact Email",
-      "sub_alt":"Submitted"
+      "phone_alt": "Contact Mobile:13471168831",
+      "email_alt": "Contact Email",
+      "sub_alt": "Submitted"
     }
   },
   "download": {
@@ -440,7 +437,7 @@
     "scan": "Download",
     "load": "Download",
     "other": "Other Versions",
-    "alttips":"DooTask, Download Centre",
+    "alttips": "DooTask, Download Centre",
     "log": {
       "title": "Logs",
       "headline": "DooTask Update Log",
@@ -452,23 +449,23 @@
     "headtitle": "Logs - DooTask",
     "description": "Lightweight open source online project task management tool to help teams efficiently advance their projects and make work easier."
   },
-"appstore": {
+  "appstore": {
     "headtitle": "App Store - Explore More Apps",
     "description": "Discover and install various high-quality applications to improve your work efficiency",
-    "btn":"Go Now",
+    "btn": "Go Now",
     "features": {
-      "title01":"Diversified applications",
-      "desc01":"Covering various office, collaboration, efficiency, tools and other rich applications to meet the needs of different scenarios.",
-      "title02":"Convenient installation",
-      "desc02":"Support multiple installation methods such as local upload, URL, GitHub, etc., to quickly integrate new applications.",
-      "title03":"Official review",
-      "desc03":"All listed applications have undergone official review to ensure safety and reliability.",
-      "title04":"Continuous updates",
-      "desc04":"Continuous maintenance and upgrading of applications, continuous improvement of functions, and better user experience.",
-      "title05":"Multi language support",
-      "desc05":"Both the application and platform support multiple languages and are compatible with global users.",
-      "title06":"Safe and reliable",
-      "desc06":"Strict permission management and security mechanisms ensure data and system security."
+      "title01": "Diversified applications",
+      "desc01": "Covering various office, collaboration, efficiency, tools and other rich applications to meet the needs of different scenarios.",
+      "title02": "Convenient installation",
+      "desc02": "Support multiple installation methods such as local upload, URL, GitHub, etc., to quickly integrate new applications.",
+      "title03": "Official review",
+      "desc03": "All listed applications have undergone official review to ensure safety and reliability.",
+      "title04": "Continuous updates",
+      "desc04": "Continuous maintenance and upgrading of applications, continuous improvement of functions, and better user experience.",
+      "title05": "Multi language support",
+      "desc05": "Both the application and platform support multiple languages and are compatible with global users.",
+      "title06": "Safe and reliable",
+      "desc06": "Strict permission management and security mechanisms ensure data and system security."
     },
     "installation": {
       "title": "Installation method",
@@ -499,67 +496,63 @@
     "popular": {
       "title": "Popular applications",
       "install": "Go to",
-      "minder": 
-        {
-          "name": "Minder",
-          "desc": "The Minder plugin provides the ability to draw and edit mind maps for DooTask. Users can directly create, view, and modify mind maps within the platform, helping to clarify ideas, plan projects, and improve team collaboration efficiency."
-        },
-      "airobot":
-        {
-          "name": "AI Robot",
-          "desc": "The AI plugin provides intelligent capabilities for DooTask, integrating multiple mainstream language models. These AI models can be uniformly configured and called in DooTask for various scenarios such as task suggestions and content generation, significantly improving team efficiency."
-        },
-      "zinc":
-        {
-          "name": "ZincSearch",
-          "desc": "ZincSearch is a high-performance full-text search engine plugin designed specifically for Dootask system optimization. It is developed in Go language and based on the Bluge index library, making it a lightweight alternative to Elasticsearch."
-        },
-      "okr":
-        {
-          "name": "OKR",
-          "desc": "This is a DooTask plugin for Goal and Key Results (OKR) management. Through this plugin, you can implement goal management, progress tracking, team collaboration, and other functions in DooTask, helping teams better set and achieve goals."
-        },
-      "viewmore":"View more",
-      "load":"download",
-      "usr":"user",
-      "rate":"score"
+      "minder": {
+        "name": "Minder",
+        "desc": "The Minder plugin provides the ability to draw and edit mind maps for DooTask. Users can directly create, view, and modify mind maps within the platform, helping to clarify ideas, plan projects, and improve team collaboration efficiency."
+      },
+      "airobot": {
+        "name": "AI Robot",
+        "desc": "The AI plugin provides intelligent capabilities for DooTask, integrating multiple mainstream language models. These AI models can be uniformly configured and called in DooTask for various scenarios such as task suggestions and content generation, significantly improving team efficiency."
+      },
+      "zinc": {
+        "name": "ZincSearch",
+        "desc": "ZincSearch is a high-performance full-text search engine plugin designed specifically for Dootask system optimization. It is developed in Go language and based on the Bluge index library, making it a lightweight alternative to Elasticsearch."
+      },
+      "okr": {
+        "name": "OKR",
+        "desc": "This is a DooTask plugin for Goal and Key Results (OKR) management. Through this plugin, you can implement goal management, progress tracking, team collaboration, and other functions in DooTask, helping teams better set and achieve goals."
+      },
+      "viewmore": "View more",
+      "load": "download",
+      "usr": "user",
+      "rate": "score"
     },
     "development": {
       "title": "How to develop your own application",
       "structure": {
         "title": "Directory Structure and Configuration Files",
-        "li01":"Config. yml: Basic application information and configuration (supports multiple languages, field configuration, menu items, etc.)",
-        "li02":"Docker-compose.yml: Define application container configuration",
-        "li03":"Nginx. conf: optional, defines Nginx proxy configuration",
-        "li04":"Logo.png/README.md: Application icon and documentation, supports multiple languages"
+        "li01": "Config. yml: Basic application information and configuration (supports multiple languages, field configuration, menu items, etc.)",
+        "li02": "Docker-compose.yml: Define application container configuration",
+        "li03": "Nginx. conf: optional, defines Nginx proxy configuration",
+        "li04": "Logo.png/README.md: Application icon and documentation, supports multiple languages"
       },
-      "suggest":{
-        "title":"Development suggestions",
-        "li01":"Unified use of TailwindCSS to improve interface consistency",
-        "li02":"pass through",
-        "li002":"Dootask/tools interacts with the main application",
-        "li03":"Follow the semantic version number specification",
-        "li04":"Configure support for multiple languages and environment variables",
-        "li05":"Avoid hard coding sensitive information to ensure security",
-        "li06":"Container image optimization, reasonable use of caching mechanism"
+      "suggest": {
+        "title": "Development suggestions",
+        "li01": "Unified use of TailwindCSS to improve interface consistency",
+        "li02": "pass through",
+        "li002": "Dootask/tools interacts with the main application",
+        "li03": "Follow the semantic version number specification",
+        "li04": "Configure support for multiple languages and environment variables",
+        "li05": "Avoid hard coding sensitive information to ensure security",
+        "li06": "Container image optimization, reasonable use of caching mechanism"
       },
-      "build":{
-        "title":"Packaging and publishing process",
-        "li01":"Confirm that the application directory structure is complete",
-        "li02":"Package in zip or tar.gz format",
-        "li03":"Log in to DooTask User Center",
-        "li04":"Click on 'Submit Application' to upload the compressed file",
-        "li05":"Fill in application information and submit for review",
-        "li06":"Automatically list and publish after approval"
+      "build": {
+        "title": "Packaging and publishing process",
+        "li01": "Confirm that the application directory structure is complete",
+        "li02": "Package in zip or tar.gz format",
+        "li03": "Log in to DooTask User Center",
+        "li04": "Click on 'Submit Application' to upload the compressed file",
+        "li05": "Fill in application information and submit for review",
+        "li06": "Automatically list and publish after approval"
       },
-      "support":{
-        "title":"Support and Community",
-        "li01":"Submit issues through GitHub Issues",
-        "li02":"Visit official documentation for assistance",
-        "li03":"Join the official community and participate in discussions",
-        "li04":"Follow the update log to learn about version changes",
-        "li05":"Contact technical support via email or phone",
-        "li06":"Actively participate in community contribution plugins"
+      "support": {
+        "title": "Support and Community",
+        "li01": "Submit issues through GitHub Issues",
+        "li02": "Visit official documentation for assistance",
+        "li03": "Join the official community and participate in discussions",
+        "li04": "Follow the update log to learn about version changes",
+        "li05": "Contact technical support via email or phone",
+        "li06": "Actively participate in community contribution plugins"
       }
     }
   },
@@ -578,7 +571,7 @@
     "api_docs": "API Document",
     "community": "Community",
     "QQ": "QQ group",
-    "QQ_alt":"group number：546574618"
+    "QQ_alt": "group number：546574618"
   },
   "cookie": {
     "content": " We use first party cookies to improve your browsing experience on our website, to analyze our website traffic and to understand where our visitors are coming from. If you choose to opt-out, only strictly necessary cookies will be used.",

@@ -1,0 +1,223 @@
+.welfare {
+  padding: 120px 0 120px 0;
+  background: var(--bg-fa-color);
+}
+
+.welfare-con {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.welfare-layout {
+  text-align: center;
+}
+
+.welfare-title {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.welfare-desc {
+  font-size: 18px;
+  margin-bottom: 80px;
+  opacity: 0.8;
+}
+
+.welfare-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.welfare-card {
+  border-radius: 12px;
+  padding: 40px 32px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  overflow: hidden;
+  box-shadow: 0px 4px 16px 8px rgba(0, 0, 0, 0.08);
+}
+
+.welfare-card-education,
+.welfare-card-nonprofit,
+.welfare-card-influence {
+  /* background: linear-gradient(to top, #ffffff 0%, #f5fef1 100%); */
+  background: linear-gradient(
+    to top,
+    rgba(139, 207, 112, 0.08) 0%,
+    rgba(139, 207, 112, 0.02) 40%,
+    transparent 100%
+  );
+}
+
+.welfare-card-education:hover,
+.welfare-card-nonprofit:hover,
+.welfare-card-influence:hover {
+  background: linear-gradient(
+    to top,
+    rgba(139, 207, 112, 0.15) 0%,
+    rgba(139, 207, 112, 0.05) 40%,
+    transparent 100%
+  );
+}
+
+.welfare-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.welfare-card-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.badge-discount {
+  background: #ffdd33;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 0 12px 0 6px;
+  font-size: 14px;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.welfare-card-icon {
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.welfare-card-icon img {
+  width: 56px;
+  height: 56px;
+}
+
+.welfare-card-content {
+  flex: 1;
+  text-align: left;
+}
+
+.welfare-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.welfare-card-desc {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.8;
+  text-align: left;
+}
+
+.welfare-card-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.welfare-card-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+  min-width: 120px;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.welfare-btn-outline {
+  background: transparent;
+  border: 1px solid #8bcf70;
+  color: #8bcf70;
+}
+
+.welfare-btn-outline:hover {
+  background: #8bcf70;
+  color: white;
+}
+
+.welfare-btn-confirm {
+  background: #8bcf70;
+  color: white;
+  border: none;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.welfare-btn-confirm:hover {
+  background: #7ab85f;
+}
+
+.welfare-btn-arrow-svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+  color: inherit;
+}
+
+.welfare-card-btn:hover .btn-arrow-svg {
+  transform: translateX(2px);
+}
+
+/* 模态框样式 */
+.welfare-apply-image {
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.welfare-apply-text {
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.welfare-apply-actions {
+  padding: 8px 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .welfare {
+    padding: 60px 0;
+  }
+
+  .welfare-cards {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .welfare-card {
+    padding: 30px 24px;
+  }
+
+  .welfare-title {
+    font-size: 28px;
+  }
+
+  .welfare-desc {
+    font-size: 16px;
+    margin-bottom: 60px;
+  }
+}
