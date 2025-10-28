@@ -125,8 +125,18 @@ definePageMeta({
 });
 defineOgImageComponent('NuxtSeo');
 const { locale, t } = useI18n();
+const themeStore = useThemeStore();
+
+// 保存用户原始主题设置
+const originalTheme = ref('light');
 
 onMounted(() => {
+  // 保存当前主题设置
+  originalTheme.value = themeStore.theme;
+  
+  // 强制设置为明亮模式
+  themeStore.setTheme('light', locale.value);
+  
   fetchAdBanner(locale.value);
   fetchAdPlan(locale.value);
   fetchAdIntro(locale.value);
@@ -134,6 +144,28 @@ onMounted(() => {
   manageAnimate();
 
   handleDialog();
+});
+
+// 监听主题变化，强制保持明亮模式
+const stopWatch = watch(
+  () => themeStore.theme,
+  (newTheme) => {
+    if (newTheme !== 'light') {
+      nextTick(() => {
+        themeStore.setTheme('light', locale.value);
+      });
+    }
+  }
+);
+
+// 当页面卸载时，停止监听并恢复之前的主题设置
+onBeforeUnmount(() => {
+  stopWatch();
+  if (originalTheme.value && originalTheme.value !== 'light') {
+    themeStore.setTheme(originalTheme.value, locale.value);
+  } else {
+    themeStore.loadTheme(locale.value);
+  }
 });
 
 // 获取广告banner数据
