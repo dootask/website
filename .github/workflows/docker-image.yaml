@@ -18,7 +18,7 @@ env:
   REGISTRY: hub.hitosea.com
   # github.repository as <account>/<repo>
   IMAGE_NAME: official-website/dootask-site
-  PROJECT_URL: 333read/doo-Helper
+  PROJECT_URL: xxyijixx/dootask-help
   PROJECT_PATH: help
 
 jobs:
