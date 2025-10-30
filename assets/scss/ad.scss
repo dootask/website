@@ -69,7 +69,8 @@
   header .ad .ad-content .ad-content-left .ad-text {
     font-size: 28px;
     font-weight: 600;
-    color: #441726;
+    // color: #441726;
+    color: #042C52;
     font-family: Lexend;
     margin-right: 16px;
     line-height: 35px;
@@ -775,7 +776,7 @@
 
 .ad-close {
   cursor: pointer;
-  padding: 8px;
+  padding: 4px;
   transition: all 0.3s ease;
   
   &:hover {
@@ -804,7 +805,7 @@
   }
   
   .ad-close {
-    padding: 6px;
+    padding: 4px;
     
     img {
       width: 14px;
