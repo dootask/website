@@ -26,6 +26,13 @@
     transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
   }
 
+  /* 为 OG Image 生成和无障碍需求禁用过渡 */
+  @media (prefers-reduced-motion: reduce) {
+    header .ad {
+      transition: none;
+    }
+  }
+
   header .ad .ad-content {
     display: flex;
     justify-content: center;

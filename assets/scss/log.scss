@@ -173,4 +173,13 @@
   .footer-layout {
     border-top: var(--border-color) solid 1px;
   }
+
+  /* 为 OG Image 生成和无障碍需求禁用过渡 */
+  @media (prefers-reduced-motion: reduce) {
+    .logs,
+    .logs-sticky,
+    .logs-t-768 {
+      transition: none;
+    }
+  }
 }

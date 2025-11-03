@@ -589,6 +589,23 @@ img {
   transition: top 0.3s ease-in-out;
 }
 
+/* 为 OG Image 生成和无障碍需求禁用所有过渡和动画 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .head,
+  .nav {
+    transition: none !important;
+  }
+}
+
 .nav-layout {
   width: 100%;
   max-width: 1280px;
