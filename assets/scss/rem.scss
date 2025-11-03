@@ -913,9 +913,10 @@
   .update-h1 {
     margin-bottom: 28px !important;
   }
-  .logs-t-768 {
-    margin-top: 96px !important;
-  }
+   /* margin-top 动态设置，以适应广告条高度变化 */
+  // .logs-t-768 {
+  //   margin-top: 96px !important;
+  // }
   #help-pic1-svg {
     width: 44%;
   }

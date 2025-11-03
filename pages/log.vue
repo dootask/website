@@ -109,6 +109,7 @@ import { ref, onMounted, onUnmounted, nextTick, toRefs } from 'vue';
 import axios from 'axios';
 import markdownIt from 'markdown-it';
 import '@/assets/scss/log.scss';
+import { debounce } from '../utils/debounceThrottle';
 
 import { useI18n } from 'vue-i18n';
 
@@ -269,22 +270,43 @@ const fetchLogsData = async () => {
   }
 };
 
-// 获取是否存在广告条
+// 获取广告条的实际高度并动态调整页面上边距
 const adjustLogPageHeight = () => {
   nextTick(() => {
     const adBar = document.getElementById('ad');
     const logPage = document.querySelector('.logs') as HTMLElement;
+    const logsMobileHeader = document.querySelector('.logs-t-768') as HTMLElement;
 
-    if (adBar && adBar.style.display !== 'none' && logPage) {
-      // 如果广告条存在且可见，向下调整 30px
-      if (isMobile.value) {
-        logPage.setAttribute('style', 'margin-top: 120px !important;');
-      } else {
-        logPage.style.marginTop = '150px';
+    if (!logPage) return;
+
+    // 导航栏固定高度
+    const navHeight = 80;
+    
+    if (adBar && adBar.style.display !== 'none') {
+      // 获取广告条的实际高度
+      const adBarHeight = adBar.offsetHeight || 0;
+      
+      // 额外的间距（让内容不会太靠近导航栏）
+      const extraSpacing = isMobile.value ? 10 : 20;
+      
+      // 计算总的上边距：导航栏高度 + 广告条实际高度 + 额外间距
+      const totalMarginTop = navHeight + adBarHeight + extraSpacing;
+      
+      logPage.style.marginTop = `${totalMarginTop}px`;
+      
+      // 移动端标题栏也需要设置 margin-top
+      if (logsMobileHeader && isMobile.value) {
+        logsMobileHeader.style.marginTop = `${totalMarginTop}px`;
       }
-    } else if (logPage) {
-      // 如果广告条不存在或不可见，重置高度
-      logPage.setAttribute('style', 'margin-top: 90px;');
+    } else {
+      // 如果广告条不存在或不可见，只保留导航栏高度 + 一点额外间距
+      const totalMarginTop = navHeight + 10;
+      logPage.style.marginTop = `${totalMarginTop}px`;
+      
+      // 移动端标题栏也需要设置
+      if (logsMobileHeader && isMobile.value) {
+        logsMobileHeader.style.marginTop = `${totalMarginTop}px`;
+      }
     }
   });
 };
@@ -295,6 +317,9 @@ const adjustStickyNavPosition = () => {
 
   if (!logsStickyEl) return;
 
+  // 导航栏固定高度
+  const navHeight = 80;
+
   // 延迟检测，确保DOM完全渲染
   nextTick(() => {
     if (adBar) {
@@ -304,14 +329,15 @@ const adjustStickyNavPosition = () => {
         computedStyle.visibility !== 'hidden';
 
       if (isAdBarVisible) {
-        const adBarHeight = window.innerWidth <= 768 ? 48 : 64;
-        logsStickyEl.style.top = `${80 + adBarHeight}px`;
+        // 获取广告条的实际高度
+        const adBarHeight = adBar.offsetHeight || 0;
+        logsStickyEl.style.top = `${navHeight + adBarHeight}px`;
       } else {
-        logsStickyEl.style.top = '80px';
+        logsStickyEl.style.top = `${navHeight}px`;
       }
     } else {
       // 如果没有找到广告条，保持默认位置
-      logsStickyEl.style.top = '80px';
+      logsStickyEl.style.top = `${navHeight}px`;
     }
   });
 };
@@ -336,12 +362,18 @@ const scrollToSection = (index: number, smooth = true) => {
   const content = document.getElementById(id);
 
   if (content) {
-    // const offset = 90; // 上偏移量
     const adBar = document.getElementById('ad');
-    const isAdBarVisible = adBar && adBar.style.display !== 'none';
-
-    // 根据广告条是否存在调整额外偏移量
-    const additionalOffset = isAdBarVisible ? 150 : 90; // 增加额外的偏移量
+    const navHeight = 80; // 导航栏固定高度
+    
+    // 计算实际偏移量
+    let additionalOffset = navHeight + 10; // 默认：导航栏 + 10px 额外间距
+    
+    if (adBar && adBar.style.display !== 'none') {
+      // 获取广告条的实际高度
+      const adBarHeight = adBar.offsetHeight || 0;
+      additionalOffset = navHeight + adBarHeight + 20; // 导航栏 + 广告条 + 20px 额外间距
+    }
+    
     const targetPosition = content.getBoundingClientRect().top + window.scrollY;
 
     // 滚动到目标位置，并考虑上偏移量
@@ -375,10 +407,16 @@ const handleNavClick = (index: number) => {
 // 监听滚动，更新导航高亮
 const scrollHandler = () => {
   const adBar = document.getElementById('ad');
-  const isAdBarVisible = adBar && adBar.style.display !== 'none';
+  const navHeight = 80; // 导航栏固定高度
 
-  // 根据广告条是否存在调整额外偏移量
-  const additionalOffset = isAdBarVisible ? 150 : 90;
+  // 计算实际偏移量
+  let additionalOffset = navHeight + 10; // 默认：导航栏 + 10px
+  
+  if (adBar && adBar.style.display !== 'none') {
+    // 获取广告条的实际高度
+    const adBarHeight = adBar.offsetHeight || 0;
+    additionalOffset = navHeight + adBarHeight + 20; // 导航栏 + 广告条 + 20px
+  }
 
   const sections: HTMLHeadingElement[] = Array.from(
     document.querySelectorAll('.logs-r-ul li h4'), // 获取所有版本号的标题
@@ -477,7 +515,21 @@ const isMobile = ref(false);
 // 检查屏幕尺寸
 const checkMobileView = () => {
   isMobile.value = window.innerWidth <= 768;
+  // 窗口尺寸变化时重新计算高度
+  adjustLogPageHeight();
+  adjustStickyNavPosition();
 };
+
+// 使用防抖函数 - 避免频繁触发重新计算（100ms 延迟）
+const adjustHeights = () => {
+  adjustStickyNavPosition();
+  adjustLogPageHeight();
+};
+const debouncedAdjustHeights = debounce(adjustHeights, 100);
+
+// 存储 observers 以便清理
+let adBarMutationObserver: MutationObserver | null = null;
+let adBarResizeObserver: ResizeObserver | null = null;
 
 // 生命周期钩子
 onMounted(() => {
@@ -490,17 +542,25 @@ onMounted(() => {
   // 添加高度调整
   adjustLogPageHeight();
 
-  const adBarObserver = new MutationObserver(() => {
-    adjustStickyNavPosition();
-    adjustLogPageHeight();
-  });
   const adBar = document.getElementById('ad');
 
   if (adBar) {
-    adBarObserver.observe(adBar, {
+    // 监听广告条的 style 属性变化（显示/隐藏）
+    adBarMutationObserver = new MutationObserver(() => {
+      debouncedAdjustHeights();
+    });
+    
+    adBarMutationObserver.observe(adBar, {
       attributes: true,
       attributeFilter: ['style'],
     });
+
+    // 监听广告条的尺寸变化（高度变化，包括打字机效果导致的高度变化）
+    adBarResizeObserver = new ResizeObserver(() => {
+      debouncedAdjustHeights();
+    });
+    
+    adBarResizeObserver.observe(adBar);
   }
 
   fetchLogsData().then(() => {
@@ -514,6 +574,17 @@ onUnmounted(() => {
   window.removeEventListener('scroll', scrollHandler);
   window.removeEventListener('beforeunload', saveScrollState);
   window.removeEventListener('resize', checkMobileView);
+  
+  // 清理 observers
+  if (adBarMutationObserver) {
+    adBarMutationObserver.disconnect();
+    adBarMutationObserver = null;
+  }
+  
+  if (adBarResizeObserver) {
+    adBarResizeObserver.disconnect();
+    adBarResizeObserver = null;
+  }
 });
 </script>
 

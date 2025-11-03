@@ -565,6 +565,8 @@ img {
 .head {
   position: relative;
   background-color: var(--bg-color);
+  /* 添加平滑过渡效果 */
+  transition: margin-top 0.3s ease-in-out;
 }
 
 .head-con {
@@ -583,6 +585,8 @@ img {
   height: 80px;
   position: fixed;
   top: 0;
+  /* 添加平滑过渡效果 */
+  transition: top 0.3s ease-in-out;
 }
 
 .nav-layout {
