@@ -107,7 +107,7 @@ const limitCharacters = () => {
 const sendFormRequest = async () => {
   // 邮箱验证正则
   const emailPattern =
-    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
 
   // 验证邮箱
   if (!emailPattern.test(email.value)) {
@@ -143,8 +143,9 @@ const sendFormRequest = async () => {
     message.value = '';
 
     alert('提交成功！');
-  } catch (error: any) {
-    alert(error.message || '提交失败，请重试');
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : '提交失败，请重试';
+    alert(message);
   } finally {
     isSubmitting.value = false;
   }

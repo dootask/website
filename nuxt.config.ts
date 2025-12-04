@@ -2,9 +2,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
-  components: {
-    dirs: ['~/components'],
-  },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   nitro: {

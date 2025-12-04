@@ -344,14 +344,6 @@ const showBackground = ref(true);
 const config = useRuntimeConfig();
 const siteUrl = config.public.siteUrl;
 
-const getTabStyles = () => {
-  return {
-    backgroundColor: 'var(--bg-hover-color)', // 设置背景色
-    color: 'var(--text-color)', // 设置文本颜色
-    borderRadius: '6px', // 设置圆角
-  };
-};
-
 onMounted(() => {
   const supportTxt = document.getElementById('support-txt');
   const submenuPop = document.getElementById('submenu-pop');

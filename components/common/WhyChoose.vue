@@ -130,8 +130,6 @@ const HomeArcsRef = ref<HTMLElement | null>(null);
 
 const touchStartX = ref(0);
 const touchMoveX = ref(0);
-const touchTranslateX = ref(0);
-const itemWidth = ref(0);
 
 
 interface ChooseItem {
@@ -247,28 +245,8 @@ const handleTouchEnd = () => {
   startAutoPlay();
 };
 
-onMounted(() => {
-  checkMobileView();
-  window.addEventListener('resize', () => {
-    checkMobileView();
-    // 调整窗口大小时重新启动自动播放
-    startAutoPlay();
-  });
-
-  // 组件挂载时启动自动播放
-  startAutoPlay();
-
-  // 添加滚动监听器以触发动画
-  animateBoxes();
-  window.addEventListener('scroll', animateBoxes);
-});
-
-
-
-
-
 /* 滑动到可视区域执行动画 */
-let timerId = null;
+let timerId: ReturnType<typeof setTimeout> | null = null;
 const animateBoxes = () => {
   if (BoxesRef.value) {
     BoxesRef.value.forEach((box) => {
@@ -290,13 +268,14 @@ onMounted(() => {
   checkMobileView();
   window.addEventListener('resize', () => {
     checkMobileView();
-    // 屏幕尺寸变化时重新启动自动轮播
+    // 调整窗口大小时重新启动自动播放
     startAutoPlay();
   });
 
-  // 如果是移动端，启动自动轮播
+  // 组件挂载时启动自动播放
   startAutoPlay();
 
+  // 添加滚动监听器以触发动画
   animateBoxes();
   window.addEventListener('scroll', animateBoxes);
 });
@@ -305,6 +284,10 @@ onUnmounted(() => {
   window.removeEventListener('resize', checkMobileView);
   stopAutoPlay();
   window.removeEventListener('scroll', animateBoxes);
+  if (timerId) {
+    clearTimeout(timerId);
+    timerId = null;
+  }
 });
 </script>
 

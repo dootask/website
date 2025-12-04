@@ -229,7 +229,15 @@ const { theme } = toRefs(themeStore);
 const showContactModal = ref(false);
 const modalTitle = ref('');
 
-const plans = computed(() => [
+interface IPlan {
+  name: string;
+  price: string;
+  priceUnit?: string;
+  buttonText: string;
+  buttonLink?: string; 
+} 
+
+const plans = computed<IPlan[]>(() => [
   {
     name: t('pricing.plans.free.name'),
     price: '¥0',
@@ -412,7 +420,7 @@ const compareSections = computed(() => [
   },
 ]);
 
-function handlePlanSelect(plan) {
+function handlePlanSelect(plan: IPlan) {
   // 如果有直接链接，打开链接
   if (plan.buttonLink) {
     window.open(plan.buttonLink, '_blank');

@@ -35,7 +35,7 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item">
-                  <NuxtLink class="txt-4001620 txt nav-price":to="`/${locale}/appstore`">{{
+                  <NuxtLink class="txt-4001620 txt nav-price" :to="`/${locale}/appstore`">{{
                      $t('footer.appstore') 
                   }}</NuxtLink
                     >
@@ -141,7 +141,7 @@
 </template>
 <script setup lang="ts">
 import { toRefs } from 'vue';
-import { openInNewTab } from '../utils/common';
+// import { openInNewTab } from '@/utils/common';
 import { useI18n } from 'vue-i18n';
 
 const themeStore = useThemeStore();

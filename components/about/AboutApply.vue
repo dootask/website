@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { onMounted, ref, onBeforeUnmount } from 'vue';
-import { throttle } from '../utils/debounceThrottle';
+import { throttle } from '../../utils/debounceThrottle';
 
 const AboutAnimateBoxRef = ref<NodeListOf<HTMLElement> | null>(null);
 const { t } = useI18n();
