@@ -1,8 +1,11 @@
+import type { UseLanguageReturn } from '../types/composable';
+
 /**
  * 语言管理 Composable
  * 提供语言切换和本地化路由生成功能
+ * @returns {UseLanguageReturn} 语言管理相关的函数和响应式数据
  */
-export const useLanguage = () => {
+export const useLanguage = (): UseLanguageReturn => {
   const { locale, setLocale, t } = useI18n();
   const themeStore = useThemeStore();
 

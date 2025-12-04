@@ -1,9 +1,5 @@
 import { defineStore } from 'pinia';
-
-interface ThemeStore {
-  theme: string;
-  lang: string;
-}
+import type { ThemeStoreState } from '../types/theme';
 
 /**
  * 主题 Store
@@ -13,7 +9,7 @@ interface ThemeStore {
  * 注意：这个 Store 只负责状态存储，不包含任何业务逻辑
  */
 export const useThemeStore = defineStore('themeStore', {
-  state: (): ThemeStore => ({
+  state: (): ThemeStoreState => ({
     theme: 'light',
     lang: 'zh',
   }),

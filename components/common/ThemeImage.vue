@@ -16,18 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-interface Props {
-  // id
-  id?: string;
-  // 自定义 class
-  class?: string;
-  // 图片描述
-  alt: string;
-  // 客户端渲染的图片路径
-  src: string;
-}
+import type { ThemeImageProps } from '../../types/component';
 
-const props = defineProps<Props>();
+const props = defineProps<ThemeImageProps>();
 
 const { theme } = useTheme();
 

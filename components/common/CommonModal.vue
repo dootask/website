@@ -16,15 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-const props = defineProps({
-  modelValue: { type: Boolean, required: true },
-  title: { type: String, default: '' },
-  width: { type: [String, Number], default: '400px' },
-  showClose: { type: Boolean, default: true },
-  closeOnOverlay: { type: Boolean, default: true }
-})
-const emit = defineEmits(['update:modelValue', 'close'])
+import { computed } from 'vue';
+import type { CommonModalProps, CommonModalEmits } from '../../types/component';
+
+const props = withDefaults(defineProps<CommonModalProps>(), {
+  title: '',
+  width: '400px',
+  showClose: true,
+  closeOnOverlay: true,
+});
+const emit = defineEmits<CommonModalEmits>();
 const modalStyle = computed(() => ({ width: typeof props.width === 'number' ? props.width + 'px' : props.width }))
 // const { t } = useI18n();
 const themeStore = useThemeStore();

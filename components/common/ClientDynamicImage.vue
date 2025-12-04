@@ -13,20 +13,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-interface Props {
-  // id
-  id?: string;
-  // 自定义 class
-  class?: string;
-  // 图片描述
-  alt: string;
-  // 客户端渲染的图片路径
-  src: string;
-  // SSR 默认图片路径
-  defaultSrc: string;
-}
+import type { ClientDynamicImageProps } from '../../types/component';
 
-const props = defineProps<Props>();
+const props = defineProps<ClientDynamicImageProps>();
 
 // 合并自定义类名
 const imageClass = computed(() => {

@@ -1,8 +1,11 @@
+import type { UseAppSiteConfigReturn } from '../types/composable';
+
 /**
  * 站点配置 Composable
  * 提供统一的站点配置访问接口
+ * @returns {UseAppSiteConfigReturn} 站点配置相关的响应式数据
  */
-export const useAppSiteConfig = () => {
+export const useAppSiteConfig = (): UseAppSiteConfigReturn => {
   // 默认站点 URL
   const DEFAULT_SITE_URL = 'https://www.dootask.com';
 

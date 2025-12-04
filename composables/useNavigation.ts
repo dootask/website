@@ -1,8 +1,11 @@
+import type { UseNavigationReturn, ThemeMenuItem, LanguageMenuItem } from '../types/navigation';
+
 /**
  * 导航管理 Composable
  * 提供路由判断、菜单项生成等功能
+ * @returns {UseNavigationReturn} 导航管理相关的函数
  */
-export const useNavigation = () => {
+export const useNavigation = (): UseNavigationReturn => {
   const route = useRoute();
   const { getLocalizedRoutes, t } = useLanguage();
   const { siteUrl } = useAppSiteConfig();
@@ -93,10 +96,10 @@ export const useNavigation = () => {
    * 生成主题菜单项
    * @returns 主题菜单项数组
    */
-  const getThemeItems = () => {
+  const getThemeItems = (): ThemeMenuItem[] => {
     return [
-      { text: t('theme.light'), value: 'light' },
-      { text: t('theme.dark'), value: 'dark' },
+      { text: t('theme.light'), value: 'light' as const },
+      { text: t('theme.dark'), value: 'dark' as const },
     ];
   };
 
@@ -104,7 +107,7 @@ export const useNavigation = () => {
    * 生成语言菜单项
    * @returns 语言菜单项数组
    */
-  const getLanguageItems = () => {
+  const getLanguageItems = (): LanguageMenuItem[] => {
     return [
       { text: t('common.lang_zh'), value: 'zh' as const },
       { text: t('common.lang_en'), value: 'en' as const },
