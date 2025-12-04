@@ -6,11 +6,11 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-const themeStore = useThemeStore();
+const { loadTheme } = useTheme();
 const { locale } = useI18n();
 
 onMounted(() => {
-  themeStore.loadTheme(locale.value);
+  loadTheme(locale.value);
 });
 </script>
 

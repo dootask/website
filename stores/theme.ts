@@ -5,47 +5,17 @@ interface ThemeStore {
   lang: string;
 }
 
+/**
+ * 主题 Store
+ * 仅用于存储主题和语言状态
+ * 所有业务逻辑请使用 useTheme 和 useLanguage composables
+ * 
+ * 注意：这个 Store 只负责状态存储，不包含任何业务逻辑
+ */
 export const useThemeStore = defineStore('themeStore', {
   state: (): ThemeStore => ({
     theme: 'light',
     lang: 'zh',
   }),
-  actions: {
-    initializeTheme() {
-      if (import.meta.client) {
-        const savedTheme = sessionStorage.getItem('theme') || 'light';
-        if (savedTheme) {
-          this.theme = savedTheme;
-          document.documentElement.setAttribute('data-theme', savedTheme);
-        }
-      }
-    },
-
-    // Function to set the theme
-    setTheme(theme: string, lang?: string): void {
-      const root = document.documentElement;
-      if (!lang) {
-        lang = localStorage.getItem('language') || this.lang || 'zh';
-      }
-      this.theme = theme;
-      this.lang = lang;
-      root.style.setProperty(
-        '--bg-pic1-url',
-        `url(/img/${theme}/${lang}_dow_pic1.png)`,
-      );
-
-      // Store the theme in localStorage
-      sessionStorage.setItem('theme', theme);
-      document.documentElement.setAttribute('data-theme', theme);
-    },
-
-    loadTheme(lang?: string): void {
-      const theme = sessionStorage.getItem('theme');
-      if (theme == 'dark') {
-        this.setTheme('dark', lang);
-      } else {
-        this.setTheme('light', lang);
-      }
-    },
-  },
+  // 移除了所有 actions，业务逻辑已迁移到 composables
 });

@@ -43,12 +43,12 @@ const topicsName = computed(() => {
   return route.meta.topicsName || '';
 });
 
-const themeStore = useThemeStore();
+const { loadTheme } = useTheme();
 const { locale } = useI18n();
 // 控制脚部是否渲染
 const isFooterReady = ref(false);
 onBeforeMount(() => {
-  themeStore.loadTheme(locale.value);
+  loadTheme(locale.value);
   nextTick(() => {
     isFooterReady.value = true;
   });

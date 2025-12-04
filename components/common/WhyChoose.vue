@@ -264,13 +264,16 @@ const animateBoxes = () => {
   }
 };
 
+// 创建 resize 事件处理函数，保存引用以便后续移除
+const handleResize = () => {
+  checkMobileView();
+  // 调整窗口大小时重新启动自动播放
+  startAutoPlay();
+};
+
 onMounted(() => {
   checkMobileView();
-  window.addEventListener('resize', () => {
-    checkMobileView();
-    // 调整窗口大小时重新启动自动播放
-    startAutoPlay();
-  });
+  window.addEventListener('resize', handleResize);
 
   // 组件挂载时启动自动播放
   startAutoPlay();
@@ -281,7 +284,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', checkMobileView);
+  window.removeEventListener('resize', handleResize);
   stopAutoPlay();
   window.removeEventListener('scroll', animateBoxes);
   if (timerId) {

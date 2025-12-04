@@ -140,18 +140,14 @@
   </footer>
 </template>
 <script setup lang="ts">
-import { toRefs } from 'vue';
 // import { openInNewTab } from '@/utils/common';
 import { useI18n } from 'vue-i18n';
 
-const themeStore = useThemeStore();
+const { theme } = useTheme();
+const { locale } = useI18n();
 
 const config = useRuntimeConfig()
 const siteUrl = config.public.siteUrl
-
-const { locale } = useI18n();
-
-const { theme } = toRefs(themeStore);
 
 const year = new Date().getFullYear();
 </script>

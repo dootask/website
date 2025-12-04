@@ -1,13 +1,13 @@
 <template>
   <img
-    v-show="themeStore.theme === 'dark'"
+    v-show="theme === 'dark'"
     :id="id"
     :class="imageClass"
     :alt="alt"
     :src="imgDarkSrc"
   />
   <img
-    v-show="themeStore.theme === 'light'"
+    v-show="theme === 'light'"
     :id="id"
     :class="imageClass"
     :alt="alt"
@@ -29,7 +29,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const themeStore = useThemeStore();
+const { theme } = useTheme();
 
 // 合并自定义类名
 const imageClass = computed(() => {

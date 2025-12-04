@@ -125,17 +125,17 @@ definePageMeta({
 });
 defineOgImageComponent('NuxtSeo');
 const { locale, t } = useI18n();
-const themeStore = useThemeStore();
+const { theme, setTheme, loadTheme } = useTheme();
 
 // 保存用户原始主题设置
 const originalTheme = ref('light');
 
 onMounted(() => {
   // 保存当前主题设置
-  originalTheme.value = themeStore.theme;
+  originalTheme.value = theme.value;
   
   // 强制设置为明亮模式
-  themeStore.setTheme('light', locale.value);
+  setTheme('light', locale.value);
   
   fetchAdBanner(locale.value);
   fetchAdPlan(locale.value);
@@ -148,11 +148,11 @@ onMounted(() => {
 
 // 监听主题变化，强制保持明亮模式
 const stopWatch = watch(
-  () => themeStore.theme,
+  () => theme.value,
   (newTheme) => {
     if (newTheme !== 'light') {
       nextTick(() => {
-        themeStore.setTheme('light', locale.value);
+        setTheme('light', locale.value);
       });
     }
   }
@@ -162,9 +162,9 @@ const stopWatch = watch(
 onBeforeUnmount(() => {
   stopWatch();
   if (originalTheme.value && originalTheme.value !== 'light') {
-    themeStore.setTheme(originalTheme.value, locale.value);
+    setTheme(originalTheme.value, locale.value);
   } else {
-    themeStore.loadTheme(locale.value);
+    loadTheme(locale.value);
   }
 });
 

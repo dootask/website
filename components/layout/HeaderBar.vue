@@ -94,7 +94,7 @@
           </li>
         </ul>
         <div class="nav-r">
-          <a :href="`${siteUrl}/saas/signup`" target="_blank" :title="$t('common.try_saas_now')">
+          <a :href="saasSignupUrl" target="_blank" :title="$t('common.try_saas_now')">
             <i class="nav-r-icon cloud-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
@@ -141,7 +141,7 @@
           </a>
           <i class="line-1"></i>
           <span class="get-started">
-            <a :href="`${siteUrl}/manage/dashboard`" target="_blank">
+            <a :href="manageDashboardUrl" target="_blank">
               <button class="btn btn-primary">
                 {{ $t('common.try_now') }}
               </button>
@@ -286,7 +286,7 @@
         <li class="drawer-item">
           <a
             class="txt-4001620 txt"
-            :href="`${siteUrl}/saas/signup`"
+            :href="saasSignupUrl"
             target="_blank"
             @click="closeDrawer"
             >{{ $t('common.try_saas_now') }}</a
@@ -295,7 +295,7 @@
         <li class="drawer-item">
           <a
             class="txt-4001620 txt"
-            :href="`${siteUrl}/manage/dashboard`"
+            :href="manageDashboardUrl"
             target="_blank"
             @click="closeDrawer"
             >{{ $t('common.try_now') }}</a
@@ -307,19 +307,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-const themeStore = useThemeStore();
+// 使用 composables
+const { theme, setTheme: setThemeComposable } = useTheme();
+const { locale, switchLanguage } = useLanguage();
+const { isActiveRoute, getMainMenuItems, getSupportItems, getThemeItems, getLanguageItems } = useNavigation();
+const { siteUrl: siteUrlRef } = useAppSiteConfig();
 
-const { theme } = toRefs(themeStore);
+// 创建 computed 属性来生成完整的 URL，确保在模板中正确解包
+// 添加安全检查，确保在 SSR 环境下也能正常工作
+const siteUrl = computed(() => {
+  try {
+    const url = siteUrlRef?.value;
+    return url && typeof url === 'string' ? url : 'https://www.dootask.com';
+  } catch {
+    return 'https://www.dootask.com';
+  }
+});
 
-// 获取当前路由信息
-const route = useRoute();
+const saasSignupUrl = computed(() => {
+  const baseUrl = siteUrl.value;
+  return `${baseUrl}/saas/signup`;
+});
 
-// 在 setup 顶部立即调用 useI18n()
-const { t, setLocale, locale } = useI18n();
+const manageDashboardUrl = computed(() => {
+  const baseUrl = siteUrl.value;
+  return `${baseUrl}/manage/dashboard`;
+});
 
 // 抽屉相关状态和方法
 // const isDrawerOpen = ref(false);
@@ -329,20 +344,14 @@ const isSupportMenuOpen = ref(false);
 const isThemeMenuOpen = ref(false);
 const isLanguageMenuOpen = ref(false);
 
-// 语言切换方法
-const switchLanguage = async (lang: 'zh' | 'en') => {
-  setLocale(lang);
-  // 更新 themeStore
-  themeStore.lang = lang;
-  // 保存到 localStorage
-  localStorage.setItem('language', lang);
-};
-
 // 背景显示状态
 const showBackground = ref(true);
 
-const config = useRuntimeConfig();
-const siteUrl = config.public.siteUrl;
+// 使用 composables 生成菜单项
+const mainMenuItems = computed(() => getMainMenuItems());
+const supportItems = computed(() => getSupportItems());
+const themeItems = computed(() => getThemeItems());
+const languageItems = computed(() => getLanguageItems());
 
 onMounted(() => {
   const supportTxt = document.getElementById('support-txt');
@@ -401,7 +410,7 @@ const showLangPopHandle = (e: Event) => {
 // 设置主题
 const setTheme = (newTheme: 'light' | 'dark' | string) => {
   try {
-    themeStore.setTheme(newTheme);
+    setThemeComposable(newTheme);
   } catch (error) {
     console.error('切换主题时出错:', error);
   }
@@ -422,70 +431,6 @@ const changeMenu = () => {
 const isDrawerVisible = ref(false);
 // const drawerRef = ref<HTMLElement | null>(null);
 
-// 创建带语言前缀的路径
-const localizedRoutes = computed(() => ({
-  product: `/${locale.value}/product`,
-  solutions: `/${locale.value}/solutions`,
-  ai: `/${locale.value}/ai`,
-  pricing: `/${locale.value}/price`,
-  about: `/${locale.value}/about`,
-  download: `/${locale.value}/download`,
-  // help: `/${locale.value}/help`,
-  privacy: `/${locale.value}/privacy`,
-  appstore: `/${locale.value}/appstore`,
-}));
-
-// 菜单项数据
-const mainMenuItems = computed(() => [
-  { text: t('navigation.product'), link: localizedRoutes.value.product },
-  { text: 'AI', link: localizedRoutes.value.ai },
-  { text: t('navigation.solution'), link: localizedRoutes.value.solutions },
-  { text: t('navigation.pricing'), link: localizedRoutes.value.pricing },
-  { text: t('navigation.appstore'), link: localizedRoutes.value.appstore },
-]);
-
-const supportItems = computed(() => [
-  { 
-    text: t('navigation.download'), 
-    link: localizedRoutes.value.download,
-  },
-  {
-    text: t('navigation.help_center'),
-    link: `${siteUrl}/help/basic/quick-start`,
-    target: '_blank',
-  },
-  {
-    text: t('navigation.privacy_policy'),
-    link: localizedRoutes.value.privacy,
-    target: '_blank',
-  },
-  {
-    text: t('navigation.api_docs'),
-    link: `${siteUrl}/docs/index.html`,
-    target: '_blank',
-  },
-  {
-    text: t('navigation.about_us'),
-    link: localizedRoutes.value.about,
-    // target: '_blank',
-  },
-
-]);
-
-const themeItems = computed(() => [
-  { text: t('theme.light'), value: 'light' },
-  { text: t('theme.dark'), value: 'dark' },
-]);
-
-interface LanguageItem {
-  text: string;
-  value: 'zh' | 'en';
-}
-
-const languageItems: LanguageItem[] = [
-  { text: t('common.lang_zh'), value: 'zh' },
-  { text: t('common.lang_en'), value: 'en' },
-];
 
 const openDrawer = () => {
   isDrawerVisible.value = true;
@@ -512,10 +457,5 @@ const expandMenuHandle = (val: string) => {
 const handleSetLocale = (newLocale: 'zh' | 'en') => {
   switchLanguage(newLocale);
   isLangPopVisisble.value = false;
-};
-
-// 判断当前路由是否激活
-const isActiveRoute = (path: string) => {
-  return route.path.includes(path);
 };
 </script>
