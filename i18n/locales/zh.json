@@ -295,33 +295,72 @@
       "deploy": "立即部署",
       "communicate": "联系我们",
       "custom": "定制咨询",
+      "try_now": "立即体验",
+      "free_use": "免费使用",
+      "buy_now": "立即购买",
+      "recommended": "推荐",
       "features_first": "支持私有化部署",
       "features_sec": "技术咨询服务",
       "features_third": "24小时服务响应",
       "features_forth": "Logo定制",
       "features_five": "专属客户经理",
       "features_six": "12小时服务响应",
-      "free": {
-        "name": "普通版",
-        "price": "¥0",
-        "unit": "/月",
-        "limit": "人数无限制"
+      "saas": {
+        "name": "SaaS 体验版",
+        "price": "免费试用",
+        "price7day": "7天免费试用",
+        "limit": "适合个人使用",
+        "link": "#",
+        "feature1": "无需部署",
+        "feature2": "快速体验开源版功能",
+        "feature3": "多端支持"
       },
-      "free_sec": {
-        "name": "专业版",
+      "open_source": {
+        "name": "开源版",
         "price": "¥0",
-        "unit": "/月",
-        "limit": "最多3人"
+        "limit": "限3人以下使用",
+        "feature1": "支持私有化本地部署",
+        "feature2": "源代码开放",
+        "feature3": "多端支持"
+      },
+      "basic": {
+        "name": "基础版",
+        "price": "¥888",
+        "unit": "/人",
+        "limit": "限10人以下小团队",
+        "feature1": "含开源版所有功能",
+        "feature2": "支持私有化本地部署",
+        "feature3": "适用初创团队",
+        "feature4": "一对一技术支持",
+        "feature5": "专属客户经理"
       },
       "pro": {
         "name": "专业版",
         "price": "¥18,888",
-        "limit": "人数无限制"
+        "limit": "人数无限制，适用于企业数字化办公和复杂研发项目管理",
+        "feature1": "含基础版所有功能",
+        "feature2": "支持私有化本地部署",
+        "feature3": "使用人数无限制",
+        "feature4": "企业级功能全开放",
+        "feature5": "源代码开放方便二开",
+        "feature6": "更多应用资源权限",
+        "feature7": "一对一技术支持",
+        "feature8": "赠送一年增值服务",
+        "feature9": "专属客户经理"
       },
       "enterprise": {
         "name": "定制版",
-        "price": "定制",
-        "limit": "人数可定制"
+        "price": "咨询报价",
+        "limit": "提供全面的私有部署解决方案\n适应企业个性化需求",
+        "feature1": "含专业版所有功能",
+        "feature2": "支持私有化本地部署",
+        "feature3": "使用人数无限制",
+        "feature4": "支持企业品牌定制",
+        "feature5": "第三方系统无缝对接",
+        "feature6": "专业解决方案制定",
+        "feature7": "一对一技术支持",
+        "feature8": "赠送一年增值服务",
+        "feature9": "专属客户经理"
       }
     },
     "comparetitle": "对比所有计划",
@@ -344,11 +383,15 @@
     "repcyc": "重复周期",
     "progress": "项目进度",
     "protemp": "项目模版",
+    "tasktemp": "任务模板",
+    "tasktag": "任务标签",
     "gantchar": "甘特图",
     "apply": "应用",
     "appro": "审批中心",
     "okr": "OKR管理",
     "bot": "AI机器人",
+    "asset_management": "资产管理",
+    "performance_appraisal": "绩效考核",
     "meeting": "会议",
     "okrresult": "OKR结果",
     "email": "邮件",
@@ -363,7 +406,11 @@
     "meswithout": "消息免打扰",
     "colorcode": "颜色备注",
     "custom": "定制咨询",
-    "modaldesc": "如果有任何问题，欢迎使用以下方式与我们联系。",
+    "modaldesc": "如有任何问题，欢迎随时与我们联系。",
+    "modalqrcode": "如需购买请扫码添加微信客服专员",
+    "modalqrcode_buy": "如需购买请扫码添加微信客服专员",
+    "modalqrcode_consult": "如需咨询请扫码添加微信客服专员",
+    "modalqrcode_contact": "请扫码添加微信客服专员",
     "modalphone": "座机电话：0771-3164099",
     "modaladdr1": "邮箱地址：service",
     "modaladdr2": "hitosea.com",
@@ -380,7 +427,7 @@
       },
       "nonprofit": {
         "title": "非营利组织",
-        "desc": "经认证的非营利组织可申请 Team 版 50% 长期折扣，助力公益效率提升。",
+        "desc": "经认证的非营利组织可申请 Pro 版 50% 长期折扣，助力公益效率提升。",
         "modal": "请提供您的非营利组织认证文件，我们将为符合条件的组织提供团队版 50% 的持续折扣。"
       },
       "influence": {

@@ -475,6 +475,12 @@ img {
   grid-template-columns: 336px 236px 236px 236px 236px;
 }
 
+.grid-6 {
+  display: grid !important;
+  // grid-template-columns: 306px 192px 192px 192px 192px 192px;
+  grid-template-columns: 306px 216px 216px 216px 216px 216px;
+}
+
 /* padding样式 */
 .pl-26 {
   padding-left: 26px;
@@ -1331,22 +1337,88 @@ footer {
   color: white; /* 暗色模式中的文字颜色 */
 }
 
+.modal-body {
+  text-align: center;
+}
+
 .modal-body p {
   color: inherit;
+  margin: 0;
+}
+
+.modal-qrcode-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 24px 0;
+}
+
+.modal-qrcode {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+}
+
+.modal-qrcode-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+  margin: 0 !important;
+  text-align: center;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.modal-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: inherit;
+  margin-bottom: 20px !important;
+  text-align: center;
+}
+
+.modal-contact-info {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.modal-contact-info p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: inherit;
+  margin: 8px 0 !important;
+}
+
+.modal-content h3 {
+  text-align: center;
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .modal-actions {
-  text-align: right;
+  text-align: center;
+  margin-top: 24px;
 }
 .btn-confirm {
-  padding: 6px 16px;
+  padding: 10px 32px;
   border-radius: 8px;
   border: 1px solid transparent;
   font-size: 16px;
+  font-weight: 500;
   background: #8bd070;
   color: #fffffe;
-  text-align: right;
+  text-align: center;
   cursor: pointer;
+  min-width: 120px;
+  transition: all 0.3s ease;
+}
+
+.btn-confirm:hover {
+  background: #7ab85f;
 }
 
 .external-link-icon::after{

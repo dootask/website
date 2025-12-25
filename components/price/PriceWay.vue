@@ -1,6 +1,6 @@
 <template>
   <div class="topics" style="padding-bottom: 120px;">
-    <div class="topics-con">
+    <div class="topics-con" style="max-width: 1440px;">
       <div class="topics-layout">
         <div class="topics-tit mb-32">
           <span class="txt-6007290 topics-h1">{{ $t('pricing.title') }}</span>
@@ -23,17 +23,18 @@
           >
             <h4 class="txt-5002025 price-card-h4 mb-24">
               {{ plan.name }}
-              <i v-if="index === 2" class="rec-icon">Rec.</i>
+              <i v-if="index === 3" class="rec-icon">{{ $t('pricing.plans.recommended') }}</i>
             </h4>
             <div class="price-card-money mb-12">
               <h2 class="txt-6003645 price-card-h2">
-                {{ plan.price }}
+                <span v-if="index !== 0">{{ plan.price }}</span>
+                <span v-if="index === 0">{{ $t('pricing.plans.saas.price7day') }}</span>
               </h2>
               <i v-if="plan.priceUnit" class="txt-5001628 price-card-unit">{{
                 plan.priceUnit
               }}</i>
             </div>
-            <h6 class="txt-4001624 price-card-h6 mb-24" style="height: 48px">
+            <h6 class="txt-4001624 price-card-h6 mb-24" style="height: 48px; white-space: pre-line;">
               {{ plan.userLimit }}
             </h6>
             <button
@@ -76,11 +77,17 @@
     >
       <div class="modal-content" @click.stop>
         <h3>{{ modalTitle }}</h3>
-        <br />
         <div class="modal-body">
-          <p>{{ $t('pricing.modaldesc') }}</p>
-          <p>{{ $t('pricing.modalphone') }}</p>
-          <p>{{ $t('pricing.modaladdr1') }}@{{ $t('pricing.modaladdr2') }}</p>
+          <!-- 客服二维码图片 -->
+          <div class="modal-qrcode-wrapper">
+            <img src="/img/side_nav_wechat.png" alt="qrcode" class="modal-qrcode"/>
+            <p class="modal-qrcode-label">{{ $t(modalQrcodeKey) }}</p>
+          </div>
+          <p class="modal-desc">{{ $t('pricing.modaldesc') }}</p>
+          <div class="modal-contact-info">
+            <p>{{ $t('pricing.modalphone') }}</p>
+            <p>{{ $t('pricing.modaladdr1') }}@{{ $t('pricing.modaladdr2') }}</p>
+          </div>
         </div>
         <div class="modal-actions">
           <button class="btn-confirm" @click="closeModal">
@@ -93,17 +100,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useI18n } from 'vue-i18n'; // 假设你的主题管理 store 路径
+import { ref, onMounted, computed, toRefs, onBeforeUnmount } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { throttle } from '../../utils/debounceThrottle';
 
 const { t } = useI18n();
 const themeStore = useThemeStore();
 const { theme } = toRefs(themeStore);
+const { siteUrl: siteUrlRef } = useAppSiteConfig();
 
-const selectedPlanIndex = ref(2);
+// 获取站点 URL
+const siteUrl = computed(() => {
+  try {
+    const url = siteUrlRef?.value;
+    return url && typeof url === 'string' ? url : 'https://www.dootask.com';
+  } catch {
+    return 'https://www.dootask.com';
+  }
+});
+
+// SaaS 注册链接
+const saasSignupUrl = computed(() => {
+  return `${siteUrl.value}/saas/signup`;
+});
+
+const selectedPlanIndex = ref(3);
 const hoveredPlanIndex = ref(-1);
 const showContactModal = ref(false);
 const modalTitle = ref('');
+const modalQrcodeKey = ref('pricing.modalqrcode');
 const animateLoaded = ref(false);
 
 const PriceCardRef = ref<HTMLElement | null>(null);
@@ -124,66 +149,117 @@ interface PricePlan {
 }
 const pricePlans = computed((): PricePlan[] => [
   {
-    name: t('pricing.plans.free.name'),
-    price: '¥0',
-    priceUnit: t('pricing.plans.free.unit'),
-    userLimit: t('pricing.plans.free.limit'),
-    buttonText: t('pricing.plans.deploy'),
-    buttonLink: 'https://github.com/kuaifan/dootask/tree/v0.13.0',
+    name: t('pricing.plans.saas.name'),
+    price: t('pricing.plans.saas.price'),
+    userLimit: t('pricing.plans.saas.limit'),
+    buttonText: t('pricing.plans.try_now'),
+    buttonLink: saasSignupUrl.value,
     features: [
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_first'),
+        text: t('pricing.plans.saas.feature1'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.saas.feature2'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.saas.feature3'),
       },
     ],
   },
   {
-    name: t('pricing.plans.free_sec.name'),
-    price: '¥0',
-    priceUnit: t('pricing.plans.free_sec.unit'),
-    userLimit: t('pricing.plans.free_sec.limit'),
-    buttonText: t('pricing.plans.deploy'),
-    buttonLink: 'https://github.com/kuaifan/dootask/tree/pro',
+    name: t('pricing.plans.open_source.name'),
+    price: t('pricing.plans.open_source.price'),
+    userLimit: t('pricing.plans.open_source.limit'),
+    buttonText: t('pricing.plans.free_use'),
+    buttonLink: 'https://github.com/kuaifan/dootask',
     features: [
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_first'),
+        text: t('pricing.plans.open_source.feature1'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_sec'),
+        text: t('pricing.plans.open_source.feature2'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_third'),
+        text: t('pricing.plans.open_source.feature3'),
+      },
+    ],
+  },
+  {
+    name: t('pricing.plans.basic.name'),
+    price: t('pricing.plans.basic.price'),
+    priceUnit: t('pricing.plans.basic.unit'),
+    userLimit: t('pricing.plans.basic.limit'),
+    buttonText: t('pricing.plans.buy_now'),
+    features: [
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.basic.feature1'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.basic.feature2'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.basic.feature3'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.basic.feature4'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.basic.feature5'),
       },
     ],
   },
   {
     name: t('pricing.plans.pro.name'),
-    price: '¥18,888',
+    price: t('pricing.plans.pro.price'),
     userLimit: t('pricing.plans.pro.limit'),
-    buttonText: t('pricing.plans.communicate'),
+    buttonText: t('pricing.plans.buy_now'),
     features: [
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_first'),
+        text: t('pricing.plans.pro.feature1'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_sec'),
+        text: t('pricing.plans.pro.feature2'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_forth'),
+        text: t('pricing.plans.pro.feature3'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_five'),
+        text: t('pricing.plans.pro.feature4'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_six'),
+        text: t('pricing.plans.pro.feature5'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.pro.feature6'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.pro.feature7'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.pro.feature8'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.pro.feature9'),
       },
     ],
   },
@@ -195,23 +271,39 @@ const pricePlans = computed((): PricePlan[] => [
     features: [
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_first'),
+        text: t('pricing.plans.enterprise.feature1'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_sec'),
+        text: t('pricing.plans.enterprise.feature2'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_forth'),
+        text: t('pricing.plans.enterprise.feature3'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_five'),
+        text: t('pricing.plans.enterprise.feature4'),
       },
       {
         icon: '/img/price_icon1.svg',
-        text: t('pricing.plans.features_six'),
+        text: t('pricing.plans.enterprise.feature5'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.enterprise.feature6'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.enterprise.feature7'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.enterprise.feature8'),
+      },
+      {
+        icon: '/img/price_icon1.svg',
+        text: t('pricing.plans.enterprise.feature9'),
       },
     ],
   },
@@ -238,12 +330,19 @@ function handlePlanSelect(index: number) {
   // 将当前点击的卡片设置为选中状态
   selectCard(index);
 
-  // 对于有通信按钮的卡片，打开模态框
+  // 对于需要打开模态框的按钮，打开联系模态框
   if (pricePlan.buttonText === t('pricing.plans.communicate')) {
     modalTitle.value = t('pricing.plans.communicate');
+    modalQrcodeKey.value = 'pricing.modalqrcode_contact';
     showContactModal.value = true;
   } else if (pricePlan.buttonText === t('pricing.plans.custom')) {
     modalTitle.value = t('pricing.custom');
+    modalQrcodeKey.value = 'pricing.modalqrcode_consult';
+    showContactModal.value = true;
+  } else if (pricePlan.buttonText === t('pricing.plans.buy_now')) {
+    // 立即购买按钮也打开联系模态框
+    modalTitle.value = t('pricing.plans.buy_now');
+    modalQrcodeKey.value = 'pricing.modalqrcode_buy';
     showContactModal.value = true;
   }
 }
