@@ -15,9 +15,9 @@ on:
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: hub.hitosea.com
+  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: official-website/dootask-site
+  IMAGE_NAME: ${{ github.repository }}
   PROJECT_URL: xxyijixx/dootask-help
   PROJECT_PATH: help
 
@@ -57,13 +57,12 @@ jobs:
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
-      - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: devops
-          password: ${{ secrets.DOCKERPASSWD }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -80,10 +79,9 @@ jobs:
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: |
-            ${{ steps.meta.outputs.tags }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          push: true
+          tags: 
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/web:latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
