@@ -11,7 +11,7 @@ on:
       branch: 
         description: 'branch (e.g., release)'
         required: true
-        default: 'pages'
+        default: 'main'
 
 env:
   # Use docker.io for Docker Hub if empty
