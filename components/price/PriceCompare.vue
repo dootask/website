@@ -179,7 +179,7 @@ const siteUrl = computed(() => {
 
 // SaaS 注册链接
 const saasSignupUrl = computed(() => {
-  return `${siteUrl.value}/saas/signup`;
+  return 'https://demo.n.dootask.com/';
 });
 
 const showContactModal = ref(false);

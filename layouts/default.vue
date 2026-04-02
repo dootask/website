@@ -1,9 +1,9 @@
 <template>
   <div :class="layoutClass">
     <HeaderBar :class="headerClass">
-      <template #ad>
+      <!-- <template #ad>
         <AdBar />
-      </template>
+      </template> -->
       <!-- <component :is="headerContent" v-if="headerContent" /> -->
       <template #default>
         <IndexMain v-if="topicsName === 'index'" />

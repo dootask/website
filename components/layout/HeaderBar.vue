@@ -327,13 +327,11 @@ const siteUrl = computed(() => {
 });
 
 const saasSignupUrl = computed(() => {
-  const baseUrl = siteUrl.value;
-  return `${baseUrl}/saas/signup`;
+  return 'https://demo.n.dootask.com/';
 });
 
 const manageDashboardUrl = computed(() => {
-  const baseUrl = siteUrl.value;
-  return `${baseUrl}/manage/dashboard`;
+  return 'https://demo.n.dootask.com/';
 });
 
 // 抽屉相关状态和方法
