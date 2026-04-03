@@ -1,0 +1,10 @@
+services:
+
+  dootask-site:
+    image: ghcr.io/dootask/website/web:latest
+    container_name: dootask-site
+    ports:
+      - "8080:3000"
+    volumes:
+      - ./uploads:/app/storage/uploads
+    restart: unless-stopped
