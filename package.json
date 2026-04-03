@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npm run build:help && nuxt build",
     "build:nuxt": "nuxt build",
-    "build:help": "cd help && npm install && npm run docs:build && rm -rf ../public/help && cp -r docs/.vitepress/dist ../public/help",
+    "build:help": "npm --prefix help install && npm --prefix help run docs:build && rm -rf public/help && cp -r help/docs/.vitepress/dist public/help",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "generate-playwright": "ENABLE_PLAYWRIGHT=true nuxt generate",
