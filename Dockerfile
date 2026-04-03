@@ -16,7 +16,6 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY --from=builder /app/.output .output
-COPY --from=builder /app/public/help /var/www/public/help
 
 ENV HOST=0.0.0.0
 ENV PORT=3000
