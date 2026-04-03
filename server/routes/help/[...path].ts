@@ -16,9 +16,15 @@ const mimeTypes: Record<string, string> = {
   '.woff2': 'font/woff2',
 }
 
+function resolveHelpDir() {
+  const prodDir = join(process.cwd(), '.output', 'public', 'help')
+  if (existsSync(prodDir)) return prodDir
+  return join(process.cwd(), 'public', 'help')
+}
+
 export default defineEventHandler((event) => {
   const path = event.context.params?.path || ''
-  const helpDir = join(process.cwd(), 'public', 'help')
+  const helpDir = resolveHelpDir()
 
   // Try exact file first, then with .html extension, then as directory index
   const candidates = [
