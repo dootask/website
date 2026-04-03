@@ -3,9 +3,13 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY . .
-RUN ls -la /app/help/ || echo "help dir missing"
+RUN if [ -f help/package.json ]; then \
+      npm run build:help; \
+    elif [ -f help/index.html ]; then \
+      rm -rf public/help && mv help public/help; \
+    fi
 RUN npm ci
-RUN npm run build
+RUN npm run build:nuxt
 
 FROM node:20-alpine
 
