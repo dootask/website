@@ -3,6 +3,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY . .
+RUN ls -la /app/help/ || echo "help dir missing"
 RUN npm ci
 RUN npm run build
 
