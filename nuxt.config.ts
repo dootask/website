@@ -16,9 +16,6 @@ export default defineNuxtConfig({
   nitro: {
     plugins: ['~/server/plugins/playwright.server.ts'],
   },
-  routeRules: {
-    '/help/**': { static: true },
-  },
   css: ['~/assets/scss/theme.scss'],
   app: {
     head: {
