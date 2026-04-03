@@ -121,7 +121,7 @@ const siteUrl = computed(() => {
 
 // SaaS 注册链接
 const saasSignupUrl = computed(() => {
-  return 'https://demo.n.dootask.com/';
+  return 'https://demo.dootask.com/';
 });
 
 const selectedPlanIndex = ref(3);

@@ -8,7 +8,6 @@ import type { UseNavigationReturn, ThemeMenuItem, LanguageMenuItem } from '../ty
 export const useNavigation = (): UseNavigationReturn => {
   const route = useRoute();
   const { getLocalizedRoutes, t } = useLanguage();
-  const { siteUrl } = useAppSiteConfig();
 
   /**
    * 判断当前路由是否激活
@@ -41,11 +40,6 @@ export const useNavigation = (): UseNavigationReturn => {
   const getSupportItems = () => {
     try {
       const routes = getLocalizedRoutes();
-      // 安全获取 siteUrl，确保在 SSR 环境下也能正常工作
-      const siteUrlValue = siteUrl && typeof siteUrl.value !== 'undefined' 
-        ? siteUrl.value 
-        : 'https://www.dootask.com';
-      
       return [
         {
           text: t('navigation.download'),
@@ -53,7 +47,7 @@ export const useNavigation = (): UseNavigationReturn => {
         },
         {
           text: t('navigation.help_center'),
-          link: `${siteUrlValue}/help/basic/quick-start`,
+          link: '/help/basic/quick-start',
           target: '_blank',
         },
         {
@@ -63,7 +57,7 @@ export const useNavigation = (): UseNavigationReturn => {
         },
         {
           text: t('navigation.api_docs'),
-          link: `${siteUrlValue}/docs/index.html`,
+          link: 'https://demo.dootask.com/docs/index.html',
           target: '_blank',
         },
         {

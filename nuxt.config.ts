@@ -10,8 +10,14 @@ export default defineNuxtConfig({
   ],
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
+  devServer: {
+    host: '0.0.0.0',
+  },
   nitro: {
     plugins: ['~/server/plugins/playwright.server.ts'],
+  },
+  routeRules: {
+    '/help/**': { static: true },
   },
   css: ['~/assets/scss/theme.scss'],
   app: {
@@ -55,6 +61,7 @@ export default defineNuxtConfig({
     autoLastmod: true,
   },
   runtimeConfig: {
+    uploadToken: process.env.UPLOAD_TOKEN || '',
     public: {
       siteUrl: 'https://www.dootask.com'
     }

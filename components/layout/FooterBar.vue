@@ -53,7 +53,7 @@
                   }}</NuxtLink>
                 </li>
                 <li class="footer-ol-item mb-16">
-                  <a :href="`${siteUrl}/help/basic/quick-start`" target="_blank" class="txt-4001624 txt external-link-icon">{{$t('footer.help')}}</a>
+                  <a href="/help/basic/quick-start" target="_blank" class="txt-4001624 txt external-link-icon">{{$t('footer.help')}}</a>
                 </li>
                 <li class="footer-ol-item mb-16">
                   <NuxtLink
@@ -66,7 +66,7 @@
                 <li class="footer-ol-item mb-16">
                   <a
                     class="txt-4001624 txt external-link-icon"
-                    :href="`${siteUrl}/docs/index.html`"
+                    :href="'https://demo.dootask.com/docs/index.html'"
                     target="_blank"
                     >{{ $t('footer.api_docs') }}</a
                   >
@@ -145,9 +145,6 @@ import { useI18n } from 'vue-i18n';
 
 const { theme } = useTheme();
 const { locale } = useI18n();
-
-const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl
 
 const year = new Date().getFullYear();
 </script>

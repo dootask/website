@@ -117,8 +117,6 @@ definePageMeta({
   layoutClass: 'log-page',
 });
 
-const config = useRuntimeConfig();
-const siteUrl = config.public.siteUrl;
 const { t, locale } = useI18n();
 
 const themeStore = useThemeStore();
@@ -251,7 +249,7 @@ const fetchLogsData = async () => {
       logsData.value = cachedLogs;
       renderLogs(cachedLogs);
     } else {
-      const url = `${siteUrl}/api/system/get/updatelog`;
+      const url = `/api/changelog`;
       const response = await axios.get(url);
       const markdown = response.data.data.updateLog;
       const html = markdownIt().render(markdown);

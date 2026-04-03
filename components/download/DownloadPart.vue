@@ -151,7 +151,7 @@
         <a
           class="download-other-btn dow-animate-box"
           style="--delay: 0.5s"
-          :href="`${siteUrl}/desktop/publish/latest`"
+          :href="'https://github.com/kuaifan/dootask/releases'"
           target="_blank"
         >
           <span>{{ $t('download.other') }}</span>
@@ -163,9 +163,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-
-const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl
 
 const platforms = ref([
   {
@@ -179,8 +176,7 @@ const platforms = ref([
     id: 'android',
     name: 'Android',
     icon: '/img/dow_android.svg',
-    normalLink:
-      `${siteUrl}/desktop/publish/latest?platform=android`,
+    normalLink: '/api/download/latest?platform=android',
   },
   {
     id: 'mac',
@@ -189,11 +185,11 @@ const platforms = ref([
     chips: [
       {
         name: 'Apple Chips',
-        link: `${siteUrl}/desktop/publish/latest?platform=mac&arch=arm64`,
+        link: '/api/download/latest?platform=mac&arch=arm64',
       },
       {
         name: 'Intel Chips',
-        link: `${siteUrl}/desktop/publish/latest?platform=mac&arch=x64`,
+        link: '/api/download/latest?platform=mac&arch=x64',
       },
     ],
   },
@@ -204,11 +200,11 @@ const platforms = ref([
     normalLinks: [
       {
         name: 'ARM64',
-        link: `${siteUrl}/desktop/publish/latest?platform=win&arch=arm64`,
+        link: '/api/download/latest?platform=win&arch=arm64',
       },
       {
         name: 'X64',
-        link: `${siteUrl}/desktop/publish/latest?platform=win&arch=x64`,
+        link: '/api/download/latest?platform=win&arch=x64',
       },
     ],
   },

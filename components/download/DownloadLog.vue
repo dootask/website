@@ -57,9 +57,6 @@ const themeStore = useThemeStore();
 
 const { locale } = useI18n();
 
-const config = useRuntimeConfig()
-const siteUrl = config.public.siteUrl
-
 const { theme, lang } = toRefs(themeStore);
 
 interface ReleaseVersion {
@@ -99,7 +96,7 @@ const goToMoreLogs = () => {
 const fetchReleases = async () => {
   // loading.value = true;
   try {
-    const url = `${siteUrl}/api/system/get/updatelog`;
+    const url = `/api/changelog`;
     const response = await axios.get(url);
     const changelog = response.data.data.updateLog;
     const regex = /## (.*?)\n([\s\S]*?)(?=\n\n## |$)/g;
