@@ -1,9 +1,7 @@
-import { resolve } from 'path'
-import { existsSync, createReadStream, statSync } from 'fs'
 import {
-  readManifest,
-  getManifestKey,
-  PACKAGES_DIR,
+  findReleasePackage,
+  getReleaseFilePath,
+  getFileStream,
   VALID_PLATFORMS,
   VALID_ARCHS,
 } from '../../utils/storage'
@@ -27,30 +25,25 @@ export default defineEventHandler((event) => {
     })
   }
 
-  const manifest = readManifest()
-  const key = getManifestKey(platform, platform !== 'android' ? arch : undefined)
-  const pkg = manifest[key]
-
-  if (!pkg) {
+  // 查找匹配的安装包
+  const filename = findReleasePackage(platform, platform !== 'android' ? arch : undefined)
+  if (!filename) {
     throw createError({ statusCode: 404, statusMessage: 'No package found for this platform/arch' })
   }
 
-  // 构建文件路径
-  const dir = platform !== 'android' && arch ? resolve(PACKAGES_DIR, platform, arch) : resolve(PACKAGES_DIR, platform)
-  const filePath = resolve(dir, pkg.filename)
-
-  if (!existsSync(filePath)) {
+  // 获取文件路径
+  const filePath = getReleaseFilePath(filename)
+  if (!filePath) {
     throw createError({ statusCode: 404, statusMessage: 'Package file not found' })
   }
 
-  const stat = statSync(filePath)
+  const { stream, size } = getFileStream(filePath)
 
-  // 设置下载响应头
   setHeaders(event, {
     'Content-Type': 'application/octet-stream',
-    'Content-Disposition': `attachment; filename="${encodeURIComponent(pkg.filename)}"`,
-    'Content-Length': String(stat.size),
+    'Content-Disposition': `attachment; filename="${encodeURIComponent(filename)}"`,
+    'Content-Length': String(size),
   })
 
-  return sendStream(event, createReadStream(filePath))
+  return sendStream(event, stream)
 })

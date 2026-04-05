@@ -1,17 +1,6 @@
-import { resolve } from 'path'
-import { writeFileSync } from 'fs'
-import {
-  verifyToken,
-  getPackageDir,
-  getManifestKey,
-  readManifest,
-  writeManifest,
-  VALID_PLATFORMS,
-  VALID_ARCHS,
-} from '../../utils/storage'
+import { verifyToken, saveDraftFile, VALID_PLATFORMS, VALID_ARCHS } from '../../utils/storage'
 
 export default defineEventHandler(async (event) => {
-  // 验证 Token
   if (!verifyToken(event)) {
     throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
   }
@@ -36,24 +25,7 @@ export default defineEventHandler(async (event) => {
 
   const { platform, arch, version } = fields
 
-  // 验证参数
-  if (!platform || !VALID_PLATFORMS.includes(platform as any)) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: `Invalid platform. Must be one of: ${VALID_PLATFORMS.join(', ')}`,
-    })
-  }
-
-  // android 不需要 arch，其他平台必须提供
-  if (platform !== 'android') {
-    if (!arch || !VALID_ARCHS.includes(arch as any)) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: `Invalid arch. Must be one of: ${VALID_ARCHS.join(', ')}`,
-      })
-    }
-  }
-
+  // version 必填
   if (!version) {
     throw createError({ statusCode: 400, statusMessage: 'Missing "version" field' })
   }
@@ -62,31 +34,42 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'No file uploaded' })
   }
 
-  // 保存文件
-  const dir = getPackageDir(platform, platform !== 'android' ? arch : undefined)
-  const filePath = resolve(dir, fileData.filename)
-  writeFileSync(filePath, fileData.data)
+  // 有 platform 时校验（安装包），无 platform 时为辅助文件
+  const meta: { platform?: string; arch?: string } = {}
 
-  // 更新清单
-  const manifest = readManifest()
-  const key = getManifestKey(platform, platform !== 'android' ? arch : undefined)
-  manifest[key] = {
-    filename: fileData.filename,
-    version,
-    size: fileData.data.length,
-    uploadedAt: new Date().toISOString(),
+  if (platform) {
+    if (!VALID_PLATFORMS.includes(platform as any)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: `Invalid platform. Must be one of: ${VALID_PLATFORMS.join(', ')}`,
+      })
+    }
+    meta.platform = platform
+
+    // android 不需要 arch，其他平台必须提供
+    if (platform !== 'android') {
+      if (!arch || !VALID_ARCHS.includes(arch as any)) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: `Invalid arch. Must be one of: ${VALID_ARCHS.join(', ')}`,
+        })
+      }
+      meta.arch = arch
+    }
   }
-  writeManifest(manifest)
+
+  // 保存到 draft
+  saveDraftFile(version, fileData.filename, fileData.data, meta)
 
   return {
     success: true,
     message: 'Package uploaded',
     data: {
-      platform,
-      arch: platform !== 'android' ? arch : undefined,
-      version,
       filename: fileData.filename,
       size: fileData.data.length,
+      platform: meta.platform,
+      arch: meta.arch,
+      version,
     },
   }
 })
