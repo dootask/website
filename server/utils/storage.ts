@@ -130,24 +130,25 @@ export function writeChangelog(content: string) {
   writeFileSync(CHANGELOG_PATH, content, 'utf-8')
 }
 
-// 保存文件到 draft
-export function saveDraftFile(version: string, filename: string, data: Buffer): void {
+// 确保 draft 版本目录就绪（如果版本不同则清除旧 draft）
+export function ensureDraftVersion(version: string): void {
   const info = readVersionInfo()
 
-  // 如果 draft 版本不同，清除旧 draft
   if (info.draft && info.draft !== version) {
     removeDir(resolve(DRAFT_DIR, info.draft))
   }
 
-  // 更新版本号
-  info.draft = version
-  writeVersionInfo(info)
+  if (info.draft !== version) {
+    info.draft = version
+    writeVersionInfo(info)
+  }
+}
 
-  // 保存文件
+// 获取 draft 版本的存储目录
+export function getDraftDir(version: string): string {
   const dir = resolve(DRAFT_DIR, sanitizeName(version))
   ensureDir(dir)
-  const filePath = resolve(dir, sanitizeName(filename))
-  writeFileSync(filePath, data)
+  return dir
 }
 
 // 将 draft 发布为 release

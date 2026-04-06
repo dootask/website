@@ -1,48 +1,89 @@
-import { verifyToken, saveDraftFile } from '../../utils/storage'
+import Busboy from 'busboy'
+import { createWriteStream } from 'fs'
+import { resolve } from 'path'
+import { verifyToken, getDraftDir, ensureDraftVersion } from '../../utils/storage'
 
 export default defineEventHandler(async (event) => {
   if (!verifyToken(event)) {
     throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
   }
 
-  const formData = await readMultipartFormData(event)
+  const headers = getHeaders(event)
+  const nodeReq = event.node.req
 
-  if (!formData || formData.length === 0) {
-    throw createError({ statusCode: 400, statusMessage: 'No form data received' })
-  }
+  return new Promise((resolvePromise, rejectPromise) => {
+    const fields: Record<string, string> = {}
+    let filePromise: Promise<{ filename: string; size: number }> | null = null
 
-  // 解析表单字段
-  const fields: Record<string, string> = {}
-  let fileData: { filename: string; data: Buffer } | null = null
+    const busboy = Busboy({ headers })
 
-  for (const part of formData) {
-    if (part.filename) {
-      fileData = { filename: part.filename, data: part.data }
-    } else if (part.name) {
-      fields[part.name] = part.data.toString('utf-8')
-    }
-  }
+    busboy.on('field', (name: string, value: string) => {
+      fields[name] = value
+    })
 
-  const { version } = fields
+    busboy.on('file', (_name: string, stream: NodeJS.ReadableStream, info: { filename: string }) => {
+      // 将文件写入包装为 Promise，在 finish 时等待
+      filePromise = new Promise((resolveFile, rejectFile) => {
+        const version = fields.version
+        if (!version) {
+          stream.resume()
+          rejectFile(new Error('version field must appear before file in form data'))
+          return
+        }
 
-  if (!version) {
-    throw createError({ statusCode: 400, statusMessage: 'Missing "version" field' })
-  }
+        ensureDraftVersion(version)
+        const dir = getDraftDir(version)
+        const filePath = resolve(dir, info.filename)
+        const writeStream = createWriteStream(filePath)
 
-  if (!fileData) {
-    throw createError({ statusCode: 400, statusMessage: 'No file uploaded' })
-  }
+        let size = 0
+        stream.on('data', (chunk: Buffer) => {
+          size += chunk.length
+        })
 
-  // 保存到 draft
-  saveDraftFile(version, fileData.filename, fileData.data)
+        stream.pipe(writeStream)
 
-  return {
-    success: true,
-    message: 'Package uploaded',
-    data: {
-      filename: fileData.filename,
-      size: fileData.data.length,
-      version,
-    },
-  }
+        writeStream.on('finish', () => {
+          resolveFile({ filename: info.filename, size })
+        })
+
+        writeStream.on('error', (err: Error) => {
+          rejectFile(err)
+        })
+      })
+    })
+
+    busboy.on('finish', async () => {
+      try {
+        if (!fields.version) {
+          rejectPromise(createError({ statusCode: 400, statusMessage: 'Missing "version" field' }))
+          return
+        }
+        if (!filePromise) {
+          rejectPromise(createError({ statusCode: 400, statusMessage: 'No file uploaded' }))
+          return
+        }
+
+        const savedFile = await filePromise
+
+        resolvePromise({
+          success: true,
+          message: 'Package uploaded',
+          data: {
+            filename: savedFile.filename,
+            size: savedFile.size,
+            version: fields.version,
+          },
+        })
+      } catch (err: any) {
+        rejectPromise(createError({ statusCode: 500, statusMessage: err.message || 'Upload failed' }))
+      }
+    })
+
+    busboy.on('error', (err: Error) => {
+      rejectPromise(createError({ statusCode: 500, statusMessage: 'Upload failed: ' + err.message }))
+    })
+
+    nodeReq.pipe(busboy)
+  })
 })
