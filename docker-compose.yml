@@ -7,4 +7,6 @@ services:
       - "8080:3000"
     volumes:
       - ./uploads:/app/storage/uploads
+    environment:
+      - NUXT_UPLOAD_TOKEN=${UPLOAD_TOKEN}
     restart: unless-stopped
