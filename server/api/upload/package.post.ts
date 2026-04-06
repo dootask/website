@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // 保存到 draft
-  saveDraftFile(version, fileData.filename, fileData.data, meta)
+  await saveDraftFile(version, fileData.filename, fileData.data, meta)
 
   return {
     success: true,

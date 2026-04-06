@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing or invalid "version" field' })
   }
 
-  const result = publishRelease(body.version)
+  const result = await publishRelease(body.version)
 
   if (!result.success) {
     throw createError({ statusCode: 400, statusMessage: result.message })

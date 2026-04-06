@@ -84,6 +84,18 @@ export function writeManifest(manifest: Manifest) {
   writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
 }
 
+// manifest 操作锁，防止并发读写丢失条目
+let manifestLock: Promise<void> = Promise.resolve()
+
+function withManifestLock<T>(fn: () => T | Promise<T>): Promise<T> {
+  const next = manifestLock.then(fn)
+  manifestLock = next.then(
+    () => {},
+    () => {}
+  )
+  return next
+}
+
 // 读取更新日志
 export function readChangelog(): string {
   if (!existsSync(CHANGELOG_PATH)) {
@@ -123,77 +135,81 @@ export function saveDraftFile(
   filename: string,
   data: Buffer,
   meta: { platform?: string; arch?: string }
-): void {
-  const manifest = readManifest()
+): Promise<void> {
+  return withManifestLock(() => {
+    const manifest = readManifest()
 
-  // 如果 draft 版本不同，清除旧 draft
-  if (manifest.draft && manifest.draft.version !== version) {
-    removeDir(resolve(DRAFT_DIR, manifest.draft.version))
-    manifest.draft = null
-  }
-
-  // 初始化 draft entry
-  if (!manifest.draft) {
-    manifest.draft = { version, files: {} }
-  }
-
-  // 保存文件
-  const dir = getDraftDir(version)
-  const safeFilename = sanitizeName(filename)
-  const filePath = resolve(dir, safeFilename)
-  writeFileSync(filePath, data)
-
-  // 更新 manifest
-  const fileInfo: FileInfo = {
-    size: data.length,
-    uploadedAt: new Date().toISOString(),
-  }
-  if (meta.platform) {
-    fileInfo.platform = meta.platform
-    if (meta.arch) {
-      fileInfo.arch = meta.arch
+    // 如果 draft 版本不同，清除旧 draft
+    if (manifest.draft && manifest.draft.version !== version) {
+      removeDir(resolve(DRAFT_DIR, manifest.draft.version))
+      manifest.draft = null
     }
-  }
-  manifest.draft.files[safeFilename] = fileInfo
-  writeManifest(manifest)
+
+    // 初始化 draft entry
+    if (!manifest.draft) {
+      manifest.draft = { version, files: {} }
+    }
+
+    // 保存文件
+    const dir = getDraftDir(version)
+    const safeFilename = sanitizeName(filename)
+    const filePath = resolve(dir, safeFilename)
+    writeFileSync(filePath, data)
+
+    // 更新 manifest
+    const fileInfo: FileInfo = {
+      size: data.length,
+      uploadedAt: new Date().toISOString(),
+    }
+    if (meta.platform) {
+      fileInfo.platform = meta.platform
+      if (meta.arch) {
+        fileInfo.arch = meta.arch
+      }
+    }
+    manifest.draft.files[safeFilename] = fileInfo
+    writeManifest(manifest)
+  })
 }
 
 // 将 draft 发布为 release
-export function publishRelease(version: string): { success: boolean; message: string } {
-  const safeVersion = sanitizeName(version)
-  const manifest = readManifest()
+export function publishRelease(version: string): Promise<{ success: boolean; message: string }> {
+  return withManifestLock(() => {
+    const safeVersion = sanitizeName(version)
+    const manifest = readManifest()
 
-  if (!manifest.draft) {
-    return { success: false, message: 'No draft version found' }
-  }
-  if (manifest.draft.version !== safeVersion) {
-    return {
-      success: false,
-      message: `Draft version is ${manifest.draft.version}, not ${safeVersion}`,
+    if (!manifest.draft) {
+      return { success: false, message: 'No draft version found' }
     }
-  }
+    if (manifest.draft.version !== safeVersion) {
+      return {
+        success: false,
+        message: `Draft version is ${manifest.draft.version}, not ${safeVersion}`,
+      }
+    }
 
-  const draftPath = resolve(DRAFT_DIR, safeVersion)
-  if (!existsSync(draftPath)) {
-    return { success: false, message: 'Draft directory not found' }
-  }
+    const draftPath = resolve(DRAFT_DIR, safeVersion)
+    if (!existsSync(draftPath)) {
+      return { success: false, message: 'Draft directory not found' }
+    }
 
-  // 清除旧 release
-  if (manifest.release) {
-    removeDir(resolve(RELEASE_DIR, manifest.release.version))
-  }
+    // 清除旧 release
+    if (manifest.release) {
+      removeDir(resolve(RELEASE_DIR, manifest.release.version))
+    }
 
-  // 移动 draft → release
-  const releasePath = resolve(RELEASE_DIR, safeVersion)
-  ensureDir(RELEASE_DIR)
-  renameSync(draftPath, releasePath)
+    // 移动 draft → release
+    const releasePath = resolve(RELEASE_DIR, safeVersion)
+    ensureDir(RELEASE_DIR)
+    renameSync(draftPath, releasePath)
 
-  // 更新 manifest
-  manifest.release = manifest.draft
-  manifest.draft = null
-  writeManifest(manifest)
+    // 更新 manifest
+    manifest.release = manifest.draft
+    manifest.draft = null
+    writeManifest(manifest)
 
-  return { success: true, message: 'Release published' }
+    return { success: true, message: 'Release published' }
+  })
 }
 
 // 查找 release 中匹配的安装包文件名
