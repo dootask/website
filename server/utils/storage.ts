@@ -6,6 +6,7 @@ import {
   writeFileSync,
   renameSync,
   rmSync,
+  readdirSync,
   statSync,
   createReadStream,
 } from 'fs'
@@ -22,7 +23,7 @@ export const RELEASE_DIR = resolve(STORAGE_ROOT, 'release')
 // 更新日志文件路径
 export const CHANGELOG_PATH = resolve(STORAGE_ROOT, 'changelog.md')
 
-// 包清单文件路径
+// 版本记录文件
 export const MANIFEST_PATH = resolve(STORAGE_ROOT, 'manifest.json')
 
 // 允许的平台和架构
@@ -32,22 +33,13 @@ export const VALID_ARCHS = ['x64', 'arm64'] as const
 export type Platform = (typeof VALID_PLATFORMS)[number]
 export type Arch = (typeof VALID_ARCHS)[number]
 
-export interface FileInfo {
-  platform?: string
-  arch?: string
-  size: number
-  uploadedAt: string
+interface VersionInfo {
+  draft: string | null
+  release: string | null
 }
 
-export interface VersionEntry {
-  version: string
-  files: Record<string, FileInfo>
-}
-
-export interface Manifest {
-  draft: VersionEntry | null
-  release: VersionEntry | null
-}
+// 安装包扩展名
+const INSTALLER_EXTS = ['.dmg', '.exe', '.msi', '.appimage', '.deb', '.rpm', '.apk', '.pkg', '.zip']
 
 // 清理文件名/版本号，防止路径遍历
 function sanitizeName(name: string): string {
@@ -65,35 +57,63 @@ export function ensureDir(dir: string) {
   }
 }
 
-// 读取 manifest
-export function readManifest(): Manifest {
+// 读取版本信息
+function readVersionInfo(): VersionInfo {
   if (!existsSync(MANIFEST_PATH)) {
     return { draft: null, release: null }
   }
   try {
     return JSON.parse(readFileSync(MANIFEST_PATH, 'utf-8'))
   } catch {
-    console.warn('Failed to parse manifest.json, returning default')
     return { draft: null, release: null }
   }
 }
 
-// 写入 manifest
-export function writeManifest(manifest: Manifest) {
+// 写入版本信息
+function writeVersionInfo(info: VersionInfo) {
   ensureDir(STORAGE_ROOT)
-  writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2), 'utf-8')
+  writeFileSync(MANIFEST_PATH, JSON.stringify(info, null, 2), 'utf-8')
 }
 
-// manifest 操作锁，防止并发读写丢失条目
-let manifestLock: Promise<void> = Promise.resolve()
+// 安全删除目录
+function removeDir(dir: string) {
+  if (existsSync(dir)) {
+    rmSync(dir, { recursive: true })
+  }
+}
 
-function withManifestLock<T>(fn: () => T | Promise<T>): Promise<T> {
-  const next = manifestLock.then(fn)
-  manifestLock = next.then(
-    () => {},
-    () => {}
-  )
-  return next
+// 从文件名解析 platform 和 arch
+function parseFilename(filename: string): { platform: string; arch: string | null } | null {
+  const lower = filename.toLowerCase()
+
+  // Android APK
+  if (lower.endsWith('.apk')) {
+    return { platform: 'android', arch: null }
+  }
+
+  // 检查是否为安装包
+  if (!INSTALLER_EXTS.some((ext) => lower.endsWith(ext))) {
+    return null
+  }
+
+  // 解析 platform
+  let platform: string | null = null
+  if (/-mac-/i.test(filename) || lower.endsWith('.dmg') || lower.endsWith('.pkg')) {
+    platform = 'mac'
+  } else if (/-win-/i.test(filename) || /-win\./i.test(filename) || lower.endsWith('.msi')) {
+    platform = 'win'
+  } else if (/-linux-/i.test(filename) || lower.endsWith('.appimage') || lower.endsWith('.deb') || lower.endsWith('.rpm')) {
+    platform = 'linux'
+  }
+
+  if (!platform) return null
+
+  // 解析 arch
+  let arch: string | null = null
+  if (/-arm64[.-]/i.test(filename)) arch = 'arm64'
+  else if (/-x64[.-]/i.test(filename)) arch = 'x64'
+
+  return { platform, arch }
 }
 
 // 读取更新日志
@@ -110,116 +130,81 @@ export function writeChangelog(content: string) {
   writeFileSync(CHANGELOG_PATH, content, 'utf-8')
 }
 
-// 获取 draft 版本的存储目录
-export function getDraftDir(version: string): string {
+// 保存文件到 draft
+export function saveDraftFile(version: string, filename: string, data: Buffer): void {
+  const info = readVersionInfo()
+
+  // 如果 draft 版本不同，清除旧 draft
+  if (info.draft && info.draft !== version) {
+    removeDir(resolve(DRAFT_DIR, info.draft))
+  }
+
+  // 更新版本号
+  info.draft = version
+  writeVersionInfo(info)
+
+  // 保存文件
   const dir = resolve(DRAFT_DIR, sanitizeName(version))
   ensureDir(dir)
-  return dir
-}
-
-// 获取 release 版本的存储目录
-export function getReleaseDir(version: string): string {
-  return resolve(RELEASE_DIR, sanitizeName(version))
-}
-
-// 安全删除目录
-function removeDir(dir: string) {
-  if (existsSync(dir)) {
-    rmSync(dir, { recursive: true })
-  }
-}
-
-// 保存文件到 draft 并更新 manifest
-export function saveDraftFile(
-  version: string,
-  filename: string,
-  data: Buffer,
-  meta: { platform?: string; arch?: string }
-): Promise<void> {
-  return withManifestLock(() => {
-    const manifest = readManifest()
-
-    // 如果 draft 版本不同，清除旧 draft
-    if (manifest.draft && manifest.draft.version !== version) {
-      removeDir(resolve(DRAFT_DIR, manifest.draft.version))
-      manifest.draft = null
-    }
-
-    // 初始化 draft entry
-    if (!manifest.draft) {
-      manifest.draft = { version, files: {} }
-    }
-
-    // 保存文件
-    const dir = getDraftDir(version)
-    const safeFilename = sanitizeName(filename)
-    const filePath = resolve(dir, safeFilename)
-    writeFileSync(filePath, data)
-
-    // 更新 manifest
-    const fileInfo: FileInfo = {
-      size: data.length,
-      uploadedAt: new Date().toISOString(),
-    }
-    if (meta.platform) {
-      fileInfo.platform = meta.platform
-      if (meta.arch) {
-        fileInfo.arch = meta.arch
-      }
-    }
-    manifest.draft.files[safeFilename] = fileInfo
-    writeManifest(manifest)
-  })
+  const filePath = resolve(dir, sanitizeName(filename))
+  writeFileSync(filePath, data)
 }
 
 // 将 draft 发布为 release
-export function publishRelease(version: string): Promise<{ success: boolean; message: string }> {
-  return withManifestLock(() => {
-    const safeVersion = sanitizeName(version)
-    const manifest = readManifest()
+export function publishRelease(version: string): { success: boolean; message: string } {
+  const safeVersion = sanitizeName(version)
+  const info = readVersionInfo()
 
-    if (!manifest.draft) {
-      return { success: false, message: 'No draft version found' }
-    }
-    if (manifest.draft.version !== safeVersion) {
-      return {
-        success: false,
-        message: `Draft version is ${manifest.draft.version}, not ${safeVersion}`,
-      }
-    }
+  if (!info.draft) {
+    return { success: false, message: 'No draft version found' }
+  }
+  if (info.draft !== safeVersion) {
+    return { success: false, message: `Draft version is ${info.draft}, not ${safeVersion}` }
+  }
 
-    const draftPath = resolve(DRAFT_DIR, safeVersion)
-    if (!existsSync(draftPath)) {
-      return { success: false, message: 'Draft directory not found' }
-    }
+  const draftPath = resolve(DRAFT_DIR, safeVersion)
+  if (!existsSync(draftPath)) {
+    return { success: false, message: 'Draft directory not found' }
+  }
 
-    // 清除旧 release
-    if (manifest.release) {
-      removeDir(resolve(RELEASE_DIR, manifest.release.version))
-    }
+  // 清除旧 release
+  if (info.release) {
+    removeDir(resolve(RELEASE_DIR, info.release))
+  }
 
-    // 移动 draft → release
-    const releasePath = resolve(RELEASE_DIR, safeVersion)
-    ensureDir(RELEASE_DIR)
-    renameSync(draftPath, releasePath)
+  // 移动 draft → release
+  const releasePath = resolve(RELEASE_DIR, safeVersion)
+  ensureDir(RELEASE_DIR)
+  renameSync(draftPath, releasePath)
 
-    // 更新 manifest
-    manifest.release = manifest.draft
-    manifest.draft = null
-    writeManifest(manifest)
+  // 更新版本号
+  info.release = safeVersion
+  info.draft = null
+  writeVersionInfo(info)
 
-    return { success: true, message: 'Release published' }
-  })
+  return { success: true, message: 'Release published' }
 }
 
-// 查找 release 中匹配的安装包文件名
-export function findReleasePackage(platform: string, arch?: string): string | null {
-  const manifest = readManifest()
-  if (!manifest.release) return null
+// 获取当前 release 版本的目录路径
+function getReleaseVersionDir(): string | null {
+  const info = readVersionInfo()
+  if (!info.release) return null
+  const dir = resolve(RELEASE_DIR, info.release)
+  if (!existsSync(dir)) return null
+  return dir
+}
 
-  for (const [filename, info] of Object.entries(manifest.release.files)) {
-    if (info.platform === platform) {
-      if (platform === 'android' || info.arch === arch) {
+// 扫描 release 目录查找匹配的安装包
+export function findReleasePackage(platform: string, arch?: string): string | null {
+  const dir = getReleaseVersionDir()
+  if (!dir) return null
+
+  const files = readdirSync(dir)
+  for (const filename of files) {
+    const parsed = parseFilename(filename)
+    if (!parsed) continue
+    if (parsed.platform === platform) {
+      if (platform === 'android' || parsed.arch === arch) {
         return filename
       }
     }
@@ -229,13 +214,11 @@ export function findReleasePackage(platform: string, arch?: string): string | nu
 
 // 获取 release 中的文件路径（按文件名查找）
 export function getReleaseFilePath(filename: string): string | null {
+  const dir = getReleaseVersionDir()
+  if (!dir) return null
+
   const safeFilename = sanitizeName(filename)
-  const manifest = readManifest()
-  if (!manifest.release) return null
-
-  if (!manifest.release.files[safeFilename]) return null
-
-  const filePath = resolve(RELEASE_DIR, manifest.release.version, safeFilename)
+  const filePath = resolve(dir, safeFilename)
   if (!existsSync(filePath)) return null
 
   return filePath
@@ -245,13 +228,11 @@ export function getReleaseFilePath(filename: string): string | null {
 export function getFileStream(filePath: string): {
   stream: ReadStream
   size: number
-  filename: string
 } {
   const stat = statSync(filePath)
   return {
     stream: createReadStream(filePath),
     size: stat.size,
-    filename: filePath.split('/').pop()!,
   }
 }
 
@@ -259,7 +240,6 @@ export function getFileStream(filePath: string): {
 export function getContentType(filename: string): string {
   if (/\.ya?ml$/i.test(filename)) return 'text/yaml'
   if (/\.json$/i.test(filename)) return 'application/json'
-  if (/\.blockmap$/i.test(filename)) return 'application/octet-stream'
   return 'application/octet-stream'
 }
 

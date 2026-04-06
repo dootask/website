@@ -1,4 +1,4 @@
-import { verifyToken, saveDraftFile, VALID_PLATFORMS, VALID_ARCHS } from '../../utils/storage'
+import { verifyToken, saveDraftFile } from '../../utils/storage'
 
 export default defineEventHandler(async (event) => {
   if (!verifyToken(event)) {
@@ -23,9 +23,8 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const { platform, arch, version } = fields
+  const { version } = fields
 
-  // version 必填
   if (!version) {
     throw createError({ statusCode: 400, statusMessage: 'Missing "version" field' })
   }
@@ -34,32 +33,8 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'No file uploaded' })
   }
 
-  // 有 platform 时校验（安装包），无 platform 时为辅助文件
-  const meta: { platform?: string; arch?: string } = {}
-
-  if (platform) {
-    if (!VALID_PLATFORMS.includes(platform as any)) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: `Invalid platform. Must be one of: ${VALID_PLATFORMS.join(', ')}`,
-      })
-    }
-    meta.platform = platform
-
-    // android 不需要 arch，其他平台必须提供
-    if (platform !== 'android') {
-      if (!arch || !VALID_ARCHS.includes(arch as any)) {
-        throw createError({
-          statusCode: 400,
-          statusMessage: `Invalid arch. Must be one of: ${VALID_ARCHS.join(', ')}`,
-        })
-      }
-      meta.arch = arch
-    }
-  }
-
   // 保存到 draft
-  await saveDraftFile(version, fileData.filename, fileData.data, meta)
+  saveDraftFile(version, fileData.filename, fileData.data)
 
   return {
     success: true,
@@ -67,8 +42,6 @@ export default defineEventHandler(async (event) => {
     data: {
       filename: fileData.filename,
       size: fileData.data.length,
-      platform: meta.platform,
-      arch: meta.arch,
       version,
     },
   }

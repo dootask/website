@@ -25,13 +25,11 @@ export default defineEventHandler((event) => {
     })
   }
 
-  // 查找匹配的安装包
   const filename = findReleasePackage(platform, platform !== 'android' ? arch : undefined)
   if (!filename) {
     throw createError({ statusCode: 404, statusMessage: 'No package found for this platform/arch' })
   }
 
-  // 获取文件路径
   const filePath = getReleaseFilePath(filename)
   if (!filePath) {
     throw createError({ statusCode: 404, statusMessage: 'Package file not found' })
