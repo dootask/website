@@ -45,11 +45,6 @@
               {{ $t('homepage.hero.deployment') }}
             </button>
           </a>
-          <a href="https://saas.dootask.top" target="_blank">
-            <button class="btn btn-primary">
-              {{ $t('common.free_trial') }}
-            </button>
-          </a>
         </div>
       </div>
       <div class="ten_img">
