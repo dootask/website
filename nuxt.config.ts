@@ -59,6 +59,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     uploadToken: process.env.UPLOAD_TOKEN || '',
+    privacyRedirectUrl: process.env.PRIVACY_REDIRECT_URL || '',
     public: {
       siteUrl: 'https://www.dootask.com'
     }

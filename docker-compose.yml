@@ -9,4 +9,5 @@ services:
       - ./uploads:/app/storage/uploads
     environment:
       - NUXT_UPLOAD_TOKEN=${UPLOAD_TOKEN}
+      - NUXT_PRIVACY_REDIRECT_URL=${PRIVACY_REDIRECT_URL}
     restart: unless-stopped
