@@ -35,7 +35,7 @@ description: Use when user wants to release a new version, publish a version, bu
 - **推荐版本号的判断依据**：如果最近提交里全是 `fix:` / `chore:` / `docs:`，推 patch；出现 `feat:` 推 minor；用户另行说明则以用户为准。可以快速看一眼 `git log <last-tag>..HEAD` 或最近几条 commit 辅助判断，但不要过度分析。
 - **镜像仓库路径带 `/web` 后缀**：`ghcr.io/dootask/website/web:<version>`，不是 `ghcr.io/dootask/website:<version>`。汇报时别写错。
 - **如果 CI 报跳过（SKIP=true）**：说明 tag 已存在 = 这个版本号发过了。需要改更大的版本号重发；**不要**去删远端 tag 后复用同一号。
-- **help 子模块内容**：CI 会从 `xxyijixx/dootask-help` 的 `pages` 分支拉帮助文档一起打包。如果用户抱怨帮助中心没更新，先让他去那个仓库确认 pages 分支内容，不是本仓库的问题。
+- **help 帮助文档**：帮助中心源码已内置在本仓库 `help/`（VitePress 项目），CI 直接用 `npm run build:help` 构建进镜像，**不再依赖外部 `xxyijixx/dootask-help`**。如果用户抱怨帮助中心没更新，就在本仓库 `help/docs/` 下改内容后正常发版即可。
 - **普通 push 也会触发 CI**：workflow 是 `on: push: branches: [main]`，但有"tag 存在则跳过"的门，所以如果用户没改版本号就 push，CI 会跑起来但直接跳过构建 —— 这是预期行为，别去解释"为啥 push 触发了 CI"这种问题。
 
 ## 询问用户确认的模板

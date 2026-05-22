@@ -8,8 +8,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  PROJECT_URL: xxyijixx/dootask-help
-  PROJECT_PATH: help
 
 jobs:
   build-and-push:
@@ -21,13 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Checkout dootask-help
-        uses: actions/checkout@v4
-        with:
-          path: ${{ env.PROJECT_PATH }}
-          repository: ${{ env.PROJECT_URL }}
-          ref: pages
 
       - name: Read version from package.json
         run: |
