@@ -94,7 +94,7 @@
           </li>
         </ul>
         <div class="nav-r">
-          <a href="https://saas.dootask.top" target="_blank" :title="$t('common.try_saas_now')">
+          <a v-if="showSaas" :href="saasUrl" target="_blank" :title="$t('common.try_saas_now')">
             <i class="nav-r-icon cloud-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
@@ -141,7 +141,7 @@
           </a>
           <i class="line-1"></i>
           <span class="get-started">
-            <a :href="manageDashboardUrl" target="_blank">
+            <a :href="demoUrl" target="_blank">
               <button class="btn btn-primary">
                 {{ $t('common.try_now') }}
               </button>
@@ -283,10 +283,10 @@
             >GitHub</a
           >
         </li>
-        <li class="drawer-item">
+        <li v-if="showSaas" class="drawer-item">
           <a
             class="txt-4001620 txt"
-            href="https://saas.dootask.top"
+            :href="saasUrl"
             target="_blank"
             @click="closeDrawer"
             >{{ $t('common.try_saas_now') }}</a
@@ -295,7 +295,7 @@
         <li class="drawer-item">
           <a
             class="txt-4001620 txt"
-            :href="manageDashboardUrl"
+            :href="demoUrl"
             target="_blank"
             @click="closeDrawer"
             >{{ $t('common.try_now') }}</a
@@ -313,26 +313,14 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 const { theme, setTheme: setThemeComposable } = useTheme();
 const { locale, switchLanguage } = useLanguage();
 const { isActiveRoute, getMainMenuItems, getSupportItems, getThemeItems, getLanguageItems } = useNavigation();
-const { siteUrl: siteUrlRef } = useAppSiteConfig();
+const { demoUrl: demoUrlRef, saasUrl: saasUrlRef } = useAppSiteConfig();
 
-// 创建 computed 属性来生成完整的 URL，确保在模板中正确解包
-// 添加安全检查，确保在 SSR 环境下也能正常工作
-const siteUrl = computed(() => {
-  try {
-    const url = siteUrlRef?.value;
-    return url && typeof url === 'string' ? url : 'https://www.dootask.com';
-  } catch {
-    return 'https://www.dootask.com';
-  }
-});
-
-const saasSignupUrl = computed(() => {
-  return 'https://demo.dootask.com/';
-});
-
-const manageDashboardUrl = computed(() => {
-  return 'https://demo.dootask.com/';
-});
+// Demo（在线体验）地址，由环境变量 DEMO_URL 提供
+const demoUrl = computed(() => demoUrlRef?.value || '');
+// SaaS 服务地址，仅当环境变量 SAAS_URL 配置了才有值
+const saasUrl = computed(() => saasUrlRef?.value || '');
+// 是否显示 SaaS 相关菜单（配置了 SAAS_URL 才显示）
+const showSaas = computed(() => saasUrl.value !== '');
 
 // 抽屉相关状态和方法
 // const isDrawerOpen = ref(false);

@@ -66,7 +66,7 @@
                 <li class="footer-ol-item mb-16">
                   <a
                     class="txt-4001624 txt external-link-icon"
-                    :href="'https://demo.dootask.com/docs/index.html'"
+                    :href="`${demoUrl}/docs/index.html`"
                     target="_blank"
                     >{{ $t('footer.api_docs') }}</a
                   >
@@ -145,6 +145,7 @@ import { useI18n } from 'vue-i18n';
 
 const { theme } = useTheme();
 const { locale } = useI18n();
+const { demoUrl } = useAppSiteConfig();
 
 const year = new Date().getFullYear();
 </script>

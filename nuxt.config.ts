@@ -60,7 +60,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     privacyRedirectUrl: process.env.PRIVACY_REDIRECT_URL || '',
     public: {
-      siteUrl: 'https://www.dootask.com',
+      siteUrl: process.env.SITE_URL || 'https://www.dootask.com',
+      demoUrl: process.env.DEMO_URL || 'https://demo.dootask.com',
+      saasUrl: process.env.SAAS_URL || '',
       r2PublicUrl: process.env.R2_PUBLIC_URL || ''
     }
   },

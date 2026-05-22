@@ -8,6 +8,7 @@ import type { UseNavigationReturn, ThemeMenuItem, LanguageMenuItem } from '../ty
 export const useNavigation = (): UseNavigationReturn => {
   const route = useRoute();
   const { getLocalizedRoutes, t } = useLanguage();
+  const { demoUrl } = useAppSiteConfig();
 
   /**
    * 判断当前路由是否激活
@@ -57,7 +58,7 @@ export const useNavigation = (): UseNavigationReturn => {
         },
         {
           text: t('navigation.api_docs'),
-          link: 'https://demo.dootask.com/docs/index.html',
+          link: `${demoUrl.value}/docs/index.html`,
           target: '_blank',
         },
         {

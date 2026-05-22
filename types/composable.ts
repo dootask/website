@@ -30,6 +30,10 @@ export interface UseLanguageReturn {
 export interface UseAppSiteConfigReturn {
   /** 站点 URL */
   siteUrl: ComputedRef<string>;
+  /** Demo（在线体验）URL（由环境变量 DEMO_URL 提供，已去除结尾斜杠） */
+  demoUrl: ComputedRef<string>;
+  /** SaaS 服务 URL（由环境变量 SAAS_URL 提供，未配置时为空字符串） */
+  saasUrl: ComputedRef<string>;
   /** 站点名称 */
   siteName: ComputedRef<string>;
   /** API 基础 URL */

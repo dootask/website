@@ -165,22 +165,10 @@ const { t } = useI18n();
 
 const themeStore = useThemeStore();
 const { theme } = toRefs(themeStore);
-const { siteUrl: siteUrlRef } = useAppSiteConfig();
+const { demoUrl } = useAppSiteConfig();
 
-// 获取站点 URL
-const siteUrl = computed(() => {
-  try {
-    const url = siteUrlRef?.value;
-    return url && typeof url === 'string' ? url : 'https://www.dootask.com';
-  } catch {
-    return 'https://www.dootask.com';
-  }
-});
-
-// SaaS 注册链接
-const saasSignupUrl = computed(() => {
-  return 'https://demo.dootask.com/';
-});
+// SaaS 注册链接（在线体验地址，由环境变量 DEMO_URL 提供）
+const saasSignupUrl = demoUrl;
 
 const showContactModal = ref(false);
 const modalTitle = ref('');
