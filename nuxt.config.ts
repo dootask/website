@@ -58,10 +58,10 @@ export default defineNuxtConfig({
     autoLastmod: true,
   },
   runtimeConfig: {
-    uploadToken: process.env.UPLOAD_TOKEN || '',
     privacyRedirectUrl: process.env.PRIVACY_REDIRECT_URL || '',
     public: {
-      siteUrl: 'https://www.dootask.com'
+      siteUrl: 'https://www.dootask.com',
+      r2PublicUrl: process.env.R2_PUBLIC_URL || ''
     }
   },
   robots: {
