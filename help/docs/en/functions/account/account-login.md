@@ -4,7 +4,10 @@
 
 ### Step 1: Enter Login Information
 
-Enter your email address and password in the login page input fields.
+Enter your account and password in the login page input fields. The account supports two forms:
+
+- **Email**: Log in with the email address bound during registration.
+- **Username**: Log in with a non-email username, offering more flexible login options that better suit common enterprise account environments (such as LDAP / Active Directory).
 
 ### Step 2: Complete Login
 

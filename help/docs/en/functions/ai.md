@@ -26,6 +26,7 @@ You can easily set up and enable these AI robots through the in-app configuratio
 To ensure the AI robots run smoothly, you need to configure the following items:
 
 - **API Key**: A key provided by AI robot providers for authentication. Correctly configuring the API key is fundamental for normal communication with AI robots.
+- **Custom AI Service URL**: Supports customizing the AI service endpoint (Base URL) for more flexible connection and integration, allowing you to connect to self-hosted services, proxy gateways, or third-party services compatible with the OpenAI API.
 - **Proxy Settings**: If you need to access AI robots through a proxy, you can fill in the proxy information here. Proxy settings ensure successful connection to AI robots in restricted network environments.
 
 ## Configuration Steps
@@ -53,8 +54,12 @@ Engage in real-time chat with configured AI robots to receive intelligent answer
 
 ### AI Assistant Features
 - **Task Creation**: Automatically generate and manage tasks through AI, simplifying workflows.
+- **Multi-language Task Suggestions**: AI-generated task suggestions support multi-language output, making it smoother for cross-language teams.
+- **Image Conversations**: The AI assistant supports drag-and-drop and paste to upload images, and you can send images directly to participate in the conversation for more intuitive communication.
 - **Content Suggestions**: AI provides recommendations and suggestions for relevant content based on user needs.
 - **Other Features**: Provide intelligent services through integrated AI functions, such as automated analysis, report generation, etc.
+
+> Tip: Whether tasks are analyzed automatically can be controlled by administrators via the "[AI Auto Analysis](/en/functions/account/system-setting)" switch in System Settings; the model used for translation can also be adjusted as needed to suit different scenarios.
 
 ---
 

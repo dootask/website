@@ -39,6 +39,16 @@ In the ocean of technology and information, the AI Assistant serves as a lightho
 - **Time Management**: Provides time management tips and tool suggestions to help users improve work efficiency.
 - **Life Optimization**: Shares life tips and health advice to help users maintain balance in busy lives.
 
+## Automatic Chat History Saving
+
+The AI assistant's chat history is now **saved automatically**. After logging in on a different device or reopening it, you can continue viewing your previous conversation history without worrying about losing context, for a more seamless experience.
+
+- **Cross-device Sync**: View the same conversation history across different devices such as desktop and mobile.
+- **Context Continuity**: Reopen the AI assistant to pick up the previous topic and keep chatting.
+- **Clearer Images**: The display of long images in conversations is optimized, reducing blurriness after compression.
+
+> You can also control the AI assistant's automatic task analysis as needed via the "[AI Auto Analysis](/en/functions/account/system-setting)" switch in System Settings.
+
 ::: tip 💡 Use AI Assistant responsibly to create a better tomorrow!
 AI is the power to enable the future, but each of us should be its responsible user. Let's work together to guide the healthy development of AI with wisdom and ethics,
 making technology truly serve humanity. We firmly oppose using AI technology for fraud, infringement, forgery, and other illegal activities.

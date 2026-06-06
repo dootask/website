@@ -32,6 +32,8 @@ export const zhSidebar: DefaultTheme.Sidebar = {
         { text: "消息状态", link: "/functions/im/sf" },
         { text: "会话标记", link: "/functions/im/sign" },
         { text: "消息编辑", link: "/functions/im/edit" },
+        { text: "聊天待办", link: "/functions/im/todo" },
+        { text: "消息转发", link: "/functions/im/forward" },
         { text: "创建群组", link: "/functions/im/create-group" },
         { text: "匿名消息", link: "/functions/im/anonymous" },
         { text: "表情回复消息", link: "/functions/im/emoji-reply" },

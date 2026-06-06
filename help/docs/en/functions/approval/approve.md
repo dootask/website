@@ -26,3 +26,9 @@ The comment function not only facilitates communication between approvers and ap
 ![Add Comments](/images/en/appro_deal_2.png)
 
 Through these operations, approvers can efficiently process pending applications, provide decisions, and give detailed feedback, ensuring the approval process is smooth, transparent, and efficient.
+
+## Deleting Finished Approvals
+
+For approvals that have already finished (approved / rejected / withdrawn), the **initiator or system administrator** can delete them from the approval details, making it easier to clean up useless records and keep the approval list tidy.
+
+> Approvals in progress cannot be deleted directly; complete or withdraw them first before cleaning up, to avoid accidentally removing applications still in flow.

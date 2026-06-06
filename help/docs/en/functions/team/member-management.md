@@ -17,6 +17,17 @@ Administrators can efficiently manage departments, members, and permissions, ens
 - Update organizational structure promptly during team expansion or adjustment to avoid information lag and increased management difficulty.
 
 
+## Creating and Bulk Importing Members
+
+**Feature Overview**
+- **Create Employee Accounts**: Administrators can create accounts for members directly and fill in information such as department and position, so members can join the team without registering themselves.
+- **Bulk Import Employees**: Support importing multiple employee accounts at once, along with department, position, and other information, to quickly build a team or onboard personnel at scale.
+
+**Usage Recommendations**
+- Prepare department and position information before bulk import to ensure a clear organizational structure and complete information afterward.
+- After setting an initial password for new members, remind them to change it promptly after their first login.
+
+
 ## Precise Search and Filtering
 
 **Feature Overview**
@@ -39,6 +50,8 @@ Administrators can efficiently manage departments, members, and permissions, ens
 - **Set Temporary Account**: Create temporary accounts for short-term external collaborators, ensuring clear team boundaries while protecting internal resources.
 - **Modify Email**: Administrators can directly change member's bound email addresses to ensure account security and information accuracy.
 - **Change Password**: Administrators can directly reset passwords when members forget them or when accounts face security risks, protecting team data security.
+- **Mark Email Verification Status**: Administrators can manually mark a member's email verification status, making member information easier to manage and complementing the email verification status filter above.
+- **View Projects and Tasks**: From the member card, use the "Projects and Tasks" entry to directly view the projects, todos, and completed tasks the member participates in, giving a clear view of team collaboration progress.
 
 ![Member Permissions and Status Management](/images/en/team_mana_4.png)
 

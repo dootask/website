@@ -15,6 +15,12 @@ The project archiving feature is used to organize and store completed or cancell
 
 ![Project Archive](/images/en/pro_archi.png)
 
+## Archiving Rules
+
+Project archiving supports choosing different archiving rules. When you select the **system default rule**, the interface displays a corresponding hint, informing you that the project will follow the "Auto Archive Tasks" rule configured by the system in [System Settings](/en/functions/account/system-setting), avoiding mistakes caused by not understanding the rule.
+
+> To customize the archiving timing, choose another rule in the project settings; when the system default is selected, it follows the system's unified configuration.
+
 ## Key Features
 - **Archive Projects**: Mark completed or cancelled projects as archived.
 - **View Archived Projects**: Access archived projects and their related information at any time.

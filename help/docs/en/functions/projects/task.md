@@ -133,8 +133,14 @@ Add custom tags for task classification, filtering, and quick location.
 - **Modify Task Time**: Can adjust task start time and deadline at any time
 - **Delay Task**: Can delay the task if it cannot be completed on time
 - **Clear Task Time**: Remove task time limits for tasks without time requirements
+- **Unlink Tasks**: For tasks previously linked together, you can unlink them at any time to flexibly adjust dependencies and hierarchy between tasks.
 
 ![Task Time Management Interface](/images/en/pro_task_pic_19.png)
+
+
+### Filter Tasks by Project Owner
+
+In the task list, you can **filter tasks by project owner** to quickly focus on tasks under a specific owner, saving time when finding and organizing tasks—especially in large projects with many tasks.
 
 
 ### Task Chat

@@ -32,6 +32,8 @@ export const enSidebar: DefaultTheme.Sidebar = {
         { text: "Message Status", link: "/en/functions/im/sf" },
         { text: "Conversation Tags", link: "/en/functions/im/sign" },
         { text: "Message Editing", link: "/en/functions/im/edit" },
+        { text: "Chat Todo", link: "/en/functions/im/todo" },
+        { text: "Message Forwarding", link: "/en/functions/im/forward" },
         { text: "Create Group", link: "/en/functions/im/create-group" },
         { text: "Anonymous Messaging", link: "/en/functions/im/anonymous" },
         { text: "Emoji Replies", link: "/en/functions/im/emoji-reply" },

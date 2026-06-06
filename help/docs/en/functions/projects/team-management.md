@@ -19,3 +19,12 @@ The project team management feature allows administrators to assign and manage t
 - **Set Roles**: Assign specific roles to members, such as project leader, task collaborator, etc.
 - **Adjust Permissions**: Assign appropriate permissions to each member as needed.
 - **Remove Members**: Remove members who are no longer participating in the project.
+
+## Primary and Deputy Owners
+
+Projects support setting a **primary owner + deputy owner(s)**, making collaborative management more flexible and no longer dependent on a single owner.
+
+- **Primary Owner**: The core owner of the project, with full project management permissions.
+- **Deputy Owner**: Assists the primary owner in managing the project, sharing tasks such as member management and task coordination, so the project is never left unattended when the primary owner is away.
+
+> The same "primary owner + deputy owner" mechanism also applies to **groups** and **departments**, making it easy to share management responsibilities at a larger scale.

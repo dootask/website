@@ -39,6 +39,20 @@ Besides creating their own templates, users can select existing templates from t
 2. Select a template suitable for the current task from the template library.
 3. Set it as the default template for automatic use when creating new tasks.
 
+## Shared Task Templates
+
+Beyond using templates within a single project, **DooTask** also supports **shared task templates**, allowing commonly used templates to be reused across projects within the team, further reducing repetitive configuration.
+
+**Key Features**:
+- **Cross-project Use**: Shared templates are no longer limited to a single project and can be used directly across multiple projects.
+- **Search**: When there are many templates, you can quickly find the shared template you need by name keyword.
+- **Usage Statistics**: The system records template usage, helping the team identify the most-used and most valuable templates to continuously optimize the template library.
+
+**Usage Recommendations**:
+- Distill standardized, highly repetitive processes into shared templates to improve overall collaboration consistency.
+- Periodically clean up infrequent or outdated templates based on usage statistics to keep the template library lean and practical.
+
+
 ## Ensuring Task Details are Accurate
 When creating new tasks, users can select templates and adjust them according to actual needs, ensuring each task meets project requirements. The accuracy and consistency of tasks will significantly improve, thus promoting smooth project progress.
 

@@ -20,6 +20,12 @@ In the basic system settings, you can configure the following aspects:
 ### Project Related
 
 - **Project Invitation**: When enabled, allows project administrators to invite new members through generated links.
+- **Project Creation Permission**: Controls which members can create projects. You can select multiple options: "Everyone", "Department Owner", and "Designated Members".
+  - **Everyone**: All members can create projects.
+  - **Department Owner**: Department owners and department administrators can create projects.
+  - **Designated Members**: Only the members manually specified below can create projects (up to 200).
+  - System administrators can always create projects regardless of this switch; the "New Project" entry is automatically hidden for unauthorized members.
+- **Department Owner View**: When enabled, department owners / department administrators can view (read-only) the projects and all tasks within them that members of their own and subordinate departments participate in. The actual scope is still subject to task visibility settings.
 - **Auto Archive Tasks**: When enabled, tasks will be automatically archived upon completion.
 
 ### Task Related
@@ -27,6 +33,7 @@ In the basic system settings, you can configure the following aspects:
 - **Visibility Options**: When maintained, task visibility in detail pages will remain as user-set regardless of other setting changes. In automatic mode, the system decides task visibility in merged projects based on default values.
 - **Task Default Time**: Default time is customizable, providing a preset time range when adding new tasks for user convenience.
 - **Unclaimed Task Reminder**: When enabled, the system will send notifications about unclaimed tasks through project group chat at set reminder times daily.
+- **AI Auto Analysis**: When enabled, the AI assistant automatically analyzes tasks and provides suggestions. It can be turned off as needed to avoid unnecessary analysis.
 
 ### Message Related
 
@@ -36,6 +43,9 @@ In the basic system settings, you can configure the following aspects:
 - **Group Chat prohubited**: When open, allows messaging in personal group chats.
 - **Chat Profile**: When optional, users can choose whether to fill in this information. When required, nickname and phone number must be set before sending chat content.
 - **Anonymous Messages**: When enabled, users can send messages anonymously.
+- **Todo Permission**: Controls who can set or cancel [chat todos](/en/functions/im/todo) for others.
+  - **Allow**: All members can set / cancel todos for others.
+  - **Forbid** (safer default): Only the member themselves, system administrators, group owners (including group admins), project owners (including project admins), and task owners can set / cancel todos.
 - **Voice to Text**: When enabled, right-clicking on voice messages allows conversion to text.
 - **End-to-End Encryption**: When enabled, protects data transmission security.
 
