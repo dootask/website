@@ -1,6 +1,6 @@
 ---
-name: sync-help
-description: 把本仓库 help/(VitePress 帮助中心)对齐到 dootask 主程序 CHANGELOG 的最新功能。仅通过 /sync-help 命令调用。
+name: dootask-website-sync-help
+description: 把本仓库 help/(VitePress 帮助中心)对齐到 dootask 主程序 CHANGELOG 的最新功能。仅通过 /dootask-website-sync-help 命令调用。
 ---
 
 # 同步 help 帮助文档到 dootask 主程序
