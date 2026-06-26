@@ -112,7 +112,11 @@ export const enSidebar: DefaultTheme.Sidebar = {
     },
     {
       text: "🚀 &ensp; Deployment & Integration",
-      link: "/en/deploy",
+      collapsed: false,
+      items: [
+        { text: "Application Deployment", link: "/en/deploy" },
+        { text: "Offline Deployment", link: "/en/deploy/offline" },
+      ],
     },
     {
       text: "🤝 &ensp; Support & Help",

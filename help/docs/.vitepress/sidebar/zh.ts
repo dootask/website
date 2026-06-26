@@ -118,7 +118,11 @@ export const zhSidebar: DefaultTheme.Sidebar = {
     },
     {
       text: "🚀 &ensp; 部署与集成",
-      link: "/deploy",
+      collapsed: false,
+      items: [
+        { text: "应用部署", link: "/deploy" },
+        { text: "离线部署", link: "/deploy/offline" },
+      ],
     },
     {
       text: "🤝 &ensp; 支持与帮助",
