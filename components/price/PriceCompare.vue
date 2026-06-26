@@ -198,7 +198,6 @@ const plans = computed<IPlan[]>(() => [
   {
     name: t('pricing.plans.basic.name'),
     price: t('pricing.plans.basic.price'),
-    priceUnit: t('pricing.plans.basic.unit'),
     buttonText: t('pricing.plans.buy_now'),
   },
   {

@@ -181,7 +181,6 @@ const pricePlans = computed((): PricePlan[] => [
   {
     name: t('pricing.plans.basic.name'),
     price: t('pricing.plans.basic.price'),
-    priceUnit: t('pricing.plans.basic.unit'),
     userLimit: t('pricing.plans.basic.limit'),
     buttonText: t('pricing.plans.buy_now'),
     features: [

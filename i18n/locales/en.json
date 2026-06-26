@@ -325,8 +325,7 @@
       },
       "basic": {
         "name": "Basic Edition",
-        "price": "¥888",
-        "unit": "/person",
+        "price": "¥8,888",
         "limit": "Limited to small teams under 10 people",
         "feature1": "Includes all open source features",
         "feature2": "Support for private local deployment",
